@@ -1,0 +1,90 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 40,
+    "margin-top": 8,
+    "margin-left": 14,
+    "margin-right": 14,
+    "spacing": 0,
+
+    "modules-left": ["sway/workspaces", "sway/window"],
+    "modules-center": ["clock"],
+    "modules-right": [
+        "cpu",
+        "memory",
+        "pulseaudio",
+        "bluetooth",
+        "battery",
+        "tray"
+    ],
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "format": "{name}"
+    },
+
+    "sway/window": {
+        "max-length": 50,
+        "format": "{}"
+    },
+
+    "clock": {
+        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%a %d %b  %H:%M}"
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": "  {usage}%",
+        "tooltip": false
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": "  {percentage}%",
+        "tooltip-format": "{used:0.1f} / {total:0.1f} GiB"
+    },
+
+    "pulseaudio": {
+        "format": "{icon}  {volume}%",
+        "format-muted": "  muted",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol",
+        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+    },
+
+    "bluetooth": {
+        "format": "  {status}",
+        "format-connected": "  {device_alias}",
+        "format-connected-battery": "  {device_alias} {device_battery_percentage}%",
+        "tooltip-format": "{controller_alias}\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}  {device_address}",
+        "on-click": "bluedevil-wizard",
+        "on-click-right": "bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on"
+    },
+
+    "network": {
+        "format-wifi": "  {essid} {signalStrength}%",
+        "format-ethernet": "  {ipaddr}",
+        "format-disconnected": "  disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
+    },
+
+    "battery": {
+        "states": { "warning": 30, "critical": 15 },
+        "format": "{icon}  {capacity}%",
+        "format-charging": "  {capacity}%",
+        "format-plugged": "  {capacity}%",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    }
+}

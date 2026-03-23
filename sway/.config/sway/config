@@ -21,7 +21,7 @@ set $menu wofi --show drun
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg ~/dotfiles/wallpapers/anime-moon-landscape.jpg fill
 
 # Laptop internal display on the left, external monitor on the right
 output eDP-1 resolution 1920x1080 position 0,0
@@ -45,8 +45,34 @@ output HDMI-A-1 resolution 1920x1080 position 1920,0
 # Read `man 5 sway-input` for more information about this section.
 
 input type:keyboard {
-    xkb_options caps:swapescape,ctrl:swap_lalt_lctl
+    xkb_options caps:escape_shifted_capslock,ctrl:swap_lalt_lctl
 }
+
+### Window appearance
+default_border pixel 2
+default_floating_border pixel 2
+for_window [title=".*"] border pixel 2
+
+# Force server-side decorations (removes CSD title bars on GTK apps)
+exec_always gsettings set org.gnome.desktop.wm.preferences button-layout ''
+
+gaps inner 8
+gaps outer 4
+
+# SwayFX effects (uncomment after confirming swayfx launches)
+corner_radius 10
+blur on
+blur_passes 1
+blur_radius 5
+shadows on
+default_dim_inactive 0.05
+
+# Catppuccin Mocha border colors
+# class                 border     bg         text       indicator  child_border
+client.focused          #b4befe    #1e1e2e    #cdd6f4    #b4befe    #b4befe
+client.unfocused        #313244    #1e1e2e    #6c7086    #313244    #313244
+client.focused_inactive #313244    #1e1e2e    #6c7086    #313244    #313244
+client.urgent           #f38ba8    #1e1e2e    #f38ba8    #f38ba8    #f38ba8
 
 ### Key bindings
 #
@@ -56,10 +82,11 @@ input type:keyboard {
     bindsym $mod+Return exec $term
 
     # Kill focused window
-    bindsym $mod+Shift+q kill
+    bindsym $mod+q kill
 
     # Start your launcher
     bindsym $mod+d exec $menu
+    bindsym ctrl+space exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -196,25 +223,25 @@ bindsym $mod+r mode "resize"
     # Special keys to adjust brightness via brightnessctl
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
-    # Special key to take a screenshot with grim
-    bindsym Print exec grim
+    # Screenshot: select region → clipboard
+    bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
+    # Screenshot: full screen → clipboard
+    bindsym Print exec grim - | wl-copy
+
+    # Open audio mixer
+    bindsym $mod+F9 exec pavucontrol
+
+    # Open bluetooth manager
+    bindsym $mod+F10 exec bluedevil-wizard
+
+    # Switch focus between screens
+    bindsym $mod+semicolon focus output next
+
+    # Toggle waybar
+    bindsym $mod+Shift+b exec pkill waybar || waybar &
 
 #
-# Status Bar:
+# Status Bar: hidden by default, toggle with $mod+Shift+b
 #
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
-}
 
 include /etc/sway/config.d/*
