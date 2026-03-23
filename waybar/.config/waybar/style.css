@@ -1,0 +1,122 @@
+/* Catppuccin Mocha */
+@define-color base      #1e1e2e;
+@define-color surface0  #313244;
+@define-color surface1  #45475a;
+@define-color overlay0  #6c7086;
+@define-color text      #cdd6f4;
+@define-color subtext   #a6adc8;
+@define-color lavender  #b4befe;
+@define-color blue      #89b4fa;
+@define-color sapphire  #74c7ec;
+@define-color teal      #94e2d5;
+@define-color green     #a6e3a1;
+@define-color yellow    #f9e2af;
+@define-color peach     #fab387;
+@define-color red       #f38ba8;
+@define-color mauve     #cba6f7;
+
+@define-color module-bg rgba(0, 0, 0, 0.85);
+
+* {
+    font-family: "Fira Code", "Font Awesome 6 Free Solid", "Font Awesome 6 Brands Regular", monospace;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: @text;
+}
+
+/* Left */
+
+#workspaces {
+    background: @module-bg;
+    border-radius: 50px;
+    border: 1px solid @lavender;
+    margin: 6px 4px;
+    padding: 0 6px;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    color: @overlay0;
+    background: transparent;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+}
+
+#workspaces button.focused {
+    color: @text;
+    background: @surface1;
+}
+
+#workspaces button.urgent {
+    color: @red;
+}
+
+#workspaces button:hover {
+    color: @text;
+    background: @surface1;
+}
+
+#window {
+    background: @module-bg;
+    border-radius: 50px;
+    border: 1px solid @lavender;
+    margin: 6px 4px;
+    padding: 0 16px;
+    color: @subtext;
+}
+
+/* Center */
+
+#clock {
+    background: @module-bg;
+    border-radius: 50px;
+    border: 1px solid @lavender;
+    margin: 6px 0;
+    padding: 0 20px;
+    color: @lavender;
+    font-weight: bold;
+}
+
+/* Right */
+
+#cpu,
+#memory,
+#pulseaudio,
+#bluetooth,
+#network,
+#battery,
+#tray {
+    background: @module-bg;
+    border-radius: 50px;
+    border: 1px solid @lavender;
+    margin: 6px 4px;
+    padding: 0 14px;
+}
+
+#cpu       { color: @blue; }
+#memory    { color: @teal; }
+#pulseaudio { color: @sapphire; }
+#pulseaudio.muted { color: @overlay0; }
+
+#bluetooth { color: @sapphire; }
+#bluetooth.off { color: @overlay0; }
+
+#network { color: @green; }
+#network.disconnected { color: @red; }
+
+#battery { color: @green; }
+#battery.warning { color: @yellow; }
+#battery.critical {
+    color: @red;
+    animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+    to { background: @red; color: @base; }
+}
