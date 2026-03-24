@@ -1,0 +1,4 @@
+#!/bin/sh
+# Launch an app via wofi and run it on the NVIDIA GPU
+app=$(wofi --show run --prompt "PRIME: ")
+[ -n "$app" ] && prime-run $app
