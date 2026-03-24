@@ -27,6 +27,25 @@ output * bg ~/dotfiles/wallpapers/anime-moon-landscape.jpg fill
 output eDP-1 resolution 1920x1080 position 0,0
 output HDMI-A-1 resolution 1920x1080 position 1920,0
 
+# Workspace → output assignments
+workspace 1 output eDP-1
+workspace 2 output eDP-1
+workspace 3 output eDP-1
+workspace 4 output eDP-1
+workspace 5 output HDMI-A-1
+workspace 6 output HDMI-A-1
+
+# App → workspace assignments
+assign [app_id="kitty"] workspace 1
+assign [app_id="^zen"] workspace 2
+assign [class="^[Zz]en"] workspace 2
+assign [app_id="md.obsidian.Obsidian"] workspace 3
+assign [class="obsidian"] workspace 3
+assign [app_id="discord"] workspace 5
+assign [class="[Dd]iscord"] workspace 5
+assign [app_id="com.spotify.Client"] workspace 5
+assign [class="[Ss]potify"] workspace 5
+
 ### Idle configuration
 #
 # Example configuration:
@@ -79,14 +98,17 @@ client.urgent           #f38ba8    #1e1e2e    #f38ba8    #f38ba8    #f38ba8
 # Basics:
 #
     # Start a terminal
-    bindsym $mod+Return exec $term
+    bindsym $mod+Return exec $term, workspace 1
+    # Start a terminal with prime
+    bindsym $mod+Shift+Return exec ~/.local/bin/prime-run $term, workspace 1
 
     # Kill focused window
     bindsym $mod+q kill
 
     # Start your launcher
-    bindsym $mod+d exec $menu
     bindsym ctrl+space exec $menu
+    # Launch app on NVIDIA GPU via PRIME
+    bindsym ctrl+Shift+space exec ~/.local/bin/prime-menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -157,8 +179,8 @@ client.urgent           #f38ba8    #1e1e2e    #f38ba8    #f38ba8    #f38ba8
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
+    bindsym $mod+Shift+h splith
+    bindsym $mod+Shift+v splitv
 
     # Switch the current container between different layout styles
     bindsym $mod+s layout stacking
@@ -220,6 +242,10 @@ bindsym $mod+r mode "resize"
     bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
     bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
     bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+    # Media control keys
+    bindsym --locked XF86AudioPlay exec playerctl play-pause
+    bindsym --locked XF86AudioNext exec playerctl next
+    bindsym --locked XF86AudioPrev exec playerctl previous
     # Special keys to adjust brightness via brightnessctl
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
@@ -233,6 +259,11 @@ bindsym $mod+r mode "resize"
 
     # Open bluetooth manager
     bindsym $mod+F10 exec bluedevil-wizard
+
+    # App launchers
+    bindsym $mod+b exec zen-browser, workspace 2
+    bindsym $mod+o exec flatpak run md.obsidian.Obsidian, workspace 3
+    bindsym $mod+d exec Discord, workspace 5
 
     # Switch focus between screens
     bindsym $mod+semicolon focus output next
