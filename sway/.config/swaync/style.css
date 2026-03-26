@@ -1,0 +1,142 @@
+/* Catppuccin Mocha */
+@define-color base      #1e1e2e;
+@define-color surface0  #313244;
+@define-color surface1  #45475a;
+@define-color overlay0  #6c7086;
+@define-color text      #cdd6f4;
+@define-color subtext   #a6adc8;
+@define-color lavender  #b4befe;
+@define-color blue      #89b4fa;
+@define-color sapphire  #74c7ec;
+@define-color green     #a6e3a1;
+@define-color yellow    #f9e2af;
+@define-color red       #f38ba8;
+@define-color mauve     #cba6f7;
+
+* {
+  font-family: "Fira Code", monospace;
+  font-size: 13px;
+}
+
+.control-center {
+  background: @base;
+  border-radius: 12px;
+  border: 1px solid @lavender;
+  padding: 8px;
+  color: @text;
+}
+
+.widget-title > label {
+  font-size: 14px;
+  font-weight: bold;
+  color: @lavender;
+}
+
+.widget-title > button {
+  background: @surface0;
+  border: 1px solid @surface1;
+  border-radius: 8px;
+  color: @subtext;
+  padding: 4px 10px;
+}
+
+.widget-title > button:hover {
+  background: @surface1;
+  color: @text;
+}
+
+.widget-dnd > switch {
+  border-radius: 12px;
+}
+
+.widget-dnd > switch:checked {
+  background: @lavender;
+}
+
+.widget-volume {
+  background: @surface0;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 4px 0;
+  color: @sapphire;
+}
+
+.widget-backlight {
+  background: @surface0;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 4px 0;
+  color: @yellow;
+}
+
+.widget-mpris {
+  background: @surface0;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 4px 0;
+}
+
+.widget-mpris-player {
+  color: @text;
+}
+
+.widget-mpris-title {
+  font-weight: bold;
+  color: @lavender;
+}
+
+.widget-mpris-subtitle {
+  color: @subtext;
+}
+
+.notification-row {
+  margin: 4px 0;
+}
+
+.notification {
+  background: @surface0;
+  border-radius: 10px;
+  border: 1px solid @surface1;
+  padding: 8px;
+}
+
+.notification-default-action {
+  border-radius: 10px;
+  color: @text;
+}
+
+.notification-default-action:hover {
+  background: @surface1;
+}
+
+.notification-summary {
+  font-weight: bold;
+  color: @text;
+}
+
+.notification-body {
+  color: @subtext;
+}
+
+.notification-action {
+  background: @surface1;
+  border-radius: 6px;
+  color: @blue;
+  margin: 2px;
+}
+
+.notification-action:hover {
+  background: @lavender;
+  color: @base;
+}
+
+.close-button {
+  background: transparent;
+  color: @overlay0;
+  border-radius: 50%;
+}
+
+.close-button:hover {
+  background: @red;
+  color: @base;
+}

@@ -1,9 +1,11 @@
 #!/bin/sh
-# Wrapper to launch sway with Nvidia / AMD iGPU
+# Wrapper to launch sway with Nvidia
 
 export WLR_NO_HARDWARE_CURSORS=1
-export LIBVA_DRIVER_NAME=radeonsi
-export __GLX_VENDOR_LIBRARY_NAME=mesa
+export WLR_RENDERER_ALLOW_SOFTWARE=1
+export LIBVA_DRIVER_NAME=nvidia
+export GBM_BACKEND=nvidia-drm
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
 # AMD iGPU (card1) (for the laptor display eDP1)
 export WLR_DRM_DEVICES=/dev/dri/card1:/dev/dri/card0
 

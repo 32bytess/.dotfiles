@@ -21,19 +21,22 @@ set $menu wofi --show drun
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/dotfiles/wallpapers/anime-moon-landscape.jpg fill
+output * bg ~/dotfiles/wallpapers/illustration-anime-character-rain.jpg fill
 
 # Laptop internal display on the left, external monitor on the right
-output eDP-1 resolution 1920x1080 position 0,0
-output HDMI-A-1 resolution 1920x1080 position 1920,0
+exec_always kanshi
 
 # Workspace → output assignments
 workspace 1 output eDP-1
 workspace 2 output eDP-1
 workspace 3 output eDP-1
 workspace 4 output eDP-1
-workspace 5 output HDMI-A-1
-workspace 6 output HDMI-A-1
+workspace 5 output eDP-1
+workspace 6 output eDP-1
+workspace 7 output HDMI-A-1
+workspace 8 output HDMI-A-1
+workspace 9 output HDMI-A-1
+workspace 10 output HDMI-A-1
 
 # App → workspace assignments
 assign [app_id="kitty"] workspace 1
@@ -41,15 +44,14 @@ assign [app_id="^zen"] workspace 2
 assign [class="^[Zz]en"] workspace 2
 assign [app_id="md.obsidian.Obsidian"] workspace 3
 assign [class="obsidian"] workspace 3
-assign [app_id="discord"] workspace 5
-assign [class="[Dd]iscord"] workspace 5
-assign [app_id="com.spotify.Client"] workspace 5
-assign [class="[Ss]potify"] workspace 5
+assign [app_id="discord"] workspace 7
+assign [class="[Dd]iscord"] workspace 7
+assign [app_id="com.spotify.Client"] workspace 7
+assign [class="[Ss]potify"] workspace 7
 
 ### Idle configuration
 #
 # Example configuration:
-#
 # exec swayidle -w \
 #          timeout 300 'swaylock -f -c 000000' \
 #          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
@@ -75,8 +77,8 @@ for_window [title=".*"] border pixel 2
 # Force server-side decorations (removes CSD title bars on GTK apps)
 exec_always gsettings set org.gnome.desktop.wm.preferences button-layout ''
 
-gaps inner 8
-gaps outer 4
+gaps inner 1
+gaps outer 2
 
 # SwayFX effects (uncomment after confirming swayfx launches)
 corner_radius 10
@@ -86,12 +88,12 @@ blur_radius 5
 shadows on
 default_dim_inactive 0.05
 
-# Catppuccin Mocha border colors
+# Rosé Pine border colors
 # class                 border     bg         text       indicator  child_border
-client.focused          #b4befe    #1e1e2e    #cdd6f4    #b4befe    #b4befe
-client.unfocused        #313244    #1e1e2e    #6c7086    #313244    #313244
-client.focused_inactive #313244    #1e1e2e    #6c7086    #313244    #313244
-client.urgent           #f38ba8    #1e1e2e    #f38ba8    #f38ba8    #f38ba8
+client.focused          #ebbcba    #191724    #e0def4    #ebbcba    #ebbcba
+client.unfocused        #26233a    #191724    #6e6a86    #26233a    #26233a
+client.focused_inactive #26233a    #191724    #6e6a86    #26233a    #26233a
+client.urgent           #eb6f92    #191724    #eb6f92    #eb6f92    #eb6f92
 
 ### Key bindings
 #
@@ -179,8 +181,8 @@ client.urgent           #f38ba8    #1e1e2e    #f38ba8    #f38ba8    #f38ba8
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
-    bindsym $mod+Shift+h splith
-    bindsym $mod+Shift+v splitv
+    bindsym $mod+z splith
+    bindsym $mod+v splitv
 
     # Switch the current container between different layout styles
     bindsym $mod+s layout stacking
@@ -237,6 +239,9 @@ bindsym $mod+r mode "resize"
 #
 # Utilities:
 #
+    # Disable power button
+    bindsym --locked XF86PowerOff exec true
+
     # Special keys to adjust volume via PulseAudio
     bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
     bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
@@ -269,10 +274,10 @@ bindsym $mod+r mode "resize"
     bindsym $mod+semicolon focus output next
 
     # Toggle waybar
-    bindsym $mod+Shift+b exec pkill waybar || waybar &
+    bindsym $mod+Shift+b exec pkill -SIGUSR1 waybar
+  
 
-#
-# Status Bar: hidden by default, toggle with $mod+Shift+b
-#
+exec waybar
+exec swaync
 
 include /etc/sway/config.d/*

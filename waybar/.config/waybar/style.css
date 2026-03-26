@@ -1,19 +1,12 @@
-/* Catppuccin Mocha */
-@define-color base      #1e1e2e;
-@define-color surface0  #313244;
-@define-color surface1  #45475a;
-@define-color overlay0  #6c7086;
-@define-color text      #cdd6f4;
-@define-color subtext   #a6adc8;
-@define-color lavender  #b4befe;
-@define-color blue      #89b4fa;
-@define-color sapphire  #74c7ec;
-@define-color teal      #94e2d5;
-@define-color green     #a6e3a1;
-@define-color yellow    #f9e2af;
-@define-color peach     #fab387;
-@define-color red       #f38ba8;
-@define-color mauve     #cba6f7;
+/* Rosé Pine */
+@define-color base      #191724;
+@define-color surface   #1f1d2e;
+@define-color overlay   #26233a;
+@define-color muted     #6e6a86;
+@define-color subtle    #908caa;
+@define-color text      #e0def4;
+@define-color love      #eb6f92;
+@define-color rose      #ebbcba;
 
 @define-color module-bg rgba(0, 0, 0, 0.85);
 
@@ -35,40 +28,39 @@ window#waybar {
 #workspaces {
     background: @module-bg;
     border-radius: 50px;
-    border: 1px solid @lavender;
+    border: 1px solid @rose;
     margin: 6px 4px;
     padding: 0 6px;
 }
 
 #workspaces button {
     padding: 0 10px;
-    color: @overlay0;
+    color: @muted;
     background: transparent;
     border-radius: 50px;
     transition: all 0.2s ease;
 }
 
 #workspaces button.focused {
-    color: @text;
-    background: @surface1;
+    color: @rose;
 }
 
 #workspaces button.urgent {
-    color: @red;
+    color: @love;
 }
 
 #workspaces button:hover {
     color: @text;
-    background: @surface1;
+    background: @overlay;
 }
 
 #window {
     background: @module-bg;
     border-radius: 50px;
-    border: 1px solid @lavender;
+    border: 1px solid @rose;
     margin: 6px 4px;
     padding: 0 16px;
-    color: @subtext;
+    color: @rose;
 }
 
 /* Center */
@@ -76,10 +68,10 @@ window#waybar {
 #clock {
     background: @module-bg;
     border-radius: 50px;
-    border: 1px solid @lavender;
+    border: 1px solid @rose;
     margin: 6px 0;
     padding: 0 20px;
-    color: @lavender;
+    color: @rose;
     font-weight: bold;
 }
 
@@ -94,29 +86,35 @@ window#waybar {
 #tray {
     background: @module-bg;
     border-radius: 50px;
-    border: 1px solid @lavender;
+    border: 1px solid @rose;
     margin: 6px 4px;
     padding: 0 14px;
+    color: @rose;
 }
 
-#cpu       { color: @blue; }
-#memory    { color: @teal; }
-#pulseaudio { color: @sapphire; }
-#pulseaudio.muted { color: @overlay0; }
+#pulseaudio.muted     { color: @muted; }
+#bluetooth.off        { color: @muted; }
+#network.disconnected { color: @love; }
 
-#bluetooth { color: @sapphire; }
-#bluetooth.off { color: @overlay0; }
-
-#network { color: @green; }
-#network.disconnected { color: @red; }
-
-#battery { color: @green; }
-#battery.warning { color: @yellow; }
+#battery.warning { color: @love; }
 #battery.critical {
-    color: @red;
+    color: @love;
     animation: blink 1s steps(1) infinite;
 }
 
 @keyframes blink {
-    to { background: @red; color: @base; }
+    to { background: @love; color: @base; }
+}
+
+#custom-notification {
+    background: @module-bg;
+    border-radius: 50px;
+    border: 1px solid @rose;
+    margin: 6px 4px;
+    padding: 0 14px;
+    color: @rose;
+}
+
+#custom-notification.dnd {
+    color: @muted;
 }
