@@ -18,10 +18,11 @@ set $term kitty
 # Your preferred application launcher
 set $menu wofi --show drun
 
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/dotfiles/wallpapers/illustration-anime-character-rain.jpg fill
+output * bg ~/dotfiles/wallpapers/blossom-4k-hd-wallpapers.jpg fill
 
 # Laptop internal display on the left, external monitor on the right
 exec_always kanshi
@@ -77,16 +78,17 @@ for_window [title=".*"] border pixel 2
 # Force server-side decorations (removes CSD title bars on GTK apps)
 exec_always gsettings set org.gnome.desktop.wm.preferences button-layout ''
 
-gaps inner 1
-gaps outer 2
+gaps inner 2
+gaps outer 4
 
-# SwayFX effects (uncomment after confirming swayfx launches)
+# SwayFX effects
 corner_radius 10
-blur on
-blur_passes 1
+blur off
+blur_passes 2
 blur_radius 5
 shadows on
 default_dim_inactive 0.05
+
 
 # Rosé Pine border colors
 # class                 border     bg         text       indicator  child_border
@@ -187,7 +189,7 @@ client.urgent           #eb6f92    #191724    #eb6f92    #eb6f92    #eb6f92
     # Switch the current container between different layout styles
     bindsym $mod+s layout stacking
     bindsym $mod+w layout tabbed
-    bindsym $mod+e layout toggle split
+    bindsym $mod+e exec nautilus
 
     # Make the current focus fullscreen
     bindsym $mod+f fullscreen
@@ -268,16 +270,22 @@ bindsym $mod+r mode "resize"
     # App launchers
     bindsym $mod+b exec zen-browser, workspace 2
     bindsym $mod+o exec flatpak run md.obsidian.Obsidian, workspace 3
-    bindsym $mod+d exec Discord, workspace 5
+    bindsym $mod+d layout toggle split
 
     # Switch focus between screens
     bindsym $mod+semicolon focus output next
 
     # Toggle waybar
     bindsym $mod+Shift+b exec pkill -SIGUSR1 waybar
+
+    # Toggle window opacity and blur
+    bindsym $mod+Shift+o exec ~/.config/sway/toggle-opacity.sh
   
 
+exec /usr/bin/gnome-keyring-daemon --start --components=secrets
 exec waybar
 exec swaync
+exec nm-applet --indicator
+exec blueman-applet
 
 include /etc/sway/config.d/*

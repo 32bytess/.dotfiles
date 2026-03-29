@@ -41,7 +41,7 @@ return {
           return {
             ft_icon and { " ", ft_icon, " ", guibg = "none", guifg = ft_color } or "",
             { " " .. filename .. " ", guibg = "none" },
-            { modified and " ● " or " ", guibg = "none", guifg = "#d19a66" }, -- Dirty circle color
+            { modified and " ● " or " ", guibg = "none", guifg = "#d19a66" },
           }
         end,
       })

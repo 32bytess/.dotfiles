@@ -8,8 +8,6 @@
 @define-color love      #eb6f92;
 @define-color rose      #ebbcba;
 
-@define-color module-bg rgba(0, 0, 0, 0.85);
-
 * {
     font-family: "Fira Code", "Font Awesome 6 Free Solid", "Font Awesome 6 Brands Regular", monospace;
     font-size: 13px;
@@ -19,17 +17,15 @@
 }
 
 window#waybar {
-    background: transparent;
+    background: rgba(0, 0, 0, 0.85);
     color: @text;
+    border-radius: 0 0 10px 10px;
 }
 
 /* Left */
 
 #workspaces {
-    background: @module-bg;
-    border-radius: 50px;
-    border: 1px solid @rose;
-    margin: 6px 4px;
+    margin: 0 4px;
     padding: 0 6px;
 }
 
@@ -37,7 +33,6 @@ window#waybar {
     padding: 0 10px;
     color: @muted;
     background: transparent;
-    border-radius: 50px;
     transition: all 0.2s ease;
 }
 
@@ -51,14 +46,10 @@ window#waybar {
 
 #workspaces button:hover {
     color: @text;
-    background: @overlay;
 }
 
 #window {
-    background: @module-bg;
-    border-radius: 50px;
-    border: 1px solid @rose;
-    margin: 6px 4px;
+    margin: 0 4px;
     padding: 0 16px;
     color: @rose;
 }
@@ -66,10 +57,7 @@ window#waybar {
 /* Center */
 
 #clock {
-    background: @module-bg;
-    border-radius: 50px;
-    border: 1px solid @rose;
-    margin: 6px 0;
+    margin: 0;
     padding: 0 20px;
     color: @rose;
     font-weight: bold;
@@ -84,10 +72,7 @@ window#waybar {
 #network,
 #battery,
 #tray {
-    background: @module-bg;
-    border-radius: 50px;
-    border: 1px solid @rose;
-    margin: 6px 4px;
+    margin: 0 2px;
     padding: 0 14px;
     color: @rose;
 }
@@ -107,10 +92,7 @@ window#waybar {
 }
 
 #custom-notification {
-    background: @module-bg;
-    border-radius: 50px;
-    border: 1px solid @rose;
-    margin: 6px 4px;
+    margin: 0 2px;
     padding: 0 14px;
     color: @rose;
 }
