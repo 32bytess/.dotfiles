@@ -4,20 +4,19 @@
     "height": 40,
     "margin-top": 0,
     "margin-bottom": 0,
-    "margin-left": 2,
-    "margin-right": 2,
+    "margin-left": 0,
+    "margin-right": 0,
     "spacing": 0,
 
-    "modules-left": ["sway/workspaces", "sway/window"],
-    "modules-center": ["clock"],
+    "modules-left": ["sway/workspaces"],
+    "modules-center": ["sway/window"],
     "modules-right": [
-        "cpu",
-        "memory",
         "pulseaudio",
         "bluetooth",
+        "network",
         "battery",
-        "custom/notification",
-        "tray"
+        "clock",
+        "custom/notification"
     ],
 
     "sway/workspaces": {
@@ -66,15 +65,16 @@
         "tooltip-format": "{controller_alias}\n{num_connections} connected",
         "tooltip-format-connected": "{controller_alias}\n{num_connections} connected\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}  {device_address}",
-        "on-click": "bluedevil-wizard",
+        "on-click": "blueman-manager",
         "on-click-right": "bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on"
     },
 
     "network": {
         "format-wifi": "  {essid} {signalStrength}%",
-        "format-ethernet": "  {ipaddr}",
+        "format-ethernet": "  {ifname}",
         "format-disconnected": "  disconnected",
-        "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "networkmanager-editor"
     },
 
     "battery": {
@@ -89,14 +89,14 @@
         "tooltip": false,
         "format": "{icon}",
         "format-icons": {
-            "notification": "󰂚",
-            "none": "󰂜",
-            "dnd-notification": "󰂛",
-            "dnd-none": "󰪑",
-            "inhibited-notification": "󰂚",
-            "inhibited-none": "󰂜",
-            "dnd-inhibited-notification": "󰂛",
-            "dnd-inhibited-none": "󰪑"
+            "notification": "",
+            "none": "",
+            "dnd-notification": "",
+            "dnd-none": "",
+            "inhibited-notification": "",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "",
+            "dnd-inhibited-none": ""
         },
         "return-type": "json",
         "exec-if": "which swaync-client",
@@ -105,9 +105,4 @@
         "on-click-right": "swaync-client -d -sw",
         "escape": true
     },
-
-    "tray": {
-        "icon-size": 16,
-        "spacing": 8
-    }
 }
