@@ -1,142 +1,143 @@
-/* Catppuccin Mocha */
-@define-color base      #1e1e2e;
-@define-color surface0  #313244;
-@define-color surface1  #45475a;
-@define-color overlay0  #6c7086;
-@define-color text      #cdd6f4;
-@define-color subtext   #a6adc8;
-@define-color lavender  #b4befe;
-@define-color blue      #89b4fa;
-@define-color sapphire  #74c7ec;
-@define-color green     #a6e3a1;
-@define-color yellow    #f9e2af;
-@define-color red       #f38ba8;
-@define-color mauve     #cba6f7;
+/* Rosé Pine */
+@define-color base      #191724;
+@define-color surface   #1f1d2e;
+@define-color overlay   #26233a;
+@define-color muted     #6e6a86;
+@define-color subtle    #908caa;
+@define-color text      #e0def4;
+@define-color love      #eb6f92;
+@define-color gold      #f6c177;
+@define-color rose      #ebbcba;
+@define-color foam      #9ccfd8;
 
 * {
-  font-family: "Fira Code", monospace;
-  font-size: 13px;
+    font-family: "Fira Code", monospace;
+    font-size: 13px;
 }
 
 .control-center {
-  background: @base;
-  border-radius: 12px;
-  border: 1px solid @lavender;
-  padding: 8px;
-  color: @text;
+    background: @base;
+    border-radius: 10px;
+    border: 2px solid @rose;
+    padding: 8px;
+    color: @text;
 }
 
 .widget-title > label {
-  font-size: 14px;
-  font-weight: bold;
-  color: @lavender;
+    font-size: 14px;
+    font-weight: bold;
+    color: @rose;
 }
 
 .widget-title > button {
-  background: @surface0;
-  border: 1px solid @surface1;
-  border-radius: 8px;
-  color: @subtext;
-  padding: 4px 10px;
+    background: @overlay;
+    border: none;
+    border-radius: 8px;
+    color: @subtle;
+    padding: 4px 10px;
 }
 
 .widget-title > button:hover {
-  background: @surface1;
-  color: @text;
+    background: @overlay;
+    color: @text;
 }
 
 .widget-dnd > switch {
-  border-radius: 12px;
+    border-radius: 12px;
+    background: @overlay;
+    border: none;
+    color: @muted;
 }
 
 .widget-dnd > switch:checked {
-  background: @lavender;
+    background: @rose;
+    color: @base;
 }
 
 .widget-volume {
-  background: @surface0;
-  border-radius: 8px;
-  padding: 8px;
-  margin: 4px 0;
-  color: @sapphire;
+    background: @surface;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 4px 0;
+    color: @foam;
 }
 
 .widget-backlight {
-  background: @surface0;
-  border-radius: 8px;
-  padding: 8px;
-  margin: 4px 0;
-  color: @yellow;
+    background: @surface;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 4px 0;
+    color: @gold;
 }
 
 .widget-mpris {
-  background: @surface0;
-  border-radius: 8px;
-  padding: 8px;
-  margin: 4px 0;
+    background: @surface;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 4px 0;
 }
 
 .widget-mpris-player {
-  color: @text;
+    color: @text;
 }
 
 .widget-mpris-title {
-  font-weight: bold;
-  color: @lavender;
+    font-weight: bold;
+    color: @rose;
 }
 
 .widget-mpris-subtitle {
-  color: @subtext;
+    color: @subtle;
 }
 
 .notification-row {
-  margin: 4px 0;
+    margin: 4px 0;
 }
 
 .notification {
-  background: @surface0;
-  border-radius: 10px;
-  border: 1px solid @surface1;
-  padding: 8px;
+    background: @surface;
+    border-radius: 10px;
+    border: 1px solid @overlay;
+    padding: 8px;
 }
 
 .notification-default-action {
-  border-radius: 10px;
-  color: @text;
+    border-radius: 10px;
+    color: @text;
 }
 
 .notification-default-action:hover {
-  background: @surface1;
+    background: @overlay;
 }
 
 .notification-summary {
-  font-weight: bold;
-  color: @text;
+    font-weight: bold;
+    color: @text;
 }
 
 .notification-body {
-  color: @subtext;
+    color: @subtle;
 }
 
 .notification-action {
-  background: @surface1;
-  border-radius: 6px;
-  color: @blue;
-  margin: 2px;
+    background: @overlay;
+    border-radius: 6px;
+    color: @rose;
+    margin: 2px;
 }
 
 .notification-action:hover {
-  background: @lavender;
-  color: @base;
+    background: @rose;
+    color: @base;
 }
 
 .close-button {
-  background: transparent;
-  color: @overlay0;
-  border-radius: 50%;
+    background: transparent;
+    color: @muted;
+    border-radius: 50%;
 }
 
 .close-button:hover {
-  background: @red;
-  color: @base;
+    background: @love;
+    color: @base;
 }
