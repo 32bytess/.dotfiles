@@ -2,20 +2,18 @@
     "layer": "top",
     "position": "top",
     "height": 40,
-    "margin-top": 0,
-    "margin-bottom": 0,
-    "margin-left": 0,
-    "margin-right": 0,
     "spacing": 0,
+    "margin-left": 4,
+    "margin-right": 4,
 
-    "modules-left": ["sway/workspaces"],
-    "modules-center": ["sway/window"],
+    "modules-left": ["sway/workspaces","sway/window"],
+    "modules-center": ["clock"],
     "modules-right": [
+        "tray",
+        "group/stats",
         "pulseaudio",
         "bluetooth",
         "network",
-        "battery",
-        "clock",
         "custom/notification"
     ],
 
@@ -30,28 +28,39 @@
         "format": "{}"
     },
 
-    "clock": {
-        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%a %d %b  %H:%M}"
+    "group/stats": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 300,
+            "transition-left-to-right": false
+        },
+        "modules": ["custom/expand", "battery", "memory", "cpu"]
+    },
+
+    "custom/expand": {
+        "format": "\uf141",
+        "tooltip": false
     },
 
     "cpu": {
         "interval": 5,
-        "format": "  {usage}%",
+        "format": "\uf2db  {usage}%",
+        "states": { "warning": 70, "critical": 90 },
         "tooltip": false
     },
 
     "memory": {
         "interval": 5,
-        "format": "  {percentage}%",
-        "tooltip-format": "{used:0.1f} / {total:0.1f} GiB"
+        "format": "\uf538  {percentage}%",
+        "tooltip-format": "{used:0.1f} / {total:0.1f} GiB",
+        "states": { "warning": 70, "critical": 90 }
     },
 
     "pulseaudio": {
         "format": "{icon}  {volume}%",
-        "format-muted": "  muted",
+        "format-muted": "\uf6a9  muted",
         "format-icons": {
-            "default": ["", "", ""]
+            "default": ["\uf026", "\uf027", "\uf028"]
         },
         "on-click": "pavucontrol",
         "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
@@ -59,9 +68,9 @@
     },
 
     "bluetooth": {
-        "format": "  {status}",
-        "format-connected": "  {device_alias}",
-        "format-connected-battery": "  {device_alias} {device_battery_percentage}%",
+        "format": "\uf294  {status}",
+        "format-connected": "\uf294  {device_alias}",
+        "format-connected-battery": "\uf294  {device_alias} {device_battery_percentage}%",
         "tooltip-format": "{controller_alias}\n{num_connections} connected",
         "tooltip-format-connected": "{controller_alias}\n{num_connections} connected\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}  {device_address}",
@@ -70,33 +79,44 @@
     },
 
     "network": {
-        "format-wifi": "  {essid} {signalStrength}%",
-        "format-ethernet": "  {ifname}",
-        "format-disconnected": "  disconnected",
+        "format-wifi": "\uf1eb  {essid} {signalStrength}%",
+        "format-ethernet": "\uf796  {ifname}",
+        "format-disconnected": "\uf071  disconnected",
         "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "networkmanager-editor"
+        "on-click": "nm-connection-editor"
     },
 
     "battery": {
         "states": { "warning": 30, "critical": 15 },
         "format": "{icon}  {capacity}%",
-        "format-charging": "  {capacity}%",
-        "format-plugged": "  {capacity}%",
-        "format-icons": ["", "", "", "", ""]
+        "format-charging": "\uf0e7  {capacity}%",
+        "format-plugged": "\uf1e6  {capacity}%",
+        "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"],
+        "tooltip-format": "{timeTo}, {power:.1f}W"
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 8
+    },
+
+    "clock": {
+        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%a %d %b  %H:%M}"
     },
 
     "custom/notification": {
         "tooltip": false,
         "format": "{icon}",
         "format-icons": {
-            "notification": "",
-            "none": "",
-            "dnd-notification": "",
-            "dnd-none": "",
-            "inhibited-notification": "",
-            "inhibited-none": "",
-            "dnd-inhibited-notification": "",
-            "dnd-inhibited-none": ""
+            "notification": "\uf0f3",
+            "none": "\uf0f3",
+            "dnd-notification": "\uf1f6",
+            "dnd-none": "\uf1f6",
+            "inhibited-notification": "\uf0f3",
+            "inhibited-none": "\uf0f3",
+            "dnd-inhibited-notification": "\uf1f6",
+            "dnd-inhibited-none": "\uf1f6"
         },
         "return-type": "json",
         "exec-if": "which swaync-client",
@@ -104,5 +124,5 @@
         "on-click": "swaync-client -t -sw",
         "on-click-right": "swaync-client -d -sw",
         "escape": true
-    },
+    }
 }

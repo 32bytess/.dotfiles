@@ -6,7 +6,9 @@
 @define-color subtle    #908caa;
 @define-color text      #e0def4;
 @define-color love      #eb6f92;
+@define-color gold      #f6c177;
 @define-color rose      #ebbcba;
+@define-color foam      #9ccfd8;
 
 * {
     font-family: "Fira Code", "Font Awesome 6 Free Solid", "Font Awesome 6 Brands Regular", monospace;
@@ -20,6 +22,9 @@ window#waybar {
     background: rgba(0, 0, 0, 0.85);
     color: @text;
     border-radius: 0 0 10px 10px;
+    border-left: 2px solid @rose;
+    border-right: 2px solid @rose;
+    border-bottom: 2px solid @rose;
 }
 
 /* Left */
@@ -36,17 +41,11 @@ window#waybar {
     transition: all 0.2s ease;
 }
 
-#workspaces button.focused {
-    color: @rose;
-}
+#workspaces button.focused { color: @rose; }
+#workspaces button.urgent  { color: @love; }
+#workspaces button:hover   { color: @text; }
 
-#workspaces button.urgent {
-    color: @love;
-}
-
-#workspaces button:hover {
-    color: @text;
-}
+/* Center */
 
 #window {
     margin: 0 4px;
@@ -54,16 +53,7 @@ window#waybar {
     color: @rose;
 }
 
-/* Center */
-
-#clock {
-    margin: 0;
-    padding: 0 20px;
-    color: @rose;
-    font-weight: bold;
-}
-
-/* Right */
+/* Right — shared layout */
 
 #cpu,
 #memory,
@@ -71,32 +61,58 @@ window#waybar {
 #bluetooth,
 #network,
 #battery,
-#tray {
-    margin: 0 2px;
-    padding: 0 14px;
-    color: @rose;
-}
-
-#pulseaudio.muted     { color: @muted; }
-#bluetooth.off        { color: @muted; }
-#network.disconnected { color: @love; }
-
-#battery.warning { color: @love; }
-#battery.critical {
-    color: @love;
-    animation: blink 1s steps(1) infinite;
-}
-
-@keyframes blink {
-    to { background: @love; color: @base; }
-}
-
+#tray,
+#clock,
 #custom-notification {
     margin: 0 2px;
     padding: 0 14px;
     color: @rose;
 }
 
-#custom-notification.dnd {
-    color: @muted;
+/* System drawer toggle */
+#custom-expand {
+    padding: 0 14px;
+    color: @subtle;
+    transition: color 0.2s ease;
 }
+
+#custom-expand:hover {
+    color: @rose;
+}
+
+/* CPU */
+#cpu.warning  { color: @gold; }
+#cpu.critical { color: @love; animation: blink 1s steps(1) infinite; }
+
+/* Memory */
+#memory.warning  { color: @gold; }
+#memory.critical { color: @love; }
+
+/* Pulseaudio */
+#pulseaudio.muted { color: @muted; }
+
+/* Bluetooth */
+#bluetooth.off        { color: @muted; }
+#bluetooth.on         { color: @subtle; }
+#bluetooth.connected  { color: @rose; }
+
+/* Network */
+#network.ethernet     { color: @rose; }
+#network.wifi         { color: @rose; }
+#network.disconnected { color: @love; }
+
+/* Battery */
+#battery.warning  { color: @gold; }
+#battery.critical {
+    color: @love;
+    animation: blink 1s steps(1) infinite;
+}
+#battery.charging { color: @foam; }
+#battery.plugged  { color: @subtle; }
+
+@keyframes blink {
+    to { background: @love; color: @base; }
+}
+
+/* Notifications */
+#custom-notification.dnd { color: @muted; }
