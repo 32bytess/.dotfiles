@@ -23,6 +23,19 @@ DNF_PACKAGES=(
   tmux
   kitty
   fira-code-fonts
+  swayfx
+  waybar
+  swaync
+  wofi
+  grim
+  slurp
+  wl-clipboard
+  brightnessctl
+  playerctl
+  blueman
+  kanshi
+  pavucontrol
+  network-manager-applet
 )
 
 install_dnf_packages() {
@@ -84,6 +97,8 @@ STOW_PACKAGES=(
   kitty
   code
   obsidian
+  sway
+  waybar
 )
 
 stow_dotfiles() {
