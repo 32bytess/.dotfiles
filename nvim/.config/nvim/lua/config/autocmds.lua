@@ -7,9 +7,8 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
--- Open image files with xdg-open
 vim.api.nvim_create_autocmd("BufReadCmd", {
-  pattern = { "*.jpg", "*.jpeg", "*.png", "*.gif", "*.webp", "*.svg" },
+  pattern = { "*.jpg", "*.jpeg", "*.png", "*.gif", "*.webp", "*.svg", "*.pdf" },
   callback = function(ev)
     vim.fn.jobstart({ "xdg-open", ev.file }, { detach = true })
     vim.schedule(function()
