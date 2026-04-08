@@ -4,6 +4,7 @@ return {
   opts = {
     notifier = { enabled = false },
     picker = {
+      enabled = true,
       sources = {
         explorer = {
           hidden = true,
