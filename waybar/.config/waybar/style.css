@@ -69,6 +69,12 @@ window#waybar {
     color: @rose;
 }
 
+/* Separator */
+#custom-separator {
+    color: @muted;
+    padding: 0 4px;
+}
+
 /* System drawer toggle */
 #custom-expand {
     padding: 0 14px;

@@ -6,14 +6,18 @@
     "margin-left": 4,
     "margin-right": 4,
 
-    "modules-left": ["sway/workspaces","sway/window"],
+    "modules-left": ["sway/workspaces",
+    "custom/separator",
+    "sway/window"],
     "modules-center": ["clock"],
     "modules-right": [
         "tray",
+        "custom/separator",
         "group/stats",
         "pulseaudio",
         "bluetooth",
         "network",
+        "custom/separator",
         "custom/notification"
     ],
 
@@ -35,6 +39,11 @@
             "transition-left-to-right": false
         },
         "modules": ["custom/expand", "battery", "memory", "cpu"]
+    },
+
+    "custom/separator": {
+        "format": "|",
+        "tooltip": false
     },
 
     "custom/expand": {
