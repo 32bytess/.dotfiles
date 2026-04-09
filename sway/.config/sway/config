@@ -12,7 +12,8 @@ set $up k
 set $right l
 set $term kitty
 set $menu wofi --show drun
-set $wallpaper ~/dotfiles/wallpapers/blossom-4k-hd-wallpapers.jpg
+set $wallpaper ~/dotfiles/wallpapers/kisara-tendo.jpg
+set $wallpaper2 ~/dotfiles/wallpapers/portrait-halloween-scene-illustration-anime-style.jpg
 
 include config.d/*
 include /etc/sway/config.d/*

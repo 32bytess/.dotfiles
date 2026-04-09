@@ -1,14 +1,4 @@
-/* Rosé Pine */
-@define-color base      #191724;
-@define-color surface   #1f1d2e;
-@define-color overlay   #26233a;
-@define-color muted     #6e6a86;
-@define-color subtle    #908caa;
-@define-color text      #e0def4;
-@define-color love      #eb6f92;
-@define-color gold      #f6c177;
-@define-color rose      #ebbcba;
-@define-color foam      #9ccfd8;
+@import "colors.css";
 
 * {
     font-family: "Fira Code", monospace;
