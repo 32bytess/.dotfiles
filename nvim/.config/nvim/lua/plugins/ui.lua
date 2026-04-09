@@ -77,6 +77,13 @@ return {
     name = "catppuccin",
     priority = 1000,
   },
+  {
+    "folke/tokyonight.nvim",
+    priority = 1000,
+    opts = {
+      transparent = true,
+    },
+  },
 
   {
     "LazyVim/LazyVim",

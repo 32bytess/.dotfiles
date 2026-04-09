@@ -1,4 +1,3 @@
--- override snacks to show hide .gitignore files and .files
 return {
   "folke/snacks.nvim",
   opts = {
@@ -9,8 +8,19 @@ return {
         explorer = {
           hidden = true,
           ignored = false,
+          layout = { preset = "default" },
+          jump = { close = true },
         },
       },
+    },
+  },
+  keys = {
+    {
+      "<leader>e",
+      function()
+        Snacks.picker.explorer()
+      end,
+      desc = "Explorer",
     },
   },
 }
