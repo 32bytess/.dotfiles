@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+THEMES_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/sway/themes"
+STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/sway-theme"
+current="$(cat "$STATE_FILE" 2>/dev/null)"
+
+chosen=$(
+  for f in "$THEMES_DIR"/*; do
+    name="$(basename "$f")"
+    [[ "$name" == "$current" ]] && echo "* $name" || echo "  $name"
+  done | wofi --show dmenu --prompt "Theme" --width 300 --height 200 --cache-file /dev/null
+)
+
+# strip leading marker and spaces
+chosen="${chosen#\* }"
+chosen="${chosen#  }"
+
+[[ -n "$chosen" ]] && ~/.local/bin/set-theme "$chosen"
