@@ -48,9 +48,7 @@ swaymsg "client.urgent           $RED     $BASE $RED   $RED     $RED"
 
 # --- Waybar ---
 echo "$COLORS_CSS" >"${XDG_CONFIG_HOME:-$HOME/.config}/waybar/colors.css"
-if pkill -SIGUSR2 waybar 2>/dev/null; then
-  sleep 0.2 && pkill -SIGUSR1 waybar 2>/dev/null # reload config, keep visibility state
-fi
+pkill -SIGUSR2 waybar 2>/dev/null || true
 
 # --- Swaync ---
 echo "$COLORS_CSS" >"${XDG_CONFIG_HOME:-$HOME/.config}/swaync/colors.css"

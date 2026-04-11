@@ -16,4 +16,4 @@ set $wallpaper ~/dotfiles/wallpapers/kisara-tendo.jpg
 set $wallpaper2 ~/dotfiles/wallpapers/portrait-halloween-scene-illustration-anime-style.jpg
 
 include config.d/*
-include /etc/sway/config.d/*
+include /etc/sway/config.d/
