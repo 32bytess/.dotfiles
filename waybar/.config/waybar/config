@@ -4,8 +4,6 @@
     "position": "top",
     "height": 40,
     "spacing": 0,
-    "margin-left": 4,
-    "margin-right": 4,
 
     "modules-left": ["sway/workspaces",
     "custom/separator",

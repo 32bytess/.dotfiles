@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+WALLPAPERS_DIR="$HOME/dotfiles/wallpapers"
+STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/sway-wallpaper"
+current="$(cat "$STATE_FILE" 2>/dev/null)"
+
+chosen=$(
+  for f in "$WALLPAPERS_DIR"/*; do
+    [[ -f "$f" ]] || continue
+    name="$(basename "$f")"
+    [[ "$name" == "$current" ]] && echo "* $name" || echo "  $name"
+  done | wofi --show dmenu --prompt "Wallpaper" --width 400 --height 300 --cache-file /dev/null
+)
+
+chosen="${chosen#\* }"
+chosen="${chosen#  }"
+
+[[ -z "$chosen" ]] && exit 0
+
+swaymsg output "*" bg "$WALLPAPERS_DIR/$chosen" fill
+echo "$chosen" > "$STATE_FILE"
