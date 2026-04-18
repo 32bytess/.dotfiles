@@ -16,8 +16,5 @@ return {
     opts.indent.enable = true
     opts.indent.disable = opts.indent.disable or {}
     table.insert(opts.indent.disable, "json")
-    opts.matchup = {
-      enable = true,
-    }
   end,
 }

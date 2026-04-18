@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 WALLPAPERS_DIR="$HOME/dotfiles/wallpapers"
 STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/sway-wallpaper"
 current="$(cat "$STATE_FILE" 2>/dev/null)"
@@ -9,7 +10,7 @@ chosen=$(
     name="$(basename "$f")"
     [[ "$name" == "$current" ]] && echo "* $name" || echo "  $name"
   done | wofi --show dmenu --prompt "Wallpaper" --width 400 --height 300 --cache-file /dev/null
-)
+) || true
 
 chosen="${chosen#\* }"
 chosen="${chosen#  }"

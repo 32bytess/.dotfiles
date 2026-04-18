@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 # Usage: set-theme [<name>]   — no args lists available themes
 
 THEMES_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/sway/themes"
@@ -40,7 +41,6 @@ COLORS_CSS="/* $1 */
 @define-color rose    $ACCENT;
 @define-color foam    $CYAN;"
 
-# --- Sway window colors ---
 swaymsg "client.focused          $ACCENT  $BASE $TEXT $ACCENT  $ACCENT"
 swaymsg "client.unfocused        $OVERLAY $BASE $MUTED $OVERLAY $OVERLAY"
 swaymsg "client.focused_inactive $OVERLAY $BASE $MUTED $OVERLAY $OVERLAY"
@@ -63,11 +63,10 @@ WOFI_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/wofi"
 
 # --- Kitty ---
 KITTY_THEMES="${XDG_CONFIG_HOME:-$HOME/.config}/kitty/themes"
-if [[ -f "$KITTY_THEMES/$1.conf" ]]; then
+if [[ -d "$KITTY_THEMES" && -f "$KITTY_THEMES/$1.conf" ]]; then
   ln -sf "$KITTY_THEMES/$1.conf" "$KITTY_THEMES/current.conf"
   pkill -SIGUSR1 kitty 2>/dev/null || true
 fi
-
 # --- Persist ---
 mkdir -p "$(dirname "$STATE_FILE")"
 echo "$1" >"$STATE_FILE"

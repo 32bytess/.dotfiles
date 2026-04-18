@@ -1,12 +1,12 @@
-#!/bin/sh
+#!/usr/bin/env bash
+set -euo pipefail
 tree=$(swaymsg -t get_tree)
 
-# Check if the focused window is a scratchpad window
 focused_is_scratch=$(echo "$tree" | jq -e '
   .. | objects | select(.focused? == true) | select(.scratchpad_state? != null) | select(.scratchpad_state != "none") | .id
-' 2>/dev/null)
+' 2>/dev/null || true)
 
-if [ -n "$focused_is_scratch" ]; then
+if [[ -n "$focused_is_scratch" ]]; then
     swaymsg 'fullscreen disable'
     swaymsg 'move scratchpad'
 else

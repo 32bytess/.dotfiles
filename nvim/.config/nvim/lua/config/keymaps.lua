@@ -3,10 +3,9 @@
 -- Add any additional keymaps here
 
 local map = vim.keymap.set
-vim.opt.digraph = false
 --  Split
-map("n", "<leader>v", "<cmd>split<cr>", { desc = "Split Right" })
-map("n", "<leader>h", "<cmd>vsplit<cr>", { desc = "Split Down" })
+map("n", "<leader>v", "<cmd>split<cr>", { desc = "Split Below" })
+map("n", "<leader>h", "<cmd>vsplit<cr>", { desc = "Split Right" })
 -- Save
 map("n", "<leader>fs", "<cmd>w<cr>", { desc = "Save File" })
 map("n", "<leader>fS", "<cmd>wa<cr>", { desc = "Save All Files" })
