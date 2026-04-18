@@ -52,43 +52,94 @@ return {
     "akinsho/bufferline.nvim",
     enabled = false,
   },
-  -- colorScheme
-  {
-    "Mofiqul/dracula.nvim",
-  },
+
+  -- ── Colorschemes ─────────────────────────────────────────────────────────
+
+  { "Mofiqul/dracula.nvim", lazy = true, opts = { transparent_bg = true } },
 
   {
     "rose-pine/neovim",
     name = "rose-pine",
+    lazy = true,
     opts = {
       disable_background = true,
-
       styles = {
         background = "transparent",
         sidebars = "transparent",
         floats = "transparent",
       },
     },
-    priority = 1000,
   },
-  --- cappuccino
+
   {
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
-  },
-  {
-    "folke/tokyonight.nvim",
-    priority = 1000,
     opts = {
-      transparent = true,
+      flavour = "mocha",
+      transparent_background = true,
     },
   },
+
+  { "folke/tokyonight.nvim", lazy = true, opts = { transparent = true } },
+
+  { "rebelot/kanagawa.nvim", lazy = true, opts = { transparent = true } },
+
+  {
+    "ellisonleao/gruvbox.nvim",
+    lazy = true,
+    opts = { contrast = "hard", transparent_mode = true },
+  },
+
+  {
+    "shaunsingh/nord.nvim",
+    lazy = true,
+    init = function()
+      vim.g.nord_disable_background = true
+    end,
+  },
+
+  {
+    "sainnhe/everforest",
+    lazy = true,
+    init = function()
+      vim.g.everforest_background = "medium"
+      vim.g.everforest_transparent_background = 1
+    end,
+  },
+
+  { "navarasu/onedark.nvim", lazy = true, opts = { transparent = true } },
+
+  {
+    "sainnhe/gruvbox-material",
+    lazy = true,
+    init = function()
+      vim.g.gruvbox_material_background = "hard"
+      vim.g.gruvbox_material_transparent_background = 1
+    end,
+  },
+
+  {
+    "EdenEast/nightfox.nvim",
+    lazy = true,
+    opts = { options = { transparent = true } },
+  },
+
+  {
+    "bluz71/vim-moonfly-colors",
+    name = "moonfly",
+    lazy = true,
+    init = function()
+      vim.g.moonflyTransparent = true
+    end,
+  },
+
+  -- ── LazyVim: dynamic colorscheme from sway state file ────────────────────
 
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin",
+      colorscheme = "moonfly",
     },
   },
 }

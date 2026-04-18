@@ -28,7 +28,8 @@
 
     "sway/window": {
         "max-length": 50,
-        "format": "{}"
+        "format": "{}",
+        "tooltip": true
     },
 
     "group/stats": {
@@ -54,7 +55,7 @@
         "interval": 5,
         "format": "\uf2db  {usage}%",
         "states": { "warning": 70, "critical": 90 },
-        "tooltip": false
+        "tooltip": true
     },
 
     "memory": {
@@ -110,7 +111,8 @@
 
     "clock": {
         "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%a %d %b  %H:%M}"
+        "format": "{:%a %d %b  %H:%M}",
+        "on-click": "gnome-calendar"
     },
 
     "custom/notification": {
@@ -127,7 +129,7 @@
             "dnd-inhibited-none": "\uf1f6"
         },
         "return-type": "json",
-        "exec-if": "which swaync-client",
+        "exec-if": "command -v swaync-client",
         "exec": "swaync-client -swb",
         "on-click": "swaync-client -t -sw",
         "on-click-right": "swaync-client -d -sw",

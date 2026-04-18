@@ -12,8 +12,9 @@ set $up k
 set $right l
 set $term kitty
 set $menu wofi --show drun
-set $wallpaper ~/dotfiles/wallpapers/kisara-tendo.jpg
+set $wallpaper ~/dotfiles/wallpapers/moon-landscape.jpg
 set $wallpaper2 ~/dotfiles/wallpapers/portrait-halloween-scene-illustration-anime-style.jpg
+set $opacity 0.92
 
 include config.d/*
 include /etc/sway/config.d/

@@ -70,8 +70,8 @@ install_flatpaks() {
 
   if ! command -v flatpak &>/dev/null; then
     sudo dnf install -y flatpak
-    sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
   fi
+  sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
   local to_install=()
   for app in "${FLATPAK_APPS[@]}"; do
@@ -105,6 +105,9 @@ stow_dotfiles() {
   info "Stowing dotfiles from $DOTFILES_DIR..."
   cd "$DOTFILES_DIR"
 
+  # Remove stale symlinks from previously-stowed packages that no longer exist
+  stow -D kickstart 2>/dev/null || true
+
   for pkg in "${STOW_PACKAGES[@]}"; do
     if [[ -d "$pkg" ]]; then
       stow --restow "$pkg"
@@ -118,9 +121,9 @@ stow_dotfiles() {
 # Post-install setup
 
 setup_zsh_default() {
-  if [[ "$SHELL" != "$(which zsh)" ]]; then
+  if [[ "$SHELL" != "$(command -v zsh)" ]]; then
     info "Setting zsh as default shell..."
-    chsh -s "$(which zsh)"
+    chsh -s "$(command -v zsh)"
     success "Default shell set to zsh"
   else
     success "Zsh is already the default shell."

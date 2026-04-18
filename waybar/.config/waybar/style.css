@@ -9,16 +9,13 @@
 }
 
 window#waybar {
-    background: rgba(0, 0, 0, 0.85);
+    background: @base;
     color: @text;
-    /* border-radius: 10px; */
-    /* border: 2px solid @rose; */
 }
 
 /* Left */
 
 #workspaces {
-    /* margin: 4px; */
     padding: 0 6px;
 }
 
@@ -86,13 +83,11 @@ window#waybar {
 #pulseaudio.muted { color: @muted; }
 
 /* Bluetooth */
-#bluetooth.off        { color: @muted; }
-#bluetooth.on         { color: @subtle; }
-#bluetooth.connected  { color: @rose; }
+#bluetooth.disabled     { color: @muted; }
+#bluetooth.disconnected { color: @subtle; }
+#bluetooth.connected    { color: @rose; }
 
 /* Network */
-#network.ethernet     { color: @rose; }
-#network.wifi         { color: @rose; }
 #network.disconnected { color: @love; }
 
 /* Battery */
@@ -105,7 +100,22 @@ window#waybar {
 #battery.plugged  { color: @subtle; }
 
 @keyframes blink {
-    to { background: @love; color: @base; }
+    from { background: transparent; color: @love; }
+    to   { background: @love; color: @base; }
+}
+
+/* Hover feedback for clickable right-side modules */
+#pulseaudio:hover,
+#bluetooth:hover,
+#network:hover,
+#clock:hover,
+#battery:hover {
+    color: @text;
+}
+
+/* Tray: tighter padding for small icons */
+#tray {
+    padding: 0 8px;
 }
 
 /* Notifications */
