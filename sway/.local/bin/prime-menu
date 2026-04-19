@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
+pkill wofi && exit 0
 exec "$(dirname "$0")/prime-run" wofi --show drun --prompt "PRIME: "

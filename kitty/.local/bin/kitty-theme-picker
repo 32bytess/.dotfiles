@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 # Pick a kitty theme via wofi and apply it live
 
+pgrep -x wofi > /dev/null && { pkill wofi; exit 0; }
+
 THEMES_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/kitty/themes"
 CURRENT="$THEMES_DIR/current.conf"
 
 chosen=$(find "$THEMES_DIR" -maxdepth 1 -name '*.conf' ! -name 'current.conf' \
   -exec basename {} .conf \; | sort \
-  | wofi --dmenu --prompt "Kitty theme" --width 300 --height 200)
+  | wofi --dmenu --prompt "Kitty theme")
 
 [[ -z "$chosen" ]] && exit 0
 

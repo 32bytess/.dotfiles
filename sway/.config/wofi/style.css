@@ -1,14 +1,14 @@
-/* tokyonight */
-@define-color base    #1a1b26;
-@define-color surface #16161e;
-@define-color overlay #414868;
-@define-color muted   #565f89;
-@define-color subtle  #9aa5ce;
-@define-color text    #c0caf5;
-@define-color love    #f7768e;
-@define-color gold    #e0af68;
-@define-color rose    #7aa2f7;
-@define-color foam    #7dcfff;
+/* moonfly */
+@define-color base    #080808;
+@define-color surface #1c1c1c;
+@define-color overlay #2c2c2c;
+@define-color muted   #4e4e4e;
+@define-color subtle  #9e9d9d;
+@define-color text    #bdbdbd;
+@define-color love    #ff5454;
+@define-color gold    #e3c78a;
+@define-color rose    #80a0ff;
+@define-color foam    #79dac8;
 
 * {
     font-family: "Fira Code", monospace;
