@@ -22,9 +22,12 @@ map("i", "<A-o>", "<Esc>o", { desc = "New line below" })
 
 -- Adb wireless pairign via qr code
 map("n", "<leader>ap", function()
-  LazyVim.terminal({ "adb-wifi" }, {
-    desc = "ADB Wireless Pair (QR)",
-    esc_esc = false,
-    ctrl_hjkl = false,
+  Snacks.terminal({ "adb-wifi" }, {
+    start_insert = false,
+    win = {
+      style = "float",
+      width = 0.50,
+      height = 0.50,
+    },
   })
 end, { desc = "ADB Wireless Pair (QR)" })
