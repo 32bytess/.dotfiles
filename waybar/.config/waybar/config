@@ -92,7 +92,8 @@
         "format-ethernet": "\uf796  {ifname}",
         "format-disconnected": "\uf071  disconnected",
         "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "nm-connection-editor"
+        "on-click": "networkmanager_dmenu",
+        "on-click-right": "nmcli radio wifi $(nmcli radio wifi | grep -q enabled && echo off || echo on)"
     },
 
     "battery": {

@@ -11,7 +11,7 @@ set $down j
 set $up k
 set $right l
 set $term kitty
-set $menu wofi --show drun
+set $menu pkill wofi || wofi --show drun
 set $wallpaper ~/dotfiles/wallpapers/moon-landscape.jpg
 set $wallpaper2 ~/dotfiles/wallpapers/portrait-halloween-scene-illustration-anime-style.jpg
 set $opacity 0.92
