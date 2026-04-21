@@ -1,0 +1,5 @@
+[manager]
+prepend_keymap = [
+  { on = ["<C-s>"], run = "shell '$SHELL' --block", desc = "Open shell here" },
+  { on = ["."],     run = "hidden toggle",           desc = "Toggle hidden files" },
+]
