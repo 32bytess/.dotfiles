@@ -40,7 +40,7 @@ return {
           local modified = vim.bo[props.buf].modified
           return {
             ft_icon and { " ", ft_icon, " ", guibg = "none", guifg = ft_color } or "",
-            { " " .. filename .. " ", guibg = "none" },
+            { " " .. filename .. "", guibg = "none" },
             { modified and " ● " or " ", guibg = "none", guifg = "#d19a66" },
           }
         end,
@@ -134,12 +134,20 @@ return {
     end,
   },
 
-  -- ── LazyVim: dynamic colorscheme from sway state file ────────────────────
+  -- ── LazyVim: colorscheme from central themes state ───────────────────────
 
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "moonfly",
+      colorscheme = function()
+        local path = (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config")) .. "/themes/current.nvim"
+        local f = io.open(path, "r")
+        local name = f and f:read("*l") or "moonfly"
+        if f then
+          f:close()
+        end
+        vim.cmd.colorscheme(name)
+      end,
     },
   },
 }

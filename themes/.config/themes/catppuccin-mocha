@@ -1,3 +1,4 @@
+NVIM_THEME="catppuccin"
 BASE="#1e1e2e"
 SURFACE="#181825"
 OVERLAY="#313244"

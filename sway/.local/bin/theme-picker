@@ -2,13 +2,14 @@
 set -euo pipefail
 pgrep -x wofi > /dev/null && { pkill wofi; exit 0; }
 
-THEMES_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/sway/themes"
-STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/sway-theme"
+THEMES_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/themes"
+STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/current-theme"
 current="$(cat "$STATE_FILE" 2>/dev/null)"
 
 chosen=$(
   for f in "$THEMES_DIR"/*; do
     name="$(basename "$f")"
+    [[ "$name" == current.* ]] && continue
     [[ "$name" == "$current" ]] && echo "* $name" || echo "  $name"
   done | wofi --show dmenu --prompt "Theme" --cache-file /dev/null
 ) || true
