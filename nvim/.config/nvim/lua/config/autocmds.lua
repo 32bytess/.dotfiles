@@ -1,3 +1,11 @@
+local lsp = require("plugins.lsp")._funcs
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(ev)
+		lsp.on_attach(ev.buf)
+	end,
+})
+
 vim.api.nvim_create_autocmd("BufReadCmd", {
 	pattern = { "*.jpg", "*.jpeg", "*.png", "*.gif", "*.webp", "*.svg", "*.pdf" },
 	callback = function(ev)

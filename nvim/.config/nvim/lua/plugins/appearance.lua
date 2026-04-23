@@ -57,11 +57,6 @@ vim.api.nvim_create_autocmd("FocusGained", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank({ higroup = "YankHighlight", timeout = 150 })
-	end,
-})
 
 return {
 	{
