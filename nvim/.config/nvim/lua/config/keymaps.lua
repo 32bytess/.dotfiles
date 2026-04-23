@@ -1,6 +1,12 @@
 local oil = require("plugins.oil")._funcs
 local claude = require("plugins.claude-code")._funcs
 
+-- window navigation
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+
 -- telescope
 vim.keymap.set("n", "<leader><leader>", "<cmd>Telescope find_files<cr>", { desc = "Find File" })
 vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { desc = "Grep" })
@@ -24,6 +30,15 @@ vim.keymap.set("n", "<leader>ol", "<cmd>ObsidianLinks<cr>", { desc = "Links in n
 vim.keymap.set("n", "<leader>ot", "<cmd>ObsidianTags<cr>", { desc = "Search by tag" })
 vim.keymap.set("n", "<leader>or", "<cmd>ObsidianRename<cr>", { desc = "Rename note" })
 vim.keymap.set("n", "<leader>op", "<cmd>ObsidianPasteImg<cr>", { desc = "Paste image" })
+
+-- yanky
+vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", { desc = "Put after" })
+vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", { desc = "Put before" })
+vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)", { desc = "GPut after" })
+vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)", { desc = "GPut before" })
+vim.keymap.set("n", "]p", "<Plug>(YankyCycleForward)", { desc = "Cycle yank forward" })
+vim.keymap.set("n", "[p", "<Plug>(YankyCycleBackward)", { desc = "Cycle yank backward" })
+vim.keymap.set("n", "<leader>fy", "<cmd>Telescope yank_history<cr>", { desc = "Yank history" })
 
 -- close float windows with q
 vim.keymap.set("n", "q", function()
