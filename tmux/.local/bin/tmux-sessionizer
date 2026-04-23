@@ -6,8 +6,10 @@ else
   selected=$({
     echo ~/
     find ~/projects -mindepth 1 -maxdepth 2 -type d 2>/dev/null
+    find ~/dotfiles -mindepth 3 -maxdepth 3 -type d 2>/dev/null
     echo ~/dotfiles
-    find ~/obsidian/main/ -mindepth 1 -maxdepth 2 -type d 2>/dev/null
+    echo ~/obsidian/main/projects/thesis
+    echo ~/obsidian/main
   } | fzf)
 fi
 

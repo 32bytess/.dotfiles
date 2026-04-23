@@ -1,6 +1,6 @@
--- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
+vim.lsp.enable("dartls")
 
-vim.g.root_spec = { ".git", "cwd" }
-vim.opt.digraph = false
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.autocomplete = true
+vim.g.lazyvim_check_order = false

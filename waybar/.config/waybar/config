@@ -16,6 +16,7 @@
         "pulseaudio",
         "bluetooth",
         "network",
+        "battery",
         "custom/separator",
         "custom/notification"
     ],
@@ -38,7 +39,7 @@
             "transition-duration": 300,
             "transition-left-to-right": false
         },
-        "modules": ["custom/expand", "battery", "memory", "cpu"]
+        "modules": ["custom/expand",  "memory", "cpu"]
     },
 
     "custom/separator": {
@@ -92,7 +93,7 @@
         "format-ethernet": "\uf796  {ifname}",
         "format-disconnected": "\uf071  disconnected",
         "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "networkmanager_dmenu",
+        "on-click": "wifi-manager",
         "on-click-right": "nmcli radio wifi $(nmcli radio wifi | grep -q enabled && echo off || echo on)"
     },
 

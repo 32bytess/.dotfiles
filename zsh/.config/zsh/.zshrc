@@ -28,6 +28,7 @@ export PATH=$GOROOT/bin:$PATH
 alias vim='nvim'
 alias open='xdg-open'
 alias vi='/usr/bin/vim'
+alias light='light -S'
 
 # vim mode in zsh
 bindkey -v

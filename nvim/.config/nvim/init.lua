@@ -1,16 +1,5 @@
--- bootstrap lazy.nvim, LazyVim and your plugins
+-- lazy.nvim
 require("config.lazy")
-
--- adding syntax highlight to jsonl files ...
-vim.filetype.add({
-  extension = {
-    jsonl = "json",
-  },
-})
-
--- Main window transparency
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-
--- Floating window transparency (VimBeGood, Telescope, etc.)
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+require("config.options")
+require("config.keymaps")
+require("config.autocmds")
