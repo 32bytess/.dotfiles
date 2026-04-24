@@ -49,11 +49,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 		vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = accent, bg = "none" })
 		vim.api.nvim_set_hl(0, "CursorLineNr", { fg = accent, bold = true })
 		vim.api.nvim_set_hl(0, "LineNr", { fg = text })
-		vim.api.nvim_set_hl(
-			0,
-			"YankHighlight",
-			accent and { bg = accent, fg = "#000000", bold = true } or { link = "Visual" }
-		)
 	end,
 })
 
