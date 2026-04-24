@@ -5,10 +5,22 @@ vim.lsp.config("lua_ls", {
 	settings = {
 		Lua = {
 			runtime = { version = "LuaJIT" },
-			workspace = {vim.api.nvim_get_runtime_file("", true)},
-			diagnostics = { globals = { "vim","require" } },
+			workspace = { vim.api.nvim_get_runtime_file("", true) },
+			diagnostics = { globals = { "vim", "require" } },
 		},
 	},
+})
+
+vim.lsp.config("bashls", {
+	cmd = { "bash-language-server", "start" },
+	filetypes = { "bash", "sh" },
+	root_markers = { ".git" },
+})
+
+vim.lsp.config("pylsp", {
+	cmd = { "pylsp" },
+	filetypes = { "python" },
+	root_markers = { ".git" },
 })
 
 vim.lsp.config("*", {
@@ -16,6 +28,8 @@ vim.lsp.config("*", {
 })
 
 vim.lsp.enable("lua_ls")
+vim.lsp.enable("bashls")
+vim.lsp.enable("pylsp")
 
 return {
 	{
@@ -29,9 +43,17 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls","stylua"},
+				ensure_installed = { "lua_ls", "stylua", "bashls", "pylsp" },
 			})
 		end,
+	},
+	-- none lsp (formatters,linters)
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		opts = {
+			ensure_installed = { "shfmt", "black", "flake8", "shellcheck" },
+		},
 	},
 	{
 		"saghen/blink.cmp",

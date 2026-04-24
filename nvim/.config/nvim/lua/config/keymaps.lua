@@ -36,9 +36,19 @@ vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", { desc = "Put after" 
 vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", { desc = "Put before" })
 vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)", { desc = "GPut after" })
 vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)", { desc = "GPut before" })
+
 vim.keymap.set("n", "]p", "<Plug>(YankyCycleForward)", { desc = "Cycle yank forward" })
 vim.keymap.set("n", "[p", "<Plug>(YankyCycleBackward)", { desc = "Cycle yank backward" })
-vim.keymap.set("n", "<leader>fy", "<cmd>Telescope yank_history<cr>", { desc = "Yank history" })
+vim.keymap.set("n", "<leader>pp", "<cmd>Telescope yank_history<cr>", { desc = "Yank history" })
+
+-- diagnostics popup (like K but for errors/warnings)
+vim.keymap.set("n", "<leader>k", vim.diagnostic.open_float, { desc = "Show diagnostic popup" })
+
+-- formatting
+vim.keymap.set({ "n", "v" }, "<leader>gf", vim.lsp.buf.format, { desc = "Format" })
+
+-- clear search highlights
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr><Esc>", { desc = "Clear search highlights" })
 
 -- close float windows with q
 vim.keymap.set("n", "q", function()
@@ -49,4 +59,3 @@ vim.keymap.set("n", "q", function()
 		vim.fn.feedkeys("q", "n")
 	end
 end, { desc = "Close float / q" })
-

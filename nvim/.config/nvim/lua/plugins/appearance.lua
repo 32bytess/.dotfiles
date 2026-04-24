@@ -1,62 +1,70 @@
-local function theme_colors()
-	local themes = (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config")) .. "/themes/"
-	local nf = io.open(themes .. "current.nvim", "r")
-	if not nf then return nil, nil end
-	local name = nf:read("*l")
-	nf:close()
-	if not name then return nil, nil end
-	local tf = io.open(themes .. name, "r")
-	if not tf then return nil, nil end
+local themes_dir = (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config")) .. "/themes/"
+
+local function read_current_theme()
+	local f = io.open(themes_dir .. "current.nvim", "r")
+	if not f then
+		return nil, nil, nil
+	end
+	local name = f:read("*l")
+	f:close()
+	if not name then
+		return nil, nil, nil
+	end
+	local tf = io.open(themes_dir .. name, "r")
+	if not tf then
+		return name, nil, nil
+	end
 	local content = tf:read("*a")
 	tf:close()
-	return content:match('ACCENT="(#%x+)"'), content:match('TEXT="(#%x+)"')
+	return name, content:match('ACCENT="(#%x+)"'), content:match('TEXT="(#%x+)"')
 end
 
 vim.api.nvim_create_autocmd("VimEnter", {
 	once = true,
 	callback = function()
 		vim.schedule(function()
-			local path = (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config")) .. "/themes/current.nvim"
-			local f = io.open(path, "r")
-			local name = f and f:read("*l") or "rose-pine"
-			if f then f:close() end
-			pcall(vim.cmd.colorscheme, name)
+			local name = read_current_theme()
+			pcall(vim.cmd.colorscheme, name or "rose-pine")
 		end)
 	end,
 })
 
 vim.api.nvim_create_autocmd("ColorScheme", {
 	callback = function()
-		local accent, text = theme_colors()
-		vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-		vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-		vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+		local _, accent, text = read_current_theme()
+		local transparent = { bg = "none" }
+		for _, group in ipairs({ "Normal", "NormalNC", "NormalFloat" }) do
+			vim.api.nvim_set_hl(0, group, transparent)
+		end
+		for _, group in ipairs({
+			"TelescopeNormal",
+			"TelescopePromptNormal",
+			"TelescopeResultsNormal",
+			"TelescopePreviewNormal",
+		}) do
+			vim.api.nvim_set_hl(0, group, transparent)
+		end
 		vim.api.nvim_set_hl(0, "FloatBorder", { fg = accent, bg = "none" })
 		vim.api.nvim_set_hl(0, "FloatTitle", { fg = accent, bg = "none" })
 		vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = accent, bg = "none" })
-		vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
-		vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "none" })
-		vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = "none" })
-		vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = "none" })
 		vim.api.nvim_set_hl(0, "CursorLineNr", { fg = accent, bold = true })
 		vim.api.nvim_set_hl(0, "LineNr", { fg = text })
-		vim.api.nvim_set_hl(0, "YankHighlight", accent and { bg = accent, fg = "#000000", bold = true } or { link = "Visual" })
+		vim.api.nvim_set_hl(
+			0,
+			"YankHighlight",
+			accent and { bg = accent, fg = "#000000", bold = true } or { link = "Visual" }
+		)
 	end,
 })
 
 vim.api.nvim_create_autocmd("FocusGained", {
 	callback = function()
-		local path = (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config")) .. "/themes/current.nvim"
-		local f = io.open(path, "r")
-		if not f then return end
-		local name = f:read("*l")
-		f:close()
+		local name = read_current_theme()
 		if name and name ~= vim.g.colors_name then
 			pcall(vim.cmd.colorscheme, name)
 		end
 	end,
 })
-
 
 return {
 	{
@@ -101,7 +109,6 @@ return {
 			})
 		end,
 	},
-
 
 	-- themes
 
@@ -185,7 +192,7 @@ return {
 		end,
 	},
 
-	-- colors 
+	-- colors
 	{
 		"brenoprata10/nvim-highlight-colors",
 		opts = {
