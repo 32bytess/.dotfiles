@@ -1,7 +1,7 @@
 {
-  "blink.cmp": { "branch": "main", "commit": "959bbf79a40403f07d64cfc847b9ab6eaf95c77c" },
+  "blink.cmp": { "branch": "main", "commit": "fd0fe1ad450a407be34d18642784c71d3ee48d19" },
   "blink.compat": { "branch": "main", "commit": "2ed6d9a28b07fa6f3bface818470605f8896408c" },
-  "blink.lib": { "branch": "main", "commit": "4b9a304a1d715c180c8a0d1db7b76a8c6868ed8f" },
+  "blink.lib": { "branch": "main", "commit": "1c9dfb261b8be35f689c6d83dfd3e92b7f59ecf8" },
   "catppuccin": { "branch": "main", "commit": "426dbebe06b5c69fd846ceb17b42e12f890aedf1" },
   "claudecode.nvim": { "branch": "main", "commit": "432121f0f5b9bda041030d1e9e83b7ba3a93dd8f" },
   "cord.nvim": { "branch": "master", "commit": "0be090969e978f7442870ef227e09eff7bf3480d" },
@@ -15,6 +15,8 @@
   "incline.nvim": { "branch": "main", "commit": "8b54c59bcb23366645ae10edca6edfb9d3a0853e" },
   "kanagawa.nvim": { "branch": "master", "commit": "8ad3b4cdcc804b332c32db8f9743667e1bb82b99" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
+  "lualine.nvim": { "branch": "master", "commit": "a905eeebc4e63fdc48b5135d3bf8aea5618fb21c" },
+  "mason-lspconfig.nvim": { "branch": "main", "commit": "0c2823e0418f3d9230ff8b201c976e84de1cb401" },
   "mason.nvim": { "branch": "main", "commit": "12ddd182d9efbdc848b540f16484a583d52da0fb" },
   "moonfly": { "branch": "master", "commit": "ed33cb0e0edfced6e86e782d51f23e67232ad4a9" },
   "nightfox.nvim": { "branch": "main", "commit": "ba47d4b4c5ec308718641ba7402c143836f35aa9" },
