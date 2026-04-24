@@ -17,6 +17,7 @@ return {
           notification_style = "plugin",
         },
         lsp = {
+          on_attach = require("config.lsp_attach").on_attach,
           color = {
             enabled = true,
             background = true,
