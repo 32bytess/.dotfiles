@@ -66,9 +66,8 @@ end
 
 return {
 	"coder/claudecode.nvim",
-	opts = {},
-	_funcs = {
-		toggle_float = toggle_float,
-		send_selection = send_selection,
-	},
+	config = function()
+		vim.keymap.set("n", "<leader>og", toggle_float, { desc = "Toggle Claude Code float" })
+		vim.keymap.set("v", "<leader>oa", send_selection, { desc = "Add Selection to Claude" })
+	end,
 }
