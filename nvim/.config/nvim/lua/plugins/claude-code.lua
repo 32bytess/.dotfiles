@@ -16,7 +16,9 @@ local function open_float(focus)
 		border = "rounded",
 	})
 	if vim.bo[claude_buf].buftype ~= "terminal" then
-		vim.fn.termopen("claude")
+		vim.api.nvim_buf_call(claude_buf, function()
+			vim.fn.termopen("claude")
+		end)
 		vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { buffer = claude_buf, desc = "Exit terminal mode" })
 	end
 end
@@ -33,6 +35,10 @@ local function toggle_float()
 end
 
 local function send_selection()
+	local file = vim.fn.expand("%:p")
+	local start_line = vim.fn.line("'<")
+	local end_line = vim.fn.line("'>")
+
 	local float_open = false
 	for _, win in ipairs(vim.api.nvim_list_wins()) do
 		if claude_buf and vim.api.nvim_win_get_buf(win) == claude_buf then
@@ -43,7 +49,19 @@ local function send_selection()
 	if not float_open then
 		open_float(false)
 	end
-	vim.cmd("ClaudeCodeSend")
+
+	local job_id = vim.b[claude_buf].terminal_job_id
+	if job_id then
+		vim.fn.chansend(job_id, "@" .. file .. ":" .. start_line .. "-" .. end_line .. " ")
+	end
+
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		if claude_buf and vim.api.nvim_win_get_buf(win) == claude_buf then
+			vim.api.nvim_set_current_win(win)
+			vim.cmd("startinsert")
+			break
+		end
+	end
 end
 
 return {
