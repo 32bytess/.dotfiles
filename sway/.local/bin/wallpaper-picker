@@ -11,6 +11,8 @@ swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5
 	swaymsg reload
 	pkill -SIGUSR2 waybar 2>/dev/null || true
 	swaync-client --reload-css 2>/dev/null || true
+	pkill -SIGUSR1 kitty 2>/dev/null || true
+	tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true
 }
 
 mkdir -p "$HOME/.local/state"

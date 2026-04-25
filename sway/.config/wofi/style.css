@@ -9,21 +9,21 @@
 
 window {
     background: #000000;
-    border: 1px solid @rose;
+    border: 1px solid @accent;
     border-radius: 12px;
 }
 
 #input {
     background: #000000;
-    border: 1px solid @overlay;
+    border: 1px solid @muted;
     border-radius: 8px;
-    color: @text;
+    color: @fg;
     padding: 8px 12px;
     margin: 10px;
 }
 
 #input:focus {
-    border-color: @rose;
+    border-color: @accent;
 }
 
 #scroll {
@@ -38,14 +38,14 @@ window {
 }
 
 #entry:selected {
-    background: @overlay;
-    color: @text;
+    background: @muted;
+    color: @fg;
 }
 
 #entry:selected #text {
-    color: @text;
+    color: @fg;
 }
 
 #text {
-    color: @subtle;
+    color: @fg;
 }

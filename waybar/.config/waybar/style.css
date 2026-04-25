@@ -9,8 +9,8 @@
 }
 
 window#waybar {
-    background: @base;
-    color: @text;
+    background: @bg;
+    color: @fg;
 }
 
 /* Left */
@@ -26,16 +26,16 @@ window#waybar {
     transition: all 0.2s ease;
 }
 
-#workspaces button.focused { color: @rose; }
-#workspaces button.urgent  { color: @love; }
-#workspaces button:hover   { color: @text; }
+#workspaces button.focused { color: @accent; }
+#workspaces button.urgent  { color: @error; }
+#workspaces button:hover   { color: @fg; }
 
 /* Center */
 
 #window {
     margin: 0 4px;
     padding: 0 16px;
-    color: @rose;
+    color: @accent;
 }
 
 /* Right — shared layout */
@@ -51,7 +51,7 @@ window#waybar {
 #custom-notification {
     margin: 0 2px;
     padding: 0 14px;
-    color: @rose;
+    color: @accent;
 }
 
 /* Separator */
@@ -63,45 +63,45 @@ window#waybar {
 /* System drawer toggle */
 #custom-expand {
     padding: 0 14px;
-    color: @subtle;
+    color: @fg;
     transition: color 0.2s ease;
 }
 
 #custom-expand:hover {
-    color: @rose;
+    color: @accent;
 }
 
 /* CPU */
-#cpu.warning  { color: @gold; }
-#cpu.critical { color: @love; animation: blink 1s steps(1) infinite; }
+#cpu.warning  { color: @warning; }
+#cpu.critical { color: @error; animation: blink 1s steps(1) infinite; }
 
 /* Memory */
-#memory.warning  { color: @gold; }
-#memory.critical { color: @love; }
+#memory.warning  { color: @warning; }
+#memory.critical { color: @error; }
 
 /* Pulseaudio */
 #pulseaudio.muted { color: @muted; }
 
 /* Bluetooth */
 #bluetooth.disabled     { color: @muted; }
-#bluetooth.disconnected { color: @subtle; }
-#bluetooth.connected    { color: @rose; }
+#bluetooth.disconnected { color: @fg; }
+#bluetooth.connected    { color: @accent; }
 
 /* Network */
-#network.disconnected { color: @love; }
+#network.disconnected { color: @error; }
 
 /* Battery */
-#battery.warning  { color: @gold; }
+#battery.warning  { color: @warning; }
 #battery.critical {
-    color: @love;
+    color: @error;
     animation: blink 1s steps(1) infinite;
 }
-#battery.charging { color: @foam; }
-#battery.plugged  { color: @subtle; }
+#battery.charging { color: @info; }
+#battery.plugged  { color: @fg; }
 
 @keyframes blink {
-    from { background: transparent; color: @love; }
-    to   { background: @love; color: @base; }
+    from { background: transparent; color: @error; }
+    to   { background: @error; color: @bg; }
 }
 
 /* Hover feedback for clickable right-side modules */
@@ -110,7 +110,7 @@ window#waybar {
 #network:hover,
 #clock:hover,
 #battery:hover {
-    color: @text;
+    color: @fg;
 }
 
 /* Tray: tighter padding for small icons */

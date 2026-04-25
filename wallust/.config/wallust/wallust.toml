@@ -1,6 +1,9 @@
 backend = "full"
+
 color_space = "lab"
-palette = "dark"
+palette = "harddark16"
+check_contrast = true
+
 
 [templates]
 sway.template = "sway.conf"
@@ -14,6 +17,12 @@ waybar.target = "~/.config/waybar/colors.css"
 
 swaync.template = "swaync.css"
 swaync.target = "~/.config/swaync/colors.css"
+
+kitty.template = "kitty.conf"
+kitty.target = "~/.config/kitty/theme.conf"
+
+tmux.template = "tmux.conf"
+tmux.target = "~/.config/tmux/theme.conf"
 
 # nvim.template = "nvim.lua"
 # nvim.target = "~/.config/nvim/lua/colors.lua"
