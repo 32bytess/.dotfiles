@@ -26,3 +26,6 @@ tmux.target = "~/.config/tmux/theme.conf"
 
 nvim.template = "nvim.lua"
 nvim.target = "~/.config/nvim/lua/theme/colors.lua"
+
+obsidian.template = "obsidian.css"
+obsidian.target = "~/obsidian/main/.obsidian/snippets/wallust.css"

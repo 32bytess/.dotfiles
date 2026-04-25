@@ -1,0 +1,19 @@
+.theme-dark,
+.theme-light {
+    --background-primary: {{background}};
+    --background-primary-alt: {{color0}};
+    --background-secondary: {{color0}};
+    --background-secondary-alt: {{background}};
+    --background-modifier-border: {{color8}};
+
+    --text-normal: {{foreground}};
+    --text-muted: {{color7}};
+    --text-faint: {{color8}};
+
+    --text-accent: {{color4}};
+    --text-accent-hover: {{color12}};
+    --color-accent: {{color4}};
+    --color-accent-1: {{color4}};
+    --interactive-accent: {{color4}};
+    --interactive-accent-hover: {{color12}};
+}

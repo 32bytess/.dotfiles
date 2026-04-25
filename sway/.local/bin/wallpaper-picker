@@ -3,10 +3,11 @@ set -euo pipefail
 
 FULL_PATH="$1"
 
-swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5 -o eDP-1
-swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5 -o HDMI-A-1
+swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5
 
 ~/.cargo/bin/wallust run "$FULL_PATH" && {
+
+	sleep 0.5
 	swaymsg reload
 	pkill -SIGUSR2 waybar 2>/dev/null || true
 	swaync-client --reload-css 2>/dev/null || true
