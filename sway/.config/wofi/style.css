@@ -8,13 +8,13 @@
 }
 
 window {
-    background: #000000;
+    background: $surface;
     border: 1px solid @accent;
     border-radius: 12px;
 }
 
 #input {
-    background: #000000;
+    background: $bg;
     border: 1px solid @muted;
     border-radius: 8px;
     color: @fg;
@@ -38,7 +38,7 @@ window {
 }
 
 #entry:selected {
-    background: @muted;
+    background: @fg;
     color: @fg;
 }
 
