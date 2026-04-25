@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+WALL_DIR="$HOME/dotfiles/wallpapers"
+
+CHOSEN=$(
+    for f in "$WALL_DIR"/*; do
+        printf '%s\0icon\x1f%s\n' "$(basename "$f")" "$f"
+    done | rofi -dmenu -p "Wallpaper" -show-icons -theme ~/.config/rofi/wallpaper.rasi
+) || exit 1
+
+~/.local/bin/wallpaper-picker "$WALL_DIR/$CHOSEN"

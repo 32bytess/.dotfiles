@@ -1,0 +1,70 @@
+@import "~/.config/rofi/colors.rasi"
+
+* {
+    background-color: transparent;
+    text-color:       @fg;
+}
+
+window {
+    background-color: @bg-alpha;
+    border:           2px solid;
+    border-color:     @accent;
+    border-radius:    12px;
+    padding:          8px;
+    width:            480px;
+}
+
+mainbox {
+    background-color: transparent;
+    children:         [inputbar, listview];
+    spacing:          8px;
+    padding:          8px;
+}
+
+inputbar {
+    background-color: @bg-alt;
+    border-radius:    8px;
+    padding:          8px 12px;
+    children:         [prompt, entry];
+    spacing:          0;
+}
+
+prompt {
+    text-color: @accent;
+    padding:    0 8px 0 0;
+}
+
+entry {
+    placeholder:       "Search...";
+    placeholder-color: @fg-dim;
+}
+
+listview {
+    background-color: transparent;
+    columns:          1;
+    lines:            8;
+    spacing:          2px;
+    scrollbar:        false;
+}
+
+element {
+    background-color: transparent;
+    border-radius:    6px;
+    padding:          8px 12px;
+    spacing:          8px;
+    orientation:      horizontal;
+}
+
+element selected {
+    background-color: @accent;
+    text-color:       @bg;
+}
+
+element-icon {
+    size:           24px;
+    vertical-align: 0.5;
+}
+
+element-text {
+    vertical-align: 0.5;
+}

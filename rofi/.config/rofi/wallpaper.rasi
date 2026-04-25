@@ -1,0 +1,38 @@
+@import "~/.config/rofi/theme.rasi"
+
+window {
+    width: 900px;
+}
+
+mainbox {
+    children: [inputbar, listview];
+}
+
+listview {
+    columns: 4;
+    lines:   3;
+    spacing: 8px;
+    fixed-height: true;
+}
+
+element {
+    orientation:      vertical;
+    padding:          8px;
+    border-radius:    8px;
+}
+
+element selected {
+    background-color: @accent;
+    text-color:       @bg;
+}
+
+element-icon {
+    size:             160px;
+    border-radius:    6px;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    padding:          4px 0 0 0;
+    str:              "";
+}

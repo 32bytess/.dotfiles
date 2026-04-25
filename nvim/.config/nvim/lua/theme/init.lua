@@ -19,7 +19,20 @@ function M.setup()
 	hl(0, "NormalNC", { bg = "NONE" })
 	hl(0, "NormalFloat", { fg = c.foreground, bg = "NONE" })
 	hl(0, "FloatBorder", { fg = c.color4, bg = "NONE" })
+
 	hl(0, "FloatTitle", { fg = c.color4, bg = "NONE", bold = true })
+
+	-- Telescope
+	hl(0, "TelescopeNormal", { fg = c.foreground, bg = "NONE" })
+	hl(0, "TelescopePromptPrefix", { fg = c.color4, bg = "NONE" })
+	hl(0, "TelescopePromptBorder", { fg = c.color4, bg = "NONE" })
+	hl(0, "TelescopeResultsBorder", { fg = c.color4, bg = "NONE" })
+	hl(0, "TelescopePreviewBorder", { fg = c.color4, bg = "NONE" })
+	hl(0, "TelescopePromptTitle", { fg = c.color4, bg = "NONE" })
+	hl(0, "TelescopePromptCounter", { fg = c.color4, bg = "NONE" })
+	hl(0, "TelescopePreviewTitle", { fg = c.color4, bg = "NONE" })
+	hl(0, "TelescopeResultsTitle", { fg = c.color4, bg = "NONE" })
+	hl(0, "TelescopePromptPrefix", { fg = c.color4, bg = "NONE" })
 
 	-- Cursor & selection
 	hl(0, "CursorLine", { bg = c.color0 })

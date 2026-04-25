@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-WALL_DIR="$HOME/dotfiles/wallpapers"
-CHOSEN=$(ls "$WALL_DIR" | wofi --show dmenu --prompt "Select Wallpaper") || exit 1
-FULL_PATH="$WALL_DIR/$CHOSEN"
+FULL_PATH="$1"
 
 swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5 -o eDP-1
 swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5 -o HDMI-A-1

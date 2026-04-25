@@ -1,0 +1,31 @@
+configuration {
+    modi:                "drun,run,window";
+    font:                "Fira Code 12";
+    show-icons:          true;
+    icon-theme:          "Papirus";
+    terminal:            "kitty";
+    drun-display-format: "{name}";
+    display-drun:        "Apps";
+    display-run:         "Run";
+    display-window:      "Windows";
+
+    /* Vim-like navigation */
+    kb-row-up:            "Control+k,Up";
+    kb-row-down:          "Control+j,Down";
+    kb-row-left:          "Control+h,Left";
+    kb-row-right:         "Control+l,Right";
+    kb-page-prev:         "Control+b,Page_Up";
+    kb-page-next:         "Control+f,Page_Down";
+
+    kb-accept-entry:      "Return,KP_Enter";
+    kb-remove-to-eol:     "Control+Shift+k";
+    kb-move-char-back:    "";
+    kb-move-char-forward: "";
+    kb-move-word-back:    "Alt+b";
+    kb-move-word-forward: "Alt+f";
+    kb-remove-char-back:  "BackSpace,Shift+BackSpace";
+    kb-mode-complete:     "";
+    kb-cancel:            "Escape,Control+bracketleft";
+}
+
+@theme "~/.config/rofi/theme.rasi"
