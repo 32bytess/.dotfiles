@@ -16,6 +16,7 @@ source $ZSH/oh-my-zsh.sh
 
 # PATH
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/sdks/flutter/bin:$PATH"
 
 # Go

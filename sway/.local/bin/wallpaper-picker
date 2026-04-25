@@ -1,26 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
-pgrep -x wofi >/dev/null && {
-	pkill wofi
-	exit 0
+
+WALL_DIR="$HOME/dotfiles/wallpapers"
+CHOSEN=$(ls "$WALL_DIR" | wofi --show dmenu --prompt "Select Wallpaper") || exit 1
+FULL_PATH="$WALL_DIR/$CHOSEN"
+
+swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5
+
+~/.cargo/bin/wallust run "$FULL_PATH" && {
+	swaymsg reload
+	pkill -SIGUSR2 waybar 2>/dev/null || true
+	swaync-client --reload-css 2>/dev/null || true
 }
 
-WALLPAPERS_DIR="$HOME/dotfiles/wallpapers"
-STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/sway-wallpaper"
-current="$(cat "$STATE_FILE" 2>/dev/null)"
-
-chosen=$(
-	for f in "$WALLPAPERS_DIR"/*; do
-		[[ -f "$f" ]] || continue
-		name="$(basename "$f")"
-		[[ "$name" == "$current" ]] && echo "* $name" || echo "  $name"
-	done | wofi --show dmenu --prompt "Wallpaper" --cache-file /dev/null
-) || true
-
-chosen="${chosen#\* }"
-chosen="${chosen#  }"
-
-[[ -z "$chosen" ]] && exit 0
-
-swww img "$WALLPAPERS_DIR/$chosen" --transition-type wipe --transition-step 10
-echo "$chosen" >"$STATE_FILE"
+mkdir -p "$HOME/.local/state"
+echo "$FULL_PATH" >"$HOME/.local/state/current-wall"
