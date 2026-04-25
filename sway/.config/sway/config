@@ -11,7 +11,7 @@ set $down j
 set $up k
 set $right l
 set $term kitty
-set $menu pkill wofi || wofi --show drun
+set $menu pkill rofi || rofi -show drun
 
 include config.d/*
 include /etc/sway/config.d/

@@ -1,9 +1,0 @@
-@define-color bg       {{background}};
-@define-color fg       {{foreground}};
-@define-color surface  {{color0}};
-@define-color muted    {{color8}};
-@define-color accent   {{color5}};
-@define-color warning  {{color3}};
-@define-color error    {{color1}};
-@define-color ok       {{color2}};
-@define-color info     {{color6}};

@@ -9,8 +9,8 @@ check_contrast = true
 sway.template = "sway.conf"
 sway.target = "~/.config/sway/config.d/theme-colors.conf"
 
-wofi.template = "wofi.css"
-wofi.target = "~/.config/wofi/colors.css"
+rofi.template = "rofi.rasi"
+rofi.target = "~/.config/rofi/colors.rasi"
 
 waybar.template = "waybar.css"
 waybar.target = "~/.config/waybar/colors.css"
