@@ -1,14 +1,4 @@
-/* moonfly */
-@define-color base    #080808;
-@define-color surface #1c1c1c;
-@define-color overlay #2c2c2c;
-@define-color muted   #4e4e4e;
-@define-color subtle  #9e9d9d;
-@define-color text    #bdbdbd;
-@define-color love    #ff5454;
-@define-color gold    #e3c78a;
-@define-color rose    #80a0ff;
-@define-color foam    #79dac8;
+@import "colors.css";
 
 * {
     font-family: "Fira Code", monospace;
