@@ -1,7 +1,7 @@
 backend = "full"
 
 color_space = "lab"
-palette = "harddark16"
+palette = "dark16"
 check_contrast = true
 
 
@@ -24,5 +24,5 @@ kitty.target = "~/.config/kitty/theme.conf"
 tmux.template = "tmux.conf"
 tmux.target = "~/.config/tmux/theme.conf"
 
-# nvim.template = "nvim.lua"
-# nvim.target = "~/.config/nvim/lua/colors.lua"
+nvim.template = "nvim.lua"
+nvim.target = "~/.config/nvim/lua/theme/colors.lua"

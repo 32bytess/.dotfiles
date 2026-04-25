@@ -19,3 +19,19 @@ vim.api.nvim_create_autocmd("BufReadCmd", {
 		end)
 	end,
 })
+
+local _sigusr1 = (vim.uv or vim.loop).new_signal()
+_sigusr1:start("sigusr1", function()
+	vim.schedule(function()
+		require("theme").setup()
+		vim.cmd("redraw!")
+	end)
+end)
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "**/lua/theme/colors.lua",
+	callback = function()
+		vim.opt_local.swapfile = false
+		vim.opt_local.undofile = false
+	end,
+})

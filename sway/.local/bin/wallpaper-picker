@@ -5,7 +5,8 @@ WALL_DIR="$HOME/dotfiles/wallpapers"
 CHOSEN=$(ls "$WALL_DIR" | wofi --show dmenu --prompt "Select Wallpaper") || exit 1
 FULL_PATH="$WALL_DIR/$CHOSEN"
 
-swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5
+swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5 -o eDP-1
+swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5 -o HDMI-A-1
 
 ~/.cargo/bin/wallust run "$FULL_PATH" && {
 	swaymsg reload
@@ -13,6 +14,7 @@ swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5
 	swaync-client --reload-css 2>/dev/null || true
 	pkill -SIGUSR1 kitty 2>/dev/null || true
 	tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true
+	pkill -SIGUSR1 nvim 2>/dev/null || true
 }
 
 mkdir -p "$HOME/.local/state"
