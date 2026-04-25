@@ -1,0 +1,19 @@
+backend = "full"
+color_space = "lab"
+palette = "dark"
+
+[templates]
+sway.template = "sway.conf"
+sway.target = "~/.config/sway/config.d/theme-colors.conf"
+
+wofi.template = "wofi.css"
+wofi.target = "~/.config/wofi/colors.css"
+
+waybar.template = "waybar.css"
+waybar.target = "~/.config/waybar/colors.css"
+
+swaync.template = "swaync.css"
+swaync.target = "~/.config/swaync/colors.css"
+
+# nvim.template = "nvim.lua"
+# nvim.target = "~/.config/nvim/lua/colors.lua"

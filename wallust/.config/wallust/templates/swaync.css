@@ -1,0 +1,10 @@
+@define-color base    {{color0}};
+@define-color surface {{color8}};
+@define-color overlay {{color9}};
+@define-color muted   {{color8}};
+@define-color subtle  {{color15}};
+@define-color text    {{color7}};
+@define-color love    {{color1}};
+@define-color gold    {{color3}};
+@define-color rose    {{color4}};
+@define-color foam    {{color6}};
