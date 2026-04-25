@@ -1,17 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
-pgrep -x wofi > /dev/null && { pkill wofi; exit 0; }
+pgrep -x wofi >/dev/null && {
+	pkill wofi
+	exit 0
+}
 
 WALLPAPERS_DIR="$HOME/dotfiles/wallpapers"
 STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/sway-wallpaper"
 current="$(cat "$STATE_FILE" 2>/dev/null)"
 
 chosen=$(
-  for f in "$WALLPAPERS_DIR"/*; do
-    [[ -f "$f" ]] || continue
-    name="$(basename "$f")"
-    [[ "$name" == "$current" ]] && echo "* $name" || echo "  $name"
-  done | wofi --show dmenu --prompt "Wallpaper" --cache-file /dev/null
+	for f in "$WALLPAPERS_DIR"/*; do
+		[[ -f "$f" ]] || continue
+		name="$(basename "$f")"
+		[[ "$name" == "$current" ]] && echo "* $name" || echo "  $name"
+	done | wofi --show dmenu --prompt "Wallpaper" --cache-file /dev/null
 ) || true
 
 chosen="${chosen#\* }"
@@ -19,5 +22,5 @@ chosen="${chosen#  }"
 
 [[ -z "$chosen" ]] && exit 0
 
-swaymsg output "*" bg "$WALLPAPERS_DIR/$chosen" fill
-echo "$chosen" > "$STATE_FILE"
+swww img "$WALLPAPERS_DIR/$chosen" --transition-type wipe --transition-step 10
+echo "$chosen" >"$STATE_FILE"
