@@ -6,42 +6,42 @@
 }
 
 .control-center {
-    background: @base;
+    background: @bg;
     border-radius: 10px;
-    border: 2px solid @rose;
+    border: 2px solid @accent;
     padding: 8px;
-    color: @text;
+    color: @fg;
 }
 
 .widget-title > label {
     font-size: 14px;
     font-weight: bold;
-    color: @rose;
+    color: @accent;
 }
 
 .widget-title > button {
-    background: @overlay;
+    background: @muted;
     border: none;
     border-radius: 8px;
-    color: @subtle;
+    color: @fg;
     padding: 4px 10px;
 }
 
 .widget-title > button:hover {
-    background: @overlay;
-    color: @text;
+    background: @muted;
+    color: @fg;
 }
 
 .widget-dnd > switch {
     border-radius: 12px;
-    background: @overlay;
+    background: @muted;
     border: none;
     color: @muted;
 }
 
 .widget-dnd > switch:checked {
-    background: @rose;
-    color: @base;
+    background: @accent;
+    color: @bg;
 }
 
 .widget-volume {
@@ -49,7 +49,7 @@
     border-radius: 8px;
     padding: 8px;
     margin: 4px 0;
-    color: @foam;
+    color: @info;
 }
 
 .widget-backlight {
@@ -57,7 +57,7 @@
     border-radius: 8px;
     padding: 8px;
     margin: 4px 0;
-    color: @gold;
+    color: @warning;
 }
 
 .widget-mpris {
@@ -68,16 +68,16 @@
 }
 
 .widget-mpris-player {
-    color: @text;
+    color: @fg;
 }
 
 .widget-mpris-title {
     font-weight: bold;
-    color: @rose;
+    color: @accent;
 }
 
 .widget-mpris-subtitle {
-    color: @subtle;
+    color: @fg;
 }
 
 .notification-row {
@@ -87,38 +87,38 @@
 .notification {
     background: @surface;
     border-radius: 10px;
-    border: 1px solid @overlay;
+    border: 1px solid @muted;
     padding: 8px;
 }
 
 .notification-default-action {
     border-radius: 10px;
-    color: @text;
+    color: @fg;
 }
 
 .notification-default-action:hover {
-    background: @overlay;
+    background: @muted;
 }
 
 .notification-summary {
     font-weight: bold;
-    color: @text;
+    color: @fg;
 }
 
 .notification-body {
-    color: @subtle;
+    color: @fg;
 }
 
 .notification-action {
-    background: @overlay;
+    background: @muted;
     border-radius: 6px;
-    color: @rose;
+    color: @accent;
     margin: 2px;
 }
 
 .notification-action:hover {
-    background: @rose;
-    color: @base;
+    background: @accent;
+    color: @bg;
 }
 
 .close-button {
@@ -128,6 +128,6 @@
 }
 
 .close-button:hover {
-    background: @love;
-    color: @base;
+    background: @error;
+    color: @bg;
 }
