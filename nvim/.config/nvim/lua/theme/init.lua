@@ -14,6 +14,21 @@ function M.setup()
 
 	local hl = vim.api.nvim_set_hl
 
+	local function blend(hex1, hex2, factor)
+		local function parse(h)
+			h = h:sub(2)
+			return tonumber(h:sub(1, 2), 16), tonumber(h:sub(3, 4), 16), tonumber(h:sub(5, 6), 16)
+		end
+		local r1, g1, b1 = parse(hex1)
+		local r2, g2, b2 = parse(hex2)
+		return string.format(
+			"#%02x%02x%02x",
+			math.floor(r1 * factor + r2 * (1 - factor) + 0.5),
+			math.floor(g1 * factor + g2 * (1 - factor) + 0.5),
+			math.floor(b1 * factor + b2 * (1 - factor) + 0.5)
+		)
+	end
+
 	-- Base UI
 	hl(0, "Normal", { fg = c.foreground, bg = "NONE" })
 	hl(0, "NormalNC", { bg = "NONE" })
@@ -35,10 +50,10 @@ function M.setup()
 	hl(0, "TelescopePromptPrefix", { fg = c.color4, bg = "NONE" })
 
 	-- Cursor & selection
-	hl(0, "CursorLine", { bg = c.color0 })
+	hl(0, "CursorLine", { bg = blend(c.foreground, c.background, 0.12) })
 	hl(0, "CursorLineNr", { fg = c.color4, bg = "NONE", bold = true })
-	hl(0, "Visual", { bg = c.color0, bold = true })
-	hl(0, "VisualNOS", { bg = c.color0 })
+	hl(0, "Visual", { bg = blend(c.color4, c.background, 0.35), bold = true })
+	hl(0, "VisualNOS", { bg = blend(c.color4, c.background, 0.25) })
 
 	-- Line numbers & signs
 	hl(0, "LineNr", { fg = c.color8, bg = "NONE" })
