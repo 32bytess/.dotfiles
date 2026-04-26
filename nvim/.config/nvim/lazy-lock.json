@@ -1,5 +1,5 @@
 {
-  "blink.cmp": { "branch": "main", "commit": "e1dbca9ea1d8dc7a83e27a52bbd990bd717e54a6" },
+  "blink.cmp": { "branch": "main", "commit": "6f5538d0ac8a154a489036db4b8f0436a7a70771" },
   "blink.compat": { "branch": "main", "commit": "2ed6d9a28b07fa6f3bface818470605f8896408c" },
   "blink.lib": { "branch": "main", "commit": "dda2666685a5ac3598166577d2e34f1fff6b1637" },
   "claudecode.nvim": { "branch": "main", "commit": "432121f0f5b9bda041030d1e9e83b7ba3a93dd8f" },
@@ -27,6 +27,7 @@
   "plenary.nvim": { "branch": "master", "commit": "74b06c6c75e4eeb3108ec01852001636d85a932b" },
   "supermaven-nvim": { "branch": "main", "commit": "07d20fce48a5629686aefb0a7cd4b25e33947d50" },
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "6fea601bd2b694c6f2ae08a6c6fab14930c60e2c" },
+  "telescope-github.nvim": { "branch": "master", "commit": "cdd3ce7d317729709821d33820c619be21b22948" },
   "telescope-ui-select.nvim": { "branch": "master", "commit": "6e51d7da30bd139a6950adf2a47fda6df9fa06d2" },
   "telescope.nvim": { "branch": "master", "commit": "5255aa27c422de944791318024167ad5d40aad20" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" }
