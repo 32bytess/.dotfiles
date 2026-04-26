@@ -65,7 +65,14 @@ return {
 			require("blink.cmp").build():wait(60000)
 		end,
 		opts = {
-			keymap = { preset = "default" },
+			keymap = {
+				preset = "none",
+				["<C-j>"] = { "select_next", "fallback" },
+				["<C-k>"] = { "select_prev", "fallback" },
+				["<CR>"] = { "accept", "fallback" },
+				["<Esc>"] = { "hide", "fallback" },
+				["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+			},
 			completion = { documentation = { auto_show = false } },
 			sources = { default = { "lsp", "path", "snippets", "buffer" } },
 			fuzzy = { implementation = "prefer_rust" },
