@@ -2,6 +2,7 @@ backend = "full"
 
 color_space = "lab"
 palette = "dark16"
+filter = "vibrant"
 check_contrast = true
 
 
@@ -29,3 +30,6 @@ nvim.target = "~/.config/nvim/lua/theme/colors.lua"
 
 obsidian.template = "obsidian.css"
 obsidian.target = "~/obsidian/main/.obsidian/snippets/wallust.css"
+
+colors.template = "colors.json"
+colors.target = "~/.cache/wallust/current.json"

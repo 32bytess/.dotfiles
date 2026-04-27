@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-FULL_PATH="$1"
+CHOSEN=$(
+	~/.cargo/bin/wallust theme list 2>&1 |
+		sed 's/\x1b\[[0-9;]*m//g' |
+		grep -v "^Available" |
+		grep -v "^$" |
+		sed 's/^- //' |
+		rofi -dmenu -p "Theme" -theme ~/.config/rofi/theme.rasi
+) || exit 1
 
-swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5
-
-~/.cargo/bin/wallust run "$FULL_PATH" && \
+~/.cargo/bin/wallust theme "$CHOSEN" && \
 ~/.local/bin/wallust-darken && {
-
 	sleep 0.5
 	swaymsg reload
 	pkill -SIGUSR2 waybar 2>/dev/null || true
@@ -16,6 +20,3 @@ swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5
 	tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true
 	pkill -SIGUSR1 nvim 2>/dev/null || true
 }
-
-mkdir -p "$HOME/.local/state"
-echo "$FULL_PATH" >"$HOME/.local/state/current-wall"

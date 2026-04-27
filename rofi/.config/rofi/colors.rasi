@@ -1,0 +1,9 @@
+* {
+    bg:       #150E0E;
+    bg-alpha: #150E0Ecc;
+    bg-alt:   #0E0A0A;
+    fg:       #F8E4DC;
+    fg-dim:   #775E5E;
+    accent:   #9098A1;
+    urgent:   #A4A08D;
+}

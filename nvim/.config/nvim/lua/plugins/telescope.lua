@@ -9,10 +9,49 @@ return {
 		},
 		config = function()
 			local builtin = require("telescope.builtin")
-			vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
+
+			require("telescope").setup({
+				defaults = {
+					file_ignore_patterns = {
+						"^%.git/",
+						"%.png",
+						"%.jpg",
+						"%.jpeg",
+						"%.gif",
+						"%.webp",
+						"%.avif",
+						"%.ico",
+						"%.svg",
+						"%.bmp",
+						"%.tiff",
+						"%.pdf",
+						"%.zip",
+						"%.tar",
+						"%.gz",
+						"%.mp4",
+						"%.mp3",
+						"%.wav",
+						"%.ttf",
+						"%.woff",
+						"%.woff2",
+					},
+				},
+			})
+
+			vim.keymap.set("n", "<leader>ff", function()
+				builtin.find_files({
+					find_command = { "fd", "--type", "f", "--hidden", "--follow" },
+				})
+			end, { desc = "Telescope find files" })
+			vim.keymap.set("n", "<leader>fg", function()
+				builtin.live_grep({ additional_args = { "--hidden" } })
+			end, { desc = "Telescope live grep" })
+			vim.keymap.set("n", "<leader>fd", function()
+				builtin.find_files({
+					find_command = { "fd", "--type", "d", "--hidden", "--exclude", ".git" },
+				})
+			end, { desc = "Telescope find dirs" })
 			vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 
 			-- git
 			vim.keymap.set("n", "<leader>gb", builtin.git_branches, { desc = "Git Branches" })

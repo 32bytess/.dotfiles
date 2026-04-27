@@ -70,7 +70,6 @@ return {
 				["<C-j>"] = { "select_next", "fallback" },
 				["<C-k>"] = { "select_prev", "fallback" },
 				["<CR>"] = { "accept", "fallback" },
-				["<Esc>"] = { "hide", "fallback" },
 				["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
 			},
 			completion = { documentation = { auto_show = false } },

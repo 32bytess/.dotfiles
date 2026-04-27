@@ -63,6 +63,12 @@ return {
 				},
 				view_options = {
 					show_hidden = true,
+					is_always_hidden = function(name, bufnr)
+						local dir = require("oil").get_current_dir(bufnr)
+						if not dir then return false end
+						vim.fn.system({ "git", "check-ignore", "-q", dir .. name })
+						return vim.v.shell_error == 0
+					end,
 				},
 				float = {
 					padding = 2,
