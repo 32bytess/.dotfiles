@@ -4,11 +4,12 @@
 export XDG_CURRENT_DESKTOP=sway
 export XDG_SESSION_TYPE=wayland
 export WLR_NO_HARDWARE_CURSORS=1
-export WLR_RENDERER_ALLOW_SOFTWARE=1
-export LIBVA_DRIVER_NAME=nvidia
-export GBM_BACKEND=nvidia-drm
-export __GLX_VENDOR_LIBRARY_NAME=nvidia
+# export WLR_RENDERER_ALLOW_SOFTWARE=1
+# export LIBVA_DRIVER_NAME=nvidia
+# export GBM_BACKEND=nvidia-drm
+# export __GLX_VENDOR_LIBRARY_NAME=nvidia
 # AMD iGPU (card1) (for the laptop display eDP1)
-export WLR_DRM_DEVICES=/dev/dri/card1:/dev/dri/card0
+sleep 1
+export WLR_DRM_DEVICES="/dev/dri/card1:/dev/dri/card0"
 
 exec /usr/bin/sway --unsupported-gpu "$@"

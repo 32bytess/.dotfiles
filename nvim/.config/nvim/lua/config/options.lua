@@ -10,10 +10,10 @@ vim.g.clipboard = {
 	},
 	paste = {
 		["+"] = function()
-			return vim.fn.systemlist("wl-paste --no-newline 2>/dev/null")
+			return vim.fn.systemlist("wl-paste 2>/dev/null")
 		end,
 		["*"] = function()
-			return vim.fn.systemlist("wl-paste --no-newline --primary 2>/dev/null")
+			return vim.fn.systemlist("wl-paste --primary 2>/dev/null")
 		end,
 	},
 	cache_enabled = false,
