@@ -34,6 +34,7 @@ alias light='light -S'
 # vim mode in zsh
 bindkey -v
 bindkey -s ^f "tmux-sessionizer\n"
+export EDITOR="nvim"
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh

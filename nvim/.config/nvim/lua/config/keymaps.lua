@@ -5,8 +5,8 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 
 -- split
-vim.keymap.set("n", "<leader>v", "<cmd>vsplit<cr>", { desc = "Split vertically" })
-vim.keymap.set("n", "<leader>h", "<cmd>split<cr>", { desc = "Split horizontally" })
+vim.keymap.set("n", "<leader>h", "<cmd>vsplit<cr>", { desc = "Split horizontally" })
+vim.keymap.set("n", "<leader>v", "<cmd>split<cr>", { desc = "Split vertically" })
 vim.keymap.set("n", "<leader>q", "<cmd>q<cr>", { desc = "New tab" })
 
 -- diagnostics popup (like K but for errors/warnings)
