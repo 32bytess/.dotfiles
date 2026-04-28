@@ -29,6 +29,8 @@ export PATH=$GOROOT/bin:$PATH
 alias vim='nvim'
 alias open='xdg-open'
 alias vi='/usr/bin/vim'
+# dvim for nvim-0.13.0 dev
+alias dvim='~/nvim-install/squashfs-root/usr/bin/nvim'
 alias light='light -S'
 
 # vim mode in zsh

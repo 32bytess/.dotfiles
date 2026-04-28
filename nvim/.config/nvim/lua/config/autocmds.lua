@@ -1,4 +1,4 @@
-vim.filetype.add({ extension = { jsonl = "json" } })
+vim.filetype.add({ extension = { jsonl = "json", jsonc = "json" } })
 
 vim.o.autoread = true
 
@@ -23,5 +23,13 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
 		vim.opt_local.swapfile = false
 		vim.opt_local.undofile = false
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	callback = function()
+		local view = vim.fn.winsaveview()
+		vim.cmd("silent! keepjumps normal! gg=G")
+		vim.fn.winrestview(view)
 	end,
 })
