@@ -3,14 +3,11 @@ set -euo pipefail
 
 FULL_PATH="$1"
 
-swww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5
-
-~/.cargo/bin/wallust run "$FULL_PATH" && \
-~/.local/bin/wallust-darken && {
-
+swww img "$FULL_PATH" --transition-type center --transition-step 30 &&
+	~/.cargo/bin/wallust run "$FULL_PATH" &&
+	~/.local/bin/wallust-darken && {
 	sleep 0.5
 	swaymsg reload
-	pkill -SIGUSR2 waybar 2>/dev/null || true
 	swaync-client --reload-css 2>/dev/null || true
 	pkill -SIGUSR1 kitty 2>/dev/null || true
 	tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true

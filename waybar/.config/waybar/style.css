@@ -1,44 +1,89 @@
 @import "colors.css";
 
 * {
-    font-family: "Fira Code", "Font Awesome 6 Free Solid", "Font Awesome 6 Brands Regular", monospace;
-    font-size: 13px;
-    border: none;
-    border-radius: 0;
-    min-height: 0;
+	font-family: "JetBrainsMono Nerd Font";
+	font-size: 18px;
+	border: none ;
+	border-radius: 0;
+	min-height: 0;
 }
 
+
+
 window#waybar {
-    background: @bg;
-    color: @fg;
+	background-color: transparent;
+}
+
+window#waybar > box {
+	border: 2px solid @accent;
+	border-radius: 15px;
+	background-color: alpha(@bg, 0.85);
+	color: @fg;
+	padding: 10;
 }
 
 /* Left */
 
-#workspaces {
-    padding: 0 6px;
+#clock {
+	font-family: "Fira Code", monospace;
+	font-size: 30px;
+	margin: 10 5 0 5;
+	font-weight: bold;
+	color: @accent;
 }
-
-#workspaces button {
-    padding: 0 10px;
-    color: @muted;
-    background: transparent;
-    transition: all 0.2s ease;
-}
-
-#workspaces button.focused { color: @accent; }
-#workspaces button.urgent  { color: @error; }
-#workspaces button:hover   { color: @fg; }
 
 /* Center */
 
-#window {
-    margin: 0 4px;
-    padding: 0 16px;
-    color: @accent;
+
+#workspaces {
+	padding: 6 0px;
 }
 
+#workspaces button {
+	padding: 4 0px;
+	color: @muted;
+	background: transparent;
+	border-radius: 15px;
+	transition: all 0.1s ease;
+	margin: 2px 4px;
+}
+
+
+#workspaces button.focused {
+	color: @bg;
+	min-width: 30px;
+	min-height: 30px;
+	background-color: @accent; 
+}
+
+#workspaces button:hover   { color: @fg; }
+
+
 /* Right — shared layout */
+#pulseaudio-slider trough {
+	min-height: 80px;
+	min-width: 8px;
+	border-radius: 5px;
+	background: @muted;
+}
+
+#pulseaudio-slider highlight {
+	min-width: 8px;
+	border-radius: 5px;
+	background: @accent;
+}
+
+#pulseaudio-slider slider {
+	min-width: 0;
+	min-height: 0;
+	background: transparent;
+	border: none;
+	box-shadow: none;
+}
+
+#pulseaudio {
+	font-size: 22px;
+}
 
 #cpu,
 #memory,
@@ -47,28 +92,37 @@ window#waybar {
 #network,
 #battery,
 #tray,
-#clock,
 #custom-notification {
-    margin: 0 2px;
-    padding: 0 14px;
-    color: @accent;
+	padding: 4px 0;
+	color: @accent;
+	background: transparent;
+	border-radius: 15px;
+	transition: all 0.1s ease;
+	margin: 2px 4px;
+	min-width: 30px;
+	min-height: 30px;
 }
 
 /* Separator */
 #custom-separator {
-    color: @muted;
-    padding: 0 4px;
+	color: @muted;
+	padding: 0 4px;
 }
 
 /* System drawer toggle */
 #custom-expand {
-    padding: 0 14px;
-    color: @fg;
-    transition: color 0.2s ease;
+	padding: 4px 0;
+	color: @muted;
+	background: transparent;
+	border-radius: 15px;
+	transition: all 0.1s ease;
+	margin: 2px 4px;
+	min-width: 30px;
+	min-height: 30px;
 }
 
 #custom-expand:hover {
-    color: @accent;
+	color: @accent;
 }
 
 /* CPU */
@@ -84,7 +138,7 @@ window#waybar {
 
 /* Bluetooth */
 #bluetooth.disabled     { color: @muted; }
-#bluetooth.disconnected { color: @fg; }
+#bluetooth.disconnected { color: @muted; }
 #bluetooth.connected    { color: @accent; }
 
 /* Network */
@@ -93,29 +147,19 @@ window#waybar {
 /* Battery */
 #battery.warning  { color: @warning; }
 #battery.critical {
-    color: @error;
-    animation: blink 1s steps(1) infinite;
+	color: @error;
+	animation: blink 1s steps(1) infinite;
 }
 #battery.charging { color: @info; }
 #battery.plugged  { color: @fg; }
 
 @keyframes blink {
-    from { background: transparent; color: @error; }
-    to   { background: @error; color: @bg; }
+	from { background: transparent; color: @error; }
+	to   { background: @error; color: @bg; }
 }
 
-/* Hover feedback for clickable right-side modules */
-#pulseaudio:hover,
-#bluetooth:hover,
-#network:hover,
-#clock:hover,
-#battery:hover {
-    color: @fg;
-}
-
-/* Tray: tighter padding for small icons */
 #tray {
-    padding: 0 8px;
+	padding: 4px 8px;
 }
 
 /* Notifications */
