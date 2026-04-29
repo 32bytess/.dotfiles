@@ -2,7 +2,7 @@
 
 * {
 	font-family: "JetBrainsMono Nerd Font";
-	font-size: 18px;
+	font-size: 20px;
 	border: none ;
 	border-radius: 0;
 	min-height: 0;
@@ -19,16 +19,85 @@ window#waybar > box {
 	border-radius: 15px;
 	background-color: alpha(@bg, 0.85);
 	color: @fg;
-	padding: 10;
+	padding: 10 0;
 }
 
 /* Left */
 
 #clock {
 	font-family: "Fira Code", monospace;
-	font-size: 30px;
-	margin: 10 5 0 5;
+	font-size: 25px;
 	font-weight: bold;
+	color: @accent;
+}
+
+
+/* Pomodoro */
+#custom-pomodoro-mode,
+#custom-pomodoro-timer {
+	font-family: "JetBrainsMono Nerd Font";
+	font-weight: bold;
+	color: @accent;
+}
+
+#custom-pomodoro-timer {
+	font-family: "Fira Code", monospace;
+	font-size: 20px;
+}
+
+#custom-pomodoro-mode {
+	font-size: 16px;
+	background-color: alpha(@accent, 0.15);
+	border-radius: 50%;
+	margin: 5px 15px;
+	min-width: 32px;
+	min-height: 32px;
+	padding: 0;
+}
+
+#custom-pomodoro-mode.work,
+#custom-pomodoro-timer.work {
+	color: @accent;
+}
+
+#custom-pomodoro-mode.work {
+	background-color: alpha(@accent, 0.2);
+}
+
+#custom-pomodoro-mode.rest,
+#custom-pomodoro-mode.long-break,
+#custom-pomodoro-timer.rest,
+#custom-pomodoro-timer.long-break {
+	color: @info;
+}
+
+#custom-pomodoro-mode.rest,
+#custom-pomodoro-mode.long-break {
+	background-color: alpha(@info, 0.2);
+}
+
+#custom-pomodoro-mode.work-paused,
+#custom-pomodoro-mode.rest-paused,
+#custom-pomodoro-mode.long-break-paused,
+#custom-pomodoro-timer.work-paused,
+#custom-pomodoro-timer.rest-paused,
+#custom-pomodoro-timer.long-break-paused {
+	color: @muted;
+}
+
+#custom-pomodoro-mode.work-paused,
+#custom-pomodoro-mode.rest-paused,
+#custom-pomodoro-mode.long-break-paused {
+	background-color: alpha(@muted, 0.2);
+}
+
+#group-pomodoro .pomodoro-button {
+	color: @muted;
+	padding: 0 4px;
+	margin: 2px 0;
+}
+
+#group-pomodoro .pomodoro-button:hover {
 	color: @accent;
 }
 
@@ -42,7 +111,6 @@ window#waybar > box {
 #workspaces button {
 	padding: 4 0px;
 	color: @muted;
-	background: transparent;
 	border-radius: 15px;
 	transition: all 0.1s ease;
 	margin: 2px 4px;
@@ -50,10 +118,16 @@ window#waybar > box {
 
 
 #workspaces button.focused {
-	color: @bg;
-	min-width: 30px;
-	min-height: 30px;
-	background-color: @accent; 
+	color: @accent;
+}
+
+#workspaces button label {
+	margin: 0 5px;
+	font-size: 18px;
+}
+#workspaces button.focused label {
+	font-weight: bold;
+	font-size: 23px;
 }
 
 #workspaces button:hover   { color: @fg; }
@@ -106,7 +180,8 @@ window#waybar > box {
 /* Separator */
 #custom-separator {
 	color: @muted;
-	padding: 0 4px;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 /* System drawer toggle */
@@ -137,6 +212,14 @@ window#waybar > box {
 #pulseaudio.muted { color: @muted; }
 
 /* Bluetooth */
+#bluetooth.off,
+#bluetooth.disabled {
+	margin: 0;
+	padding: 0;
+	min-width: 0;
+	min-height: 0;
+}
+
 #bluetooth.disabled     { color: @muted; }
 #bluetooth.disconnected { color: @muted; }
 #bluetooth.connected    { color: @accent; }
