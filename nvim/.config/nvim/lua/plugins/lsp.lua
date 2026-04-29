@@ -24,7 +24,7 @@ vim.lsp.config("pylsp", {
 })
 
 vim.lsp.config("*", {
-	on_attach = require("config.lsp_attach").on_attach,
+	on_attach = require("custom.lsp_attach").on_attach,
 })
 
 vim.lsp.enable("lua_ls")
