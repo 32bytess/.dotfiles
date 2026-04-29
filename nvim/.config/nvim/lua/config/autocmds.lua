@@ -27,9 +27,5 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-	callback = function()
-		local view = vim.fn.winsaveview()
-		vim.cmd("silent! keepjumps normal! gg=G")
-		vim.fn.winrestview(view)
-	end,
+	callback = require("custom.smart_format").smart_format,
 })
