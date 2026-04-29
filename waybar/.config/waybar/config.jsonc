@@ -5,34 +5,98 @@
 	"margin": "5 0 5 5",
 	"reload_style_on_change": true,
 
-	"modules-left": ["clock", "custom/separator"],
+	"modules-left": ["clock","custom/separator", "group/pomodoro", "custom/pomodoro-timer"],
 
 	"modules-center": ["sway/workspaces"],
 
+	"group/pomodoro": {
+		"orientation": "inherit",
+		"drawer": {
+			"transition-duration": 500,
+			"children-class": "pomodoro-button",
+			"transition-left-to-right": true
+		},
+		"modules": [
+			"custom/pomodoro-mode",
+			"custom/pomodoro-control",
+			"custom/pomodoro-skip",
+			"custom/pomodoro-restart"
+		]
+	},
+
+	"custom/pomodoro-mode": {
+		"exec": "waybar-pomodoro mode",
+		"return-type": "json",
+		"interval": 1,
+		"exec-if": "pgrep waybar-pomodoro",
+		"on-click": "waybar-pomodoro pause",
+		"tooltip": false
+	},
+
+	"custom/pomodoro-timer": {
+		"exec": "waybar-pomodoro timer",
+		"return-type": "json",
+		"interval": 1,
+		"exec-if": "pgrep waybar-pomodoro",
+		"on-click": "kitty --class 'pomodoro-timer' -o font_size=14 waybar-pomodoro tui",
+		"tooltip": false
+	},
+
+	"custom/pomodoro-control": {
+		"format": "󰐊",
+		"on-click": "waybar-pomodoro pause",
+		"tooltip": false
+	},
+
+	"custom/pomodoro-skip": {
+		"format": "󰒭",
+		"on-click": "waybar-pomodoro skip",
+		"tooltip": false
+	},
+
+	"custom/pomodoro-restart": {
+		"format": "󰑐",
+		"on-click": "waybar-pomodoro restart",
+		"tooltip": false
+	},
+
 	"modules-right": [
-		"tray",
-		"custom/separator",
+		"group/tray",
 		"group/audio",
+		"network",
+		"bluetooth",
 		"battery",
-		"custom/notification",
+		"custom/notification"
 	],
+
+	"group/tray": {
+		"orientation": "inherit",
+		"drawer": {
+			"transition-duration": 500,
+			"transition-top-to-bottom": false
+		},
+		"modules": [
+			"custom/separator",
+			"tray"
+		]
+	},
+
 
 	"sway/workspaces": {
 		"disable-scroll": true,
 		"all-outputs": true,
 		"format": "{icon}",
 		"format-icons": {
-			"1": "",
-			"2": "",
-			"3": "",
-			"4": "4",
-			"5": "5",
-			"6": "₆",
-			"7": "",
-			"8": "8",
-			"9": "9",
-			"10": "",
-			"default": ""
+			"1": ">_",
+			"2":"2",
+			"3":"3",
+			"4":"4",
+			"5":"5",
+			"6":"6",
+			"7":"7",
+			"8":"8",
+			"9":"9",
+			"10":"10"
 		}
 	},
 
@@ -64,6 +128,8 @@
 
 	"bluetooth": {
 		"format": "\uf294",
+		"format-off": "",
+		"format-disabled": "",
 		"format-connected": "\uf294",
 		"format-connected-battery": "\uf294",
 		"tooltip-format": "{controller_alias}\n{num_connections} connected",
@@ -74,9 +140,9 @@
 	},
 
 	"network": {
-		"format-wifi": "\uf1eb",
-		"format-ethernet": "\uf796",
-		"format-disconnected": "\uf071",
+		"format-wifi": "󰖩",
+		"format-ethernet": "󰈀",
+		"format-disconnected": "󰖪",
 		"tooltip-format": "{ifname}: {ipaddr}/{cidr}",
 		"on-click": "wifi-manager",
 		"on-click-right": "nmcli radio wifi $(nmcli radio wifi | grep -q enabled && echo off || echo on)",
@@ -85,9 +151,9 @@
 	"battery": {
 		"states": { "warning": 30, "critical": 15 },
 		"format": "{icon}",
-		"format-charging": "\uf0e7",
-		"format-plugged": "\uf1e6",
-		"format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"],
+		"format-charging": "󱊧",
+		"format-plugged": "󱊦",
+		"format-icons": ["󱊡", "󱊢", "󱊣", "󱊤", "󱊥", "󱊦"],
 		"tooltip-format": "{timeTo}, {power:.1f}W",
 	},
 
