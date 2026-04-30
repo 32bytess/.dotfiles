@@ -9,7 +9,6 @@
 }
 
 
-
 window#waybar {
 	background-color: transparent;
 }
@@ -17,7 +16,7 @@ window#waybar {
 window#waybar > box {
 	border: 2px solid @accent;
 	border-radius: 15px;
-	background-color: alpha(@bg, 0.85);
+	background-color: alpha(@bg, 0.9);
 	color: @fg;
 	padding: 10 0;
 }
@@ -26,7 +25,7 @@ window#waybar > box {
 
 #clock {
 	font-family: "Fira Code", monospace;
-	font-size: 25px;
+	font-size: 20px;
 	font-weight: bold;
 	color: @accent;
 }
@@ -42,17 +41,15 @@ window#waybar > box {
 
 #custom-pomodoro-timer {
 	font-family: "Fira Code", monospace;
-	font-size: 20px;
+	font-size: 15px;
 }
 
 #custom-pomodoro-mode {
-	font-size: 16px;
+	font-size: 18px;
 	background-color: alpha(@accent, 0.15);
 	border-radius: 50%;
-	margin: 5px 15px;
-	min-width: 32px;
-	min-height: 32px;
-	padding: 0;
+	margin: 5px ;
+	padding: 4px 0;
 }
 
 #custom-pomodoro-mode.work,
@@ -91,13 +88,17 @@ window#waybar > box {
 	background-color: alpha(@muted, 0.2);
 }
 
-#group-pomodoro .pomodoro-button {
+#custom-pomodoro-control,
+#custom-pomodoro-skip,
+#custom-pomodoro-restart {
 	color: @muted;
 	padding: 0 4px;
 	margin: 2px 0;
 }
 
-#group-pomodoro .pomodoro-button:hover {
+#custom-pomodoro-control:hover,
+#custom-pomodoro-skip:hover,
+#custom-pomodoro-restart:hover {
 	color: @accent;
 }
 
@@ -122,12 +123,12 @@ window#waybar > box {
 }
 
 #workspaces button label {
-	margin: 0 5px;
-	font-size: 18px;
+	margin: 0 3px;
+	font-size: 12px;
 }
 #workspaces button.focused label {
 	font-weight: bold;
-	font-size: 23px;
+	font-size: 15px;
 }
 
 #workspaces button:hover   { color: @fg; }
@@ -136,13 +137,13 @@ window#waybar > box {
 /* Right — shared layout */
 #pulseaudio-slider trough {
 	min-height: 80px;
-	min-width: 8px;
+	min-width: 4px;
 	border-radius: 5px;
 	background: @muted;
 }
 
 #pulseaudio-slider highlight {
-	min-width: 8px;
+	min-width: 4px;
 	border-radius: 5px;
 	background: @accent;
 }
@@ -172,9 +173,9 @@ window#waybar > box {
 	background: transparent;
 	border-radius: 15px;
 	transition: all 0.1s ease;
-	margin: 2px 4px;
-	min-width: 30px;
-	min-height: 30px;
+	margin: 2px 0;
+	min-width: 20px;
+	min-height: 20px;
 }
 
 /* Separator */
@@ -191,9 +192,9 @@ window#waybar > box {
 	background: transparent;
 	border-radius: 15px;
 	transition: all 0.1s ease;
-	margin: 2px 4px;
-	min-width: 30px;
-	min-height: 30px;
+	margin: 2px 2px;
+	min-width: 20px;
+	min-height: 20px;
 }
 
 #custom-expand:hover {

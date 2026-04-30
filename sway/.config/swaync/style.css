@@ -1,133 +1,310 @@
 @import "colors.css";
 
-* {
-    font-family: "Fira Code", monospace;
-    font-size: 13px;
+/* ── Animations ─────────────────────────────────────────────────────────── */
+
+@keyframes slide-in {
+	from {
+		opacity: 0;
+		transform: translateX(-16px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
 }
+
+@keyframes slide-down {
+	from {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fade-in {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+
+@keyframes pulse {
+	0%   { opacity: 1; }
+	50%  { opacity: 0.4; }
+	100% { opacity: 1; }
+}
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+
+* {
+	font-family: "Fira Code", monospace;
+	font-size: 13px;
+	transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+
+/* ── Control center ──────────────────────────────────────────────────────── */
 
 .control-center {
-    background: @bg;
-    border-radius: 10px;
-    border: 2px solid @accent;
-    padding: 8px;
-    color: @fg;
+	background: alpha(@bg, 0.90);
+	border-radius: 12px;
+	border: 2px solid @accent;
+	padding: 10px;
+	color: @fg;
 }
 
+/* ── Title ───────────────────────────────────────────────────────────────── */
+
 .widget-title > label {
-    font-size: 14px;
-    font-weight: bold;
-    color: @accent;
+	font-size: 14px;
+	font-weight: bold;
+	color: @accent;
 }
 
 .widget-title > button {
-    background: @muted;
-    border: none;
-    border-radius: 8px;
-    color: @fg;
-    padding: 4px 10px;
+	background: @muted;
+	border: none;
+	border-radius: 8px;
+	color: @fg;
+	padding: 4px 10px;
+	transition: background 150ms ease, color 150ms ease, transform 100ms ease;
 }
 
 .widget-title > button:hover {
-    background: @muted;
-    color: @fg;
+	background: @error;
+	color: @bg;
+	transform: scale(1.05);
+}
+
+/* ── DND ─────────────────────────────────────────────────────────────────── */
+
+.widget-dnd {
+	background: @surface;
+	border-radius: 8px;
+	padding: 6px 8px;
+	margin: 4px 0;
 }
 
 .widget-dnd > switch {
-    border-radius: 12px;
-    background: @muted;
-    border: none;
-    color: @muted;
+	border-radius: 12px;
+	background: @muted;
+	border: none;
+	color: @muted;
+	transition: background 200ms ease;
 }
 
 .widget-dnd > switch:checked {
-    background: @accent;
-    color: @bg;
+	background: @accent;
+	color: @bg;
 }
+
+.widget-dnd > switch slider {
+	border-radius: 50%;
+	transition: margin 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Quick-settings buttons grid ─────────────────────────────────────────── */
+
+.widget-buttons-grid {
+	background: @surface;
+	border-radius: 10px;
+	padding: 8px;
+	margin: 4px 0;
+	animation: fade-in 200ms ease;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild {
+	padding: 2px;
+	animation: slide-down 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* nth-child stagger — each button slides in slightly later */
+.widget-buttons-grid > flowbox > flowboxchild:nth-child(1) { animation-delay:  0ms; }
+.widget-buttons-grid > flowbox > flowboxchild:nth-child(2) { animation-delay: 30ms; }
+.widget-buttons-grid > flowbox > flowboxchild:nth-child(3) { animation-delay: 60ms; }
+.widget-buttons-grid > flowbox > flowboxchild:nth-child(4) { animation-delay: 90ms; }
+.widget-buttons-grid > flowbox > flowboxchild:nth-child(5) { animation-delay:120ms; }
+.widget-buttons-grid > flowbox > flowboxchild:nth-child(6) { animation-delay:150ms; }
+.widget-buttons-grid > flowbox > flowboxchild:nth-child(7) { animation-delay:180ms; }
+.widget-buttons-grid > flowbox > flowboxchild:nth-child(8) { animation-delay:210ms; }
+
+.widget-buttons-grid > flowbox > flowboxchild > button {
+	background: alpha(@muted, 0.5);
+	border: 1px solid transparent;
+	border-radius: 10px;
+	color: @fg;
+	font-size: 20px;
+	padding: 10px;
+	min-width: 56px;
+	min-height: 48px;
+	transition: background 150ms ease,
+	color       150ms ease,
+	border-color 150ms ease,
+	transform   120ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button:hover {
+	background: alpha(@accent, 0.25);
+	border-color: @accent;
+	transform: scale(1.08);
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button:active {
+	transform: scale(0.94);
+}
+
+/* toggle ON state */
+.widget-buttons-grid > flowbox > flowboxchild > button.active {
+	background: @accent;
+	color: @bg;
+	border-color: @accent;
+}
+
+/* ── Power grid (bottom) ─────────────────────────────────────────────────── */
+
+#buttons-grid-power {
+	margin-top: auto;
+	border-top: 1px solid alpha(@muted, 0.4);
+	padding-top: 10px;
+}
+
+#buttons-grid-power > flowbox > flowboxchild > button:hover {
+	background: alpha(@error, 0.25);
+	border-color: @error;
+}
+
+/* ── Volume ──────────────────────────────────────────────────────────────── */
 
 .widget-volume {
-    background: @surface;
-    border-radius: 8px;
-    padding: 8px;
-    margin: 4px 0;
-    color: @info;
+	background: @surface;
+	border-radius: 8px;
+	padding: 8px;
+	margin: 4px 0;
+	color: @info;
 }
+
+.widget-volume scale trough {
+	border-radius: 4px;
+	transition: background 150ms ease;
+}
+
+.widget-volume scale highlight {
+	background: @info;
+	border-radius: 4px;
+}
+
+/* ── Backlight ───────────────────────────────────────────────────────────── */
 
 .widget-backlight {
-    background: @surface;
-    border-radius: 8px;
-    padding: 8px;
-    margin: 4px 0;
-    color: @warning;
+	background: @surface;
+	border-radius: 8px;
+	padding: 8px;
+	margin: 4px 0;
+	color: @warning;
 }
 
+.widget-backlight scale highlight {
+	background: @warning;
+	border-radius: 4px;
+}
+
+/* ── MPRIS ───────────────────────────────────────────────────────────────── */
+
 .widget-mpris {
-    background: @surface;
-    border-radius: 8px;
-    padding: 8px;
-    margin: 4px 0;
+	background: @surface;
+	border-radius: 8px;
+	padding: 8px;
+	margin: 4px 0;
+	animation: fade-in 300ms ease;
 }
 
 .widget-mpris-player {
-    color: @fg;
+	color: @fg;
 }
 
 .widget-mpris-title {
-    font-weight: bold;
-    color: @accent;
+	font-weight: bold;
+	color: @accent;
 }
 
 .widget-mpris-subtitle {
-    color: @fg;
+	color: @fg;
 }
 
+.widget-mpris button {
+	background: transparent;
+	border: none;
+	border-radius: 50%;
+	padding: 4px;
+	transition: background 150ms ease, transform 100ms ease;
+}
+
+.widget-mpris button:hover {
+	background: @muted;
+	transform: scale(1.15);
+}
+
+/* ── Notifications ───────────────────────────────────────────────────────── */
+
 .notification-row {
-    margin: 4px 0;
+	margin: 4px 0;
+	animation: slide-in 200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .notification {
-    background: @surface;
-    border-radius: 10px;
-    border: 1px solid @muted;
-    padding: 8px;
+	background: @surface;
+	border-radius: 10px;
+	border: 1px solid @muted;
+	padding: 8px;
+	transition: border-color 150ms ease;
+}
+
+.notification:hover {
+	border-color: @accent;
 }
 
 .notification-default-action {
-    border-radius: 10px;
-    color: @fg;
+	border-radius: 10px;
+	color: @fg;
+	transition: background 150ms ease;
 }
 
 .notification-default-action:hover {
-    background: @muted;
+	background: @muted;
 }
 
 .notification-summary {
-    font-weight: bold;
-    color: @fg;
+	font-weight: bold;
+	color: @fg;
 }
 
 .notification-body {
-    color: @fg;
+	color: @fg;
 }
 
 .notification-action {
-    background: @muted;
-    border-radius: 6px;
-    color: @accent;
-    margin: 2px;
+	background: @muted;
+	border-radius: 6px;
+	color: @accent;
+	margin: 2px;
+	transition: background 150ms ease, color 150ms ease, transform 100ms ease;
 }
 
 .notification-action:hover {
-    background: @accent;
-    color: @bg;
+	background: @accent;
+	color: @bg;
+	transform: scale(1.04);
 }
 
 .close-button {
-    background: transparent;
-    color: @muted;
-    border-radius: 50%;
+	background: transparent;
+	color: @muted;
+	border-radius: 50%;
+	transition: background 150ms ease, color 150ms ease, transform 100ms ease;
 }
 
 .close-button:hover {
-    background: @error;
-    color: @bg;
+	background: @error;
+	color: @bg;
+	transform: scale(1.1);
 }
