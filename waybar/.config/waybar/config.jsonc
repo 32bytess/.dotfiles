@@ -2,7 +2,6 @@
 	"layer": "top",
 	"position": "left",
 	"font-family": "JetBrainsMono Nerd Font",
-	"margin": "5 0 5 5",
 	"reload_style_on_change": true,
 
 	"modules-left": ["clock","custom/separator", "group/pomodoro", "custom/pomodoro-timer"],

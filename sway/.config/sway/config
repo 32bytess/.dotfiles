@@ -14,5 +14,5 @@ set $term kitty
 set $menu pkill rofi || rofi -show drun
 set $opacity 0.92
 
+
 include config.d/*
-include /etc/sway/config.d/

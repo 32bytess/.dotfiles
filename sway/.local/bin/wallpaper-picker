@@ -3,7 +3,7 @@ set -euo pipefail
 
 FULL_PATH="$1"
 
-swww img "$FULL_PATH" --transition-type center --transition-step 30 &&
+swww img "$FULL_PATH" --transition-type fade --transition-step 30 &&
 	~/.cargo/bin/wallust run "$FULL_PATH" &&
 	~/.local/bin/wallust-darken && {
 	sleep 0.5

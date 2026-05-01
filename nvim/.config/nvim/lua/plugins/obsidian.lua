@@ -20,6 +20,14 @@ return {
 			return opts
 		end,
 	},
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		-- dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.icons" }, -- if you use standalone mini plugins
+		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" }, -- if you prefer nvim-web-devicons
+		---@module 'render-markdown'
+		---@type render.md.UserConfig
+		opts = {},
+	},
 
 	{
 		"epwalsh/obsidian.nvim",
@@ -53,6 +61,7 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"Saghen/blink.compat",
+			"MeanderingProgrammer/render-markdown.nvim",
 		},
 		config = function(_, opts)
 			require("obsidian").setup(opts)
