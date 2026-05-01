@@ -35,7 +35,6 @@
 	100% { opacity: 1; }
 }
 
-/* ── Base ────────────────────────────────────────────────────────────────── */
 
 * {
 	font-family: "Fira Code", monospace;
@@ -48,7 +47,7 @@
 .control-center {
 	background: alpha(@bg, 0.90);
 	border-radius: 12px;
-	border: 2px solid @accent;
+	border: 1px solid @accent;
 	padding: 10px;
 	color: @fg;
 }

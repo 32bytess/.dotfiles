@@ -9,5 +9,9 @@ return {
 			bash = { "shfmt" },
 			dart = { "dart_format" },
 		},
+		format_on_save = {
+			timeout_ms = 500,
+			lsp_fallback = true,
+		},
 	},
 }

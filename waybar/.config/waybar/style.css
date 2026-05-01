@@ -2,7 +2,7 @@
 
 * {
 	font-family: "JetBrainsMono Nerd Font";
-	font-size: 20px;
+	font-size: 18px;
 	border: none ;
 	border-radius: 0;
 	min-height: 0;
@@ -14,9 +14,10 @@ window#waybar {
 }
 
 window#waybar > box {
-	border: 2px solid @accent;
+	border: 1px solid @accent;
 	border-radius: 15px;
-	background-color: alpha(@bg, 0.9);
+	margin: 6px 0px 6px 2px;
+	background-color: alpha(@bg, 0.85);
 	color: @fg;
 	padding: 10 0;
 }
@@ -25,7 +26,7 @@ window#waybar > box {
 
 #clock {
 	font-family: "Fira Code", monospace;
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: bold;
 	color: @accent;
 }
@@ -114,7 +115,7 @@ window#waybar > box {
 	color: @muted;
 	border-radius: 15px;
 	transition: all 0.1s ease;
-	margin: 2px 4px;
+	margin: 2px;
 }
 
 
@@ -174,8 +175,8 @@ window#waybar > box {
 	border-radius: 15px;
 	transition: all 0.1s ease;
 	margin: 2px 0;
-	min-width: 20px;
-	min-height: 20px;
+	/* min-width: 18px; */
+	/* min-height: 18px; */
 }
 
 /* Separator */
@@ -193,8 +194,8 @@ window#waybar > box {
 	border-radius: 15px;
 	transition: all 0.1s ease;
 	margin: 2px 2px;
-	min-width: 20px;
-	min-height: 20px;
+	min-width: 18px;
+	min-height: 18px;
 }
 
 #custom-expand:hover {
@@ -243,7 +244,7 @@ window#waybar > box {
 }
 
 #tray {
-	padding: 4px 8px;
+	padding: 4px 4px;
 }
 
 /* Notifications */
