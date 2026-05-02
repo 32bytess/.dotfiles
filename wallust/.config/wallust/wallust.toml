@@ -1,4 +1,4 @@
-backend = "full"
+backend = "resized"
 
 color_space = "lab"
 palette = "dark16"
