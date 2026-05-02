@@ -4,9 +4,26 @@
 	"font-family": "JetBrainsMono Nerd Font",
 	"reload_style_on_change": true,
 
-	"modules-left": ["clock","custom/separator", "group/pomodoro", "custom/pomodoro-timer"],
+
+	"modules-left": ["custom/launcher","clock", "custom/pomodoro"],
 
 	"modules-center": ["sway/workspaces"],
+
+	"modules-right": [
+		"group/tray",
+		"group/audio",
+		"network",
+		"bluetooth",
+		"battery",
+		"custom/notification"
+	],
+
+	"custom/pomodoro": {
+		"modules" : [
+		"group/pomodoro",
+		"custom/pomodoro-timer"
+		]
+	},
 
 	"group/pomodoro": {
 		"orientation": "inherit",
@@ -22,7 +39,11 @@
 			"custom/pomodoro-restart"
 		]
 	},
-
+	"custom/launcher": {
+		"format": "",
+		"on-click": "",
+		"tooltip": false
+	},
 	"custom/pomodoro-mode": {
 		"exec": "waybar-pomodoro mode",
 		"return-type": "json",
@@ -59,14 +80,6 @@
 		"tooltip": false
 	},
 
-	"modules-right": [
-		"group/tray",
-		"group/audio",
-		"network",
-		"bluetooth",
-		"battery",
-		"custom/notification"
-	],
 
 	"group/tray": {
 		"orientation": "inherit",

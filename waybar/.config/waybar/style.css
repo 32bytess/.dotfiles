@@ -13,13 +13,22 @@ window#waybar {
 	background-color: transparent;
 }
 
+
 window#waybar > box {
-	border: 1px solid @accent;
+	margin: 5px 0px 5px 5px;
+}
+
+
+
+#custom-launcher ,
+#clock,
+#custom-pomodoro,
+.modules-center,
+.modules-right {
+	background-color: @bg;
 	border-radius: 15px;
-	margin: 6px 0px 6px 2px;
-	background-color: alpha(@bg, 0.85);
-	color: @fg;
-	padding: 10 0;
+	margin: 2px 0px;
+	padding: 10px 0;
 }
 
 /* Left */
@@ -28,7 +37,14 @@ window#waybar > box {
 	font-family: "Fira Code", monospace;
 	font-size: 18px;
 	font-weight: bold;
+	padding: 15 0;
 	color: @accent;
+}
+
+#custom-launcher {
+	font-size: 22px;
+	color: @accent;
+	padding: 6px 0;
 }
 
 

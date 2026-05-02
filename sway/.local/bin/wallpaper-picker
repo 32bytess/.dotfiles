@@ -3,8 +3,9 @@ set -euo pipefail
 
 FULL_PATH="$1"
 
-swww img "$FULL_PATH" --transition-type fade --transition-step 30 &&
-	~/.cargo/bin/wallust run "$FULL_PATH" &&
+pkill swaybg || true
+swaybg -i "$FULL_PATH" -m fill &
+~/.cargo/bin/wallust run "$FULL_PATH" &&
 	~/.local/bin/wallust-darken && {
 	sleep 0.5
 	swaymsg reload

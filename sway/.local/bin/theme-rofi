@@ -10,8 +10,8 @@ CHOSEN=$(
 		rofi -dmenu -p "Theme" -theme ~/.config/rofi/theme.rasi
 ) || exit 1
 
-~/.cargo/bin/wallust theme "$CHOSEN" && \
-~/.local/bin/wallust-darken && {
+~/.cargo/bin/wallust theme "$CHOSEN" &&
+	~/.local/bin/wallust-darken && {
 	sleep 0.5
 	swaymsg reload
 	pkill -SIGUSR2 waybar 2>/dev/null || true
