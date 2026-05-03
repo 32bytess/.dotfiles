@@ -8,6 +8,7 @@ else
 		find ~/projects -mindepth 1 -maxdepth 2 -type d 2>/dev/null
 		echo ~/dotfiles
 		echo ~/obsidian/main/projects/thesis
+		find ~/obsidian/main/projects/thesis/academic -mindepth 1 -maxdepth 1 -type d 2>/dev/null
 		echo ~/obsidian/main
 	} | fzf)
 fi

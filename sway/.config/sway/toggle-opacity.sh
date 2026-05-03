@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-OPACITY=$(grep -Po '(?<=set \$opacity )\S+' "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config" 2>/dev/null || echo 0.9)
+OPACITY=$(grep -Po "(?<=set \$opacity )\S+" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config" 2>/dev/null || echo 0.95)
 CON_ID=$(swaymsg -t get_tree | jq '.. | objects | select(.focused == true) | .id // empty')
 [[ -z "$CON_ID" ]] && exit 0
 
