@@ -15,126 +15,49 @@ window#waybar {
 
 
 window#waybar > box {
-	margin: 5px 0px 5px 5px;
+	margin: 2px 5px 0px 5px;
 }
 
 
 
-#custom-launcher ,
+#custom-launcher,
 #clock,
+#workspaces,
 .modules-center,
 .modules-right,
-#group-pomodoro {
+#group-tray,
+#group-audio{
 	background-color: @bg;
 	border-radius: 15px;
-	margin: 2px 0px;
-	padding: 10px 0;
+	margin: 0px 2px;
+	padding: 0 10px;
 }
 
-#group-pomodoro {
-	background-color: alpha(@bg, 1);
-	border-radius: 50%;
-	margin: 5px ;
-	padding: 4px 0;
-}
-
-/* Left */
 
 #clock {
 	font-family: "Fira Code", monospace;
 	font-size: 15px;
 	font-weight: bold;
-	padding: 15 0;
+	padding: 0 15px;
 	color: @accent;
 }
 
 #custom-launcher {
 	font-size: 22px;
 	color: @accent;
-	padding: 6px 0;
+	padding: 0 6px;
 }
 
-
-/* Pomodoro */
-#custom-pomodoro-mode,
-#custom-pomodoro-timer {
-	font-family: "JetBrainsMono Nerd Font";
-	font-weight: bold;
-	color: @accent;
-}
-
-#custom-pomodoro-timer {
-	font-family: "Fira Code", monospace;
-	font-size: 15px;
-}
-
-#custom-pomodoro-mode {
-	font-size: 18px;
-	background-color: alpha(@accent, 0.15);
-	border-radius: 50%;
-	margin: 5px ;
-	padding: 4px 0;
-}
-
-#custom-pomodoro-mode.work,
-#custom-pomodoro-timer.work {
-	color: @accent;
-}
-
-#custom-pomodoro-mode.work {
-	background-color: alpha(@accent, 0.2);
-}
-
-#custom-pomodoro-mode.rest,
-#custom-pomodoro-mode.long-break,
-#custom-pomodoro-timer.rest,
-#custom-pomodoro-timer.long-break {
-	color: @info;
-}
-
-#custom-pomodoro-mode.rest,
-#custom-pomodoro-mode.long-break {
-	background-color: alpha(@info, 0.2);
-}
-
-#custom-pomodoro-mode.work-paused,
-#custom-pomodoro-mode.rest-paused,
-#custom-pomodoro-mode.long-break-paused,
-#custom-pomodoro-timer.work-paused,
-#custom-pomodoro-timer.rest-paused,
-#custom-pomodoro-timer.long-break-paused {
-	color: @muted;
-}
-
-#custom-pomodoro-mode.work-paused,
-#custom-pomodoro-mode.rest-paused,
-#custom-pomodoro-mode.long-break-paused {
-	background-color: alpha(@muted, 0.2);
-}
-
-#custom-pomodoro-control,
-#custom-pomodoro-skip,
-#custom-pomodoro-restart {
-	color: @muted;
-	padding: 0 4px;
-	margin: 2px 0;
-}
-
-#custom-pomodoro-control:hover,
-#custom-pomodoro-skip:hover,
-#custom-pomodoro-restart:hover {
-	color: @accent;
-}
 
 /* Center */
 
 
 #workspaces {
-	padding: 6 0px;
+	padding: 0 6px;
 }
 
 #workspaces button {
-	padding: 4 0px;
+	padding: 0 8px;
 	color: @muted;
 	border-radius: 15px;
 	transition: all 0.1s ease;
@@ -143,7 +66,8 @@ window#waybar > box {
 
 
 #workspaces button.focused {
-	color: @accent;
+	background-color: @accent;
+	color: @bg;
 }
 
 #workspaces button label {
@@ -160,14 +84,14 @@ window#waybar > box {
 
 /* Right — shared layout */
 #pulseaudio-slider trough {
-	min-height: 80px;
-	min-width: 4px;
+	min-width: 80px;
+	min-height: 4px;
 	border-radius: 5px;
 	background: @muted;
 }
 
 #pulseaudio-slider highlight {
-	min-width: 4px;
+	min-height: 4px;
 	border-radius: 5px;
 	background: @accent;
 }
@@ -192,12 +116,12 @@ window#waybar > box {
 #battery,
 #tray,
 #custom-notification {
-	padding: 4px 0;
+	padding: 0 4px;
 	color: @accent;
 	background: transparent;
 	border-radius: 15px;
 	transition: all 0.1s ease;
-	margin: 2px 0;
+	margin: 0 2px;
 	/* min-width: 18px; */
 	/* min-height: 18px; */
 }
@@ -205,13 +129,13 @@ window#waybar > box {
 /* Separator */
 #custom-separator {
 	color: @muted;
-	font-size: 20px;
+	font-size: 10px;
 	font-weight: bold;
 }
 
 /* System drawer toggle */
 #custom-expand {
-	padding: 4px 0;
+	padding: 0 4px;
 	color: @muted;
 	background: transparent;
 	border-radius: 15px;

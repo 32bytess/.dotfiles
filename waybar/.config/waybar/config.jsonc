@@ -1,6 +1,6 @@
 {
 	"layer": "top",
-	"position": "left",
+	"position": "top",
 	"font-family": "JetBrainsMono Nerd Font",
 	"reload_style_on_change": true,
 
@@ -10,82 +10,19 @@
 	"modules-center": ["sway/workspaces"],
 
 	"modules-right": [
-		"group/tray",
+		"tray",
+		"custom/separator",
 		"group/audio",
-		"network",
-		"bluetooth",
 		"battery",
 		"custom/notification"
 	],
 
-	"group/pomodoro": {
-		"modules" : [
-		"group/pomodoro-drawer",
-		"custom/pomodoro-timer"
-		]
-	},
-
-	"group/pomodoro-drawer": {
-		"orientation": "inherit",
-		"drawer": {
-			"transition-duration": 500,
-			"children-class": "pomodoro-button",
-			"transition-left-to-right": true
-		},
-		"modules": [
-			"custom/pomodoro-mode",
-			"custom/pomodoro-control",
-			"custom/pomodoro-skip",
-			"custom/pomodoro-restart"
-		]
-	},
-	"custom/launcher": {
-		"format": "",
-		"on-click": "",
-		"tooltip": false
-	},
-	"custom/pomodoro-mode": {
-		"exec": "waybar-pomodoro mode",
-		"return-type": "json",
-		"interval": 1,
-		"exec-if": "pgrep waybar-pomodoro",
-		"on-click": "waybar-pomodoro pause",
-		"tooltip": false
-	},
-
-	"custom/pomodoro-timer": {
-		"exec": "waybar-pomodoro timer",
-		"return-type": "json",
-		"interval": 1,
-		"exec-if": "pgrep waybar-pomodoro",
-		"on-click": "kitty --class 'pomodoro-timer' -o font_size=14 waybar-pomodoro tui",
-		"tooltip": false
-	},
-
-	"custom/pomodoro-control": {
-		"format": "󰐊",
-		"on-click": "waybar-pomodoro pause",
-		"tooltip": false
-	},
-
-	"custom/pomodoro-skip": {
-		"format": "󰒭",
-		"on-click": "waybar-pomodoro skip",
-		"tooltip": false
-	},
-
-	"custom/pomodoro-restart": {
-		"format": "󰑐",
-		"on-click": "waybar-pomodoro restart",
-		"tooltip": false
-	},
-
 
 	"group/tray": {
-		"orientation": "inherit",
+		"orientation": "horizontal",
 		"drawer": {
 			"transition-duration": 500,
-			"transition-top-to-bottom": false
+			"transition-left-to-right": false
 		},
 		"modules": [
 			"custom/separator",
@@ -93,11 +30,30 @@
 		]
 	},
 
+	"group/audio": {
+		"orientation": "horizontal",
+		"drawer": {
+			"transition-duration": 300,
+			"transition-left-to-right": false,
+		},
+		"modules" : ["pulseaudio","pulseaudio/slider"],
+	},
+
+	"custom/launcher": {
+		"format": "",
+		"on-click": "pkill rofi || rofi -show drun",
+		"tooltip": false
+	},
 
 	"sway/workspaces": {
 		"disable-scroll": true,
 		"all-outputs": true,
 		"format": "{icon}",
+		"persistent-workspaces": {
+			"1": [],
+			"2": [],
+			"3": []
+		},
 		"format-icons": {
 			"1": ">_",
 			"2":"2",
@@ -112,26 +68,17 @@
 		}
 	},
 
-	"group/audio": {
-		"orientation": "vertical",
-		"drawer": {
-			"transition-duration": 300,
-			"transition-top-to-bottom": false,
-		},
-		"modules" : ["pulseaudio","pulseaudio/slider"],
-	},
-
 	"pulseaudio/slider": {
 		"min" : 0,
 		"max" : 100,
-		"orientation": "vertical",
+		"orientation": "horizontal",
 	},
 
 	"pulseaudio": {
 		"format": "{icon}",
-		"format-muted": "\uf6a9",
+		"format-muted": "\udb81\udf5f",
 		"format-icons": {
-			"default": ["\uf026", "\uf027", "\uf028"],
+			"default": ["\udb81\udd7f", "\udb81\udd80", "\udb81\udd7e"],
 		},
 		"on-click": "pavucontrol",
 		"on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
@@ -139,11 +86,11 @@
 	},
 
 	"bluetooth": {
-		"format": "\uf294",
-		"format-off": "",
-		"format-disabled": "",
-		"format-connected": "\uf294",
-		"format-connected-battery": "\uf294",
+		"format": "\udb80\udcaf",
+		"format-off": "\udb80\udcb2",
+		"format-disabled": "\udb80\udcb2",
+		"format-connected": "\udb80\udcb1",
+		"format-connected-battery": "\udb80\udcb1",
 		"tooltip-format": "{controller_alias}\n{num_connections} connected",
 		"tooltip-format-connected": "{controller_alias}\n{num_connections} connected\n\n{device_enumerate}",
 		"tooltip-format-enumerate-connected": "{device_alias}  {device_address}",
@@ -176,7 +123,7 @@
 
 	"clock": {
 		"tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
-		"format": "{:%H\n%M}",
+		"format": "{:%H:%M}",
 		"on-click": "gnome-calendar",
 	},
 
@@ -184,14 +131,14 @@
 		"tooltip": false,
 		"format": "{icon}",
 		"format-icons": {
-			"notification": "\uf0f3",
-			"none": "\uf0f3",
-			"dnd-notification": "\uf1f6",
-			"dnd-none": "\uf1f6",
-			"inhibited-notification": "\uf0f3",
-			"inhibited-none": "\uf0f3",
-			"dnd-inhibited-notification": "\uf1f6",
-			"dnd-inhibited-none": "\uf1f6",
+			"notification": "\udb80\udc9a",
+			"none": "\udb80\udc9a",
+			"dnd-notification": "\udb80\udc9b",
+			"dnd-none": "\udb80\udc9b",
+			"inhibited-notification": "\udb80\udc9a",
+			"inhibited-none": "\udb80\udc9a",
+			"dnd-inhibited-notification": "\udb80\udc9b",
+			"dnd-inhibited-none": "\udb80\udc9b",
 		},
 		"return-type": "json",
 		"exec-if": "command -v swaync-client",
@@ -202,7 +149,7 @@
 	},
 
 	"custom/separator": {
-		"format": "—",
+		"format": "|",
 		"tooltip": false,
 	},
 }
