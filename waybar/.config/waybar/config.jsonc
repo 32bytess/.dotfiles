@@ -5,9 +5,9 @@
 	"reload_style_on_change": true,
 
 
-	"modules-left": ["custom/launcher","clock"],
+	"modules-left": ["custom/launcher","sway/workspaces"],
 
-	"modules-center": ["sway/workspaces"],
+	"modules-center": ["clock"],
 
 	"modules-right": [
 		"tray",
@@ -123,7 +123,7 @@
 
 	"clock": {
 		"tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
-		"format": "{:%H:%M}",
+		"format": "{:%a %d %b  %H:%M}",
 		"on-click": "gnome-calendar",
 	},
 
