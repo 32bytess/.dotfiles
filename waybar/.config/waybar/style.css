@@ -79,6 +79,10 @@ window#waybar > box {
 	font-size: 15px;
 }
 
+#workspaces button.visible:not(.focused) {
+	color: @accent;
+}
+
 #workspaces button:hover   { color: @fg; }
 
 

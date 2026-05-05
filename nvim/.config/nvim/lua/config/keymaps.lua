@@ -1,10 +1,31 @@
--- diagnostics popup (like K but for errors/warnings)
-vim.keymap.set("n", "<leader>k", vim.diagnostic.open_float, { desc = "Show diagnostic popup" })
+-- ─── UI / Navigation ────────────────────────────────────────────────────────
 
--- formatting
-vim.keymap.set({ "n", "v" }, "<leader>gf", require("custom.smart_format").smart_format, { desc = "Format" })
+-- Clear search highlight; close float window if currently focused
+vim.keymap.set("n", "<Esc>", function()
+	vim.cmd.nohlsearch()
+	local win = vim.api.nvim_get_current_win()
+	if vim.api.nvim_win_get_config(win).relative ~= "" then
+		vim.api.nvim_win_close(win, false)
+	end
+end, { desc = "Close float / clear highlight", silent = true })
 
--- ADB WiFi QR code pairing (floating terminal, closes on exit)
+-- ─── Diagnostics ────────────────────────────────────────────────────────────
+
+vim.keymap.set("n", "<leader>k", vim.diagnostic.open_float, { desc = "Show diagnostic popup", silent = true })
+
+-- ─── Formatting ─────────────────────────────────────────────────────────────
+
+vim.keymap.set({ "n", "v" }, "<leader>gf", function()
+	require("custom.smart_format").smart_format()
+end, { desc = "Format", silent = true })
+
+-- ─── Terminal ───────────────────────────────────────────────────────────────
+
+local term = require("custom.term_float").new(vim.o.shell)
+vim.keymap.set("n", "<leader>tt", term.toggle, { desc = "Toggle terminal float", silent = true })
+
+-- ─── Mobile / ADB ───────────────────────────────────────────────────────────
+
 vim.keymap.set("n", "<leader>aa", function()
 	local buf = vim.api.nvim_create_buf(false, true)
 	local width = math.floor(vim.o.columns * 0.5)
@@ -26,15 +47,4 @@ vim.keymap.set("n", "<leader>aa", function()
 		end,
 	})
 	vim.cmd("startinsert")
-end, { desc = "ADB WiFi QR pair" })
-
--- close float windows with q
-vim.keymap.set("n", "<Esc>", function()
-	vim.cmd.nohlsearch()
-	local win = vim.api.nvim_get_current_win()
-	if vim.api.nvim_win_get_config(win).relative ~= "" then
-		vim.api.nvim_win_close(win, false)
-	else
-		vim.fn.feedkeys("q", "n")
-	end
-end, { desc = "Close float / q" })
+end, { desc = "ADB WiFi QR pair", silent = true })
