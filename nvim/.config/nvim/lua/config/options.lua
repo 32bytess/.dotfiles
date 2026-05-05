@@ -1,3 +1,9 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
+vim.o.timeoutlen = 200
+vim.o.ttimeoutlen = 10
+
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.cursorline = true
