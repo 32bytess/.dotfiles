@@ -2,196 +2,65 @@
 
 * {
 	font-family: "JetBrainsMono Nerd Font";
-	font-size: 18px;
-	border: none ;
+	font-size: 14px;
+	border: none;
 	border-radius: 0;
 	min-height: 0;
 }
 
-
 window#waybar {
 	background-color: @bg;
-	border-right: 1px solid @muted;
+	border-top: 1px solid @muted;
 }
-
-
-window#waybar > box {
-	margin: 0;
-}
-
-
 
 #custom-launcher,
 #clock,
 #workspaces,
-.modules-center,
-.modules-right,
-#group-tray,
-#group-audio{
-	background-color: transparent; 
-	border-radius: 0;
-	margin: 0;
-	padding: 10px 0;
-}
-
-
-#clock {
-	font-family: "Fira Code", monospace;
-	font-size: 15px;
-	font-weight: bold;
-	padding: 15px 0;
+#scratchpad,
+#pulseaudio,
+#battery,
+#tray,
+#custom-notification {
+	background-color: transparent;
+	padding: 2px 8px;
 	color: @accent;
-}
-
-#custom-launcher {
-	font-size: 22px;
-	color: @accent;
-	padding: 0 6px;
-}
-
-
-#workspaces {
-	padding: 0;
 }
 
 #workspaces button {
-	padding: 8px 0;
+	padding: 0 4px;
 	color: @muted;
-	border-radius: 0;
-	transition: all 0.1s ease;
-	margin: 0;
 }
-
 
 #workspaces button.focused {
 	color: @accent;
-}
-
-#workspaces button label {
-	margin: 0 3px;
-	font-size: 12px;
-}
-#workspaces button.focused label {
-	font-weight: bold;
-	font-size: 15px;
 }
 
 #workspaces button.visible:not(.focused) {
 	color: @accent;
 }
 
-#workspaces button:hover   { color: @fg; }
-
-
-/* Right — shared layout */
-#pulseaudio-slider trough {
-	min-height: 80px;
-	min-width: 4px;
-	border-radius: 0;
-	background: @muted;
+#workspaces button:hover {
+	color: @fg;
 }
 
-#pulseaudio-slider highlight {
-	min-width: 4px;
-	border-radius: 0;
-	background: @accent;
-}
-
-#pulseaudio-slider slider {
-	min-width: 0;
-	min-height: 0;
-	background: transparent;
-	border: none;
-	box-shadow: none;
-}
-
-#pulseaudio {
-	font-size: 22px;
-}
-
-#cpu,
-#memory,
-#pulseaudio,
-#bluetooth,
-#network,
-#battery,
-#tray,
-#custom-notification {
-	padding: 0 4px;
-	color: @accent;
-	background: transparent;
-	border-radius: 0;
-	transition: all 0.1s ease;
-	margin: 0;
-}
-
-/* Separator */
-#custom-separator {
-	color: @muted;
-	font-size: 10px;
+#clock {
 	font-weight: bold;
 }
 
-/* System drawer toggle */
-#custom-expand {
-	padding: 0 4px;
+#custom-launcher {
+	font-size: 18px;
+	padding-left: 12px;
+}
+
+#custom-separator {
 	color: @muted;
-	background: transparent;
-	border-radius: 0;
-	transition: all 0.1s ease;
-	margin: 0;
-	min-width: 18px;
-	min-height: 18px;
+	padding: 0 4px;
 }
 
-#custom-expand:hover {
-	color: @accent;
-}
+#battery.warning { color: @warning; }
+#battery.critical { color: @error; }
+#battery.charging { color: @info; }
 
-/* CPU */
-#cpu.warning  { color: @warning; }
-#cpu.critical { color: @error; animation: blink 1s steps(1) infinite; }
-
-/* Memory */
-#memory.warning  { color: @warning; }
-#memory.critical { color: @error; }
-
-/* Pulseaudio */
 #pulseaudio.muted { color: @muted; }
 
-/* Bluetooth */
-#bluetooth.off,
-#bluetooth.disabled {
-	margin: 0;
-	padding: 0;
-	min-width: 0;
-	min-height: 0;
-}
-
-#bluetooth.disabled     { color: @muted; }
-#bluetooth.disconnected { color: @muted; }
-#bluetooth.connected    { color: @accent; }
-
-/* Network */
-#network.disconnected { color: @error; }
-
-/* Battery */
-#battery.warning  { color: @warning; }
-#battery.critical {
-	color: @error;
-	animation: blink 1s steps(1) infinite;
-}
-#battery.charging { color: @info; }
-#battery.plugged  { color: @fg; }
-
-@keyframes blink {
-	from { background: transparent; color: @error; }
-	to   { background: @error; color: @bg; }
-}
-
-#tray {
-	padding: 4px 4px;
-}
-
-/* Notifications */
 #custom-notification.dnd { color: @muted; }

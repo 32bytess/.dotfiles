@@ -130,6 +130,15 @@ window#waybar > box {
 	/* min-height: 18px; */
 }
 
+#scratchpad {
+	padding: 8px 4px;
+	color: @accent;
+	transition: all 0.1s ease;
+	margin: 2px;
+	font-weight: bold;
+	font-size: 15px;
+}
+
 /* Separator */
 #custom-separator {
 	color: @muted;
