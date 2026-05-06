@@ -11,11 +11,13 @@ CHOSEN=$(
 ) || exit 1
 
 ~/.cargo/bin/wallust theme "$CHOSEN" &&
-	~/.local/bin/wallust-darken && {
-	sleep 0.5
-	swaymsg reload
-	swaync-client --reload-css 2>/dev/null || true
-	pkill -SIGUSR1 kitty 2>/dev/null || true
-	tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true
-	pkill -SIGUSR1 nvim 2>/dev/null || true
-}
+	# ~/.local/bin/wallust-darken &&
+	{
+		sleep 0.5
+		swaymsg reload
+		pkill -SIGUSR2 waybar || true
+		swaync-client --reload-css 2>/dev/null || true
+		pkill -SIGUSR1 kitty 2>/dev/null || true
+		tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true
+		pkill -SIGUSR1 nvim 2>/dev/null || true
+	}
