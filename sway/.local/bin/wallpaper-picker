@@ -4,16 +4,16 @@ set -euo pipefail
 FULL_PATH="$1"
 
 pkill swaybg || true
-swaybg -i "$FULL_PATH" -m fill &
-~/.cargo/bin/wallust run "$FULL_PATH" &&
-	~/.local/bin/wallust-darken && {
-	sleep 0.5
-	swaymsg reload
-	swaync-client --reload-css 2>/dev/null || true
-	pkill -SIGUSR1 kitty 2>/dev/null || true
-	tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true
-	pkill -SIGUSR1 nvim 2>/dev/null || true
-}
-
+swaybg -i "$FULL_PATH" -m fill # &
+# ~/.cargo/bin/wallust run "$FULL_PATH" &&
+# 	~/.local/bin/wallust-darken && {
+# 	sleep 0.5
+# 	swaymsg reload
+# 	swaync-client --reload-css 2>/dev/null || true
+# 	pkill -SIGUSR1 kitty 2>/dev/null || true
+# 	tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true
+# 	pkill -SIGUSR1 nvim 2>/dev/null || true
+# }
+#
 mkdir -p "$HOME/.local/state"
 echo "$FULL_PATH" >"$HOME/.local/state/current-wall"

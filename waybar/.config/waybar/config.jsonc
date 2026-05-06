@@ -1,12 +1,12 @@
 {
 	"layer": "top",
-	"position": "top",
+	"position": "left",
 	"font-family": "JetBrainsMono Nerd Font",
 	"reload_style_on_change": true,
 
-	"modules-left": ["custom/launcher","sway/workspaces"],
+	"modules-left": ["custom/launcher","clock"],
 
-	"modules-center": ["clock"],
+	"modules-center": ["sway/workspaces"],
 
 	"modules-right": [
 		"tray",
@@ -18,10 +18,10 @@
 
 
 	"group/tray": {
-		"orientation": "horizontal",
+		"orientation": "vertical",
 		"drawer": {
 			"transition-duration": 500,
-			"transition-left-to-right": false
+			"transition-top-to-bottom": false
 		},
 		"modules": [
 			"custom/separator",
@@ -30,10 +30,10 @@
 	},
 
 	"group/audio": {
-		"orientation": "horizontal",
+		"orientation": "vertical",
 		"drawer": {
 			"transition-duration": 300,
-			"transition-left-to-right": false,
+			"transition-top-to-bottom": false,
 		},
 		"modules" : ["pulseaudio","pulseaudio/slider"],
 	},
@@ -70,7 +70,7 @@
 	"pulseaudio/slider": {
 		"min" : 0,
 		"max" : 100,
-		"orientation": "horizontal",
+		"orientation": "vertical",
 	},
 
 	"pulseaudio": {
@@ -122,7 +122,7 @@
 
 	"clock": {
 		"tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
-		"format": "{:%a %d %b  %H:%M}",
+		"format": "{:%H\n%M}",
 		"on-click": "gnome-calendar",
 	},
 
@@ -148,7 +148,7 @@
 	},
 
 	"custom/separator": {
-		"format": "|",
+		"format": "─",
 		"tooltip": false,
 	},
 }
