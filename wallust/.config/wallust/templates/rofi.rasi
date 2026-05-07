@@ -4,6 +4,6 @@
     bg-alt:   {{color0}};
     fg:       {{foreground}};
     fg-dim:   {{color8}};
-    accent:   {{color5}};
+    accent:   {{color4}};
     urgent:   {{color1}};
 }
