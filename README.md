@@ -21,7 +21,7 @@ This repository contains personal configuration files managed using **GNU Stow**
 - **Dynamic Theming:** [Wallust](https://github.com/onur/wallust) (Generates colors from wallpapers)
 - **Terminal:** [Kitty](https://sw.kovidgoyal.net/kitty/)
 - **Shell:** Zsh (with Oh-My-Zsh and Powerlevel10k)
-- **Editor:** [Neovim](https://neovim.io/) (LazyVim-based)
+- **Editor:** [Neovim](https://neovim.io/) (Custom config with `lazy.nvim`)
 - **Multiplexer:** Tmux
 - **File Manager:** Yazi
 - **Launcher:** Rofi (Wayland fork)
@@ -39,16 +39,17 @@ The system uses `wallust` to sync colors across all supported applications. When
 
 ### Theme Scripts
 Available in `sway/.local/bin/`:
-- `appearance-rofi`: Toggle between **Modern** (gaps, floating-style) and **Minimal** (no gaps, clean) looks.
-- `wallpaper-picker <path>`: Sets a wallpaper and regenerates the system theme.
-- `theme-rofi`: Choose from predefined `wallust` color schemes/palettes.
-- `wallpaper-rofi`: A graphical picker for the `wallpapers/` directory.
+- `appearance-rofi`: Toggle between **Modern** (gaps, floating-style, blur) and **Minimal** (no gaps, clean) looks.
+- `wallpaper-picker <path>`: Sets a wallpaper, extracts colors, and regenerates all app themes.
+- `wallpaper-rofi`: A graphical wallpaper picker using Rofi to browse the `wallpapers/` directory.
+- `theme-rofi`: Choose from predefined `wallust` color schemes and palettes.
+- `pomodoro-tui`: A simple terminal-based Pomodoro timer.
 
 ### Supported Applications
 - **Sway:** Borders, focused windows, and status bar colors.
-- **Waybar / SwayNC:** Fully themed CSS.
+- **Waybar / SwayNC:** Fully themed CSS with transparency/blur support.
 - **Kitty / Tmux:** Terminal colors and status lines.
-- **Neovim:** Dynamic colors via `lua/theme/colors.lua`.
+- **Neovim:** Dynamic colors via `wallust` templates.
 - **Rofi:** Launcher and menu aesthetics.
 - **Obsidian:** Synced via a CSS snippet.
 
@@ -56,17 +57,19 @@ Available in `sway/.local/bin/`:
 
 | Directory | Description |
 |-----------|-------------|
-| `sway/` | Sway WM config, `config.d/` modules, and custom bin scripts. |
+| `sway/` | Sway WM config, `config.d/` modules, and custom scripts in `.local/bin/`. |
 | `wallust/` | Templates and configuration for color generation. |
-| `nvim/` | Neovim setup using LazyVim. Plugins in `lua/plugins/`. |
+| `nvim/` | Custom Neovim setup using `lazy.nvim`. Plugins are defined in `lua/plugins/`. |
 | `zsh/` | Zsh config with `ZDOTDIR` redirected to `~/.config/zsh`. |
 | `waybar/` | Status bar configuration and styling (Minimal & Modern modes). |
+| `swaync/` | Notification center configuration and styles. |
 | `rofi/` | Application launcher and menu themes. |
 | `kitty/` | Terminal emulator settings and theme integration. |
 | `tmux/` | Tmux session management and keybindings (`Ctrl+s` prefix). |
 | `yazi/` | Terminal file manager with image preview support. |
 | `wallpapers/` | A curated collection of wallpapers for theme generation. |
-| `code/` | VS Code settings (vim extension with vim keybindings). |
+| `obsidian/` | Vim-style configuration for Obsidian. |
+| `code/` | VS Code settings (optimized for Neovim users). |
 
 ## Development Conventions
 
