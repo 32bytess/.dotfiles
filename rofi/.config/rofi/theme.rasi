@@ -3,13 +3,14 @@
 * {
     background-color: transparent;
     text-color:       @fg;
+    font:             "JetBrainsMono Nerd Font 12";
 }
 
 window {
-    background-color: @bg-alpha;
+    background-color: @bg;
     border:           2px solid;
     border-color:     @accent;
-    border-radius:    12px;
+    border-radius:    15px;
     padding:          8px;
     width:            480px;
 }
@@ -23,7 +24,7 @@ mainbox {
 
 inputbar {
     background-color: @bg-alt;
-    border-radius:    8px;
+    border-radius:    15px;
     padding:          8px 12px;
     children:         [prompt, entry];
     spacing:          0;
@@ -49,7 +50,7 @@ listview {
 
 element {
     background-color: transparent;
-    border-radius:    6px;
+    border-radius:    15px;
     padding:          8px 12px;
     spacing:          8px;
     orientation:      horizontal;
@@ -57,7 +58,7 @@ element {
 
 element selected {
     background-color: @accent;
-    text-color:       @bg;
+    text-color:       @fg;
 }
 
 element-icon {

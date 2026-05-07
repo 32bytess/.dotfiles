@@ -2,7 +2,7 @@ backend = "resized"
 
 color_space = "lab"
 palette = "dark16"
-filter = "vibrant"
+filter = "original"
 check_contrast = true
 
 
