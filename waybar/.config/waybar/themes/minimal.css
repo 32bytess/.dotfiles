@@ -31,11 +31,13 @@ window#waybar {
 	color: @muted;
 }
 
-#workspaces button.focused {
+#workspaces button.focused,
+#workspaces button.active {
 	color: @accent;
 }
 
-#workspaces button.visible:not(.focused) {
+#workspaces button.visible:not(.focused),
+#workspaces button.visible:not(.active) {
 	color: @accent;
 }
 

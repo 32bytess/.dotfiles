@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CHOSEN=$(
+    ~/.cargo/bin/wallust theme list 2>&1 |
+        sed 's/\x1b\[[0-9;]*m//g' |
+        grep -v "^Available" |
+        grep -v "^$" |
+        sed 's/^- //' |
+        rofi -dmenu -p "Theme" -theme ~/.config/rofi/theme.rasi
+) || exit 1
+
+~/.cargo/bin/wallust theme "$CHOSEN" && {
+    sleep 0.5
+
+    if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+        hyprctl reload
+    elif [ -n "${SWAYSOCK:-}" ]; then
+        swaymsg reload
+    fi
+
+    pkill -SIGUSR2 waybar              || true
+    swaync-client --reload-css    2>/dev/null || true
+    pkill -SIGUSR1 kitty          2>/dev/null || true
+    tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true
+    pkill -SIGUSR1 nvim           2>/dev/null || true
+}

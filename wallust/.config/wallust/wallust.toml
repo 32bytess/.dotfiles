@@ -10,6 +10,9 @@ check_contrast = true
 sway.template = "sway.conf"
 sway.target = "~/.config/sway/config.d/theme-colors.conf"
 
+hyprland.template = "hyprland.lua"
+hyprland.target = "~/.config/hypr/conf/colors.lua"
+
 rofi.template = "rofi.rasi"
 rofi.target = "~/.config/rofi/colors.rasi"
 

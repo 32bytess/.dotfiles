@@ -1,0 +1,1 @@
+/home/alberto/.config/hypr/themes/modern.lua
