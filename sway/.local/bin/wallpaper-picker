@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-FULL_PATH="$1"
+FULL_PATH=$(realpath "$1")
 
 pkill swaybg || true
-swaybg -i "$FULL_PATH" -m fill # &
+swaybg -i "$FULL_PATH" -m fill &
 # ~/.cargo/bin/wallust run "$FULL_PATH" &&
 # 	~/.local/bin/wallust-darken && {
 # 	sleep 0.5

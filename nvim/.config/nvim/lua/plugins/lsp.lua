@@ -23,6 +23,12 @@ vim.lsp.config("pylsp", {
 	root_markers = { ".git" },
 })
 
+vim.lsp.config("gopls", {
+	cmd = { "gopls" },
+	filetypes = { "go" },
+	root_markers = { ".git" },
+})
+
 vim.lsp.config("*", {
 	on_attach = require("custom.lsp_attach").on_attach,
 })
@@ -30,6 +36,7 @@ vim.lsp.config("*", {
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("bashls")
 vim.lsp.enable("pylsp")
+vim.lsp.enable("gopls")
 
 return {
 	{
@@ -43,7 +50,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "stylua", "bashls", "pylsp" },
+				ensure_installed = { "lua_ls", "stylua", "bashls", "pylsp", "gopls" },
 			})
 		end,
 	},

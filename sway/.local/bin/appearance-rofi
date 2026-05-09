@@ -18,7 +18,7 @@ case "$CHOSEN" in
         ln -sf config_modern.jsonc "$WAYBAR_CONF_DIR/config.jsonc"
         
         # Apply to existing windows instantly
-        swaymsg "gaps inner all set 4; gaps outer all set 2; [tiling] border none"
+        swaymsg "gaps inner all set 4; gaps outer all set 2"
         ;;
     Minimal)
         ln -sf "$SWAY_THEMES_DIR/appearance_minimal.conf" "$SWAY_CONF_DIR/appearance.conf"
@@ -26,7 +26,7 @@ case "$CHOSEN" in
         ln -sf config_minimal.jsonc "$WAYBAR_CONF_DIR/config.jsonc"
         
         # Apply to existing windows instantly
-        swaymsg "gaps inner all set 0; gaps outer all set 0; [tiling] border none"
+        swaymsg "gaps inner all set 0; gaps outer all set 0"
         ;;
     *)
         exit 1
