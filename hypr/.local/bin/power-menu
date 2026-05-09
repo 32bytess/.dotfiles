@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CHOSEN=$(printf 'Shutdown\nReboot\nLogout\nLock' \
+    | rofi -dmenu -p "Power" -theme ~/.config/rofi/theme.rasi) || exit 1
+
+case "$CHOSEN" in
+    Shutdown) systemctl poweroff ;;
+    Reboot)   systemctl reboot ;;
+    Logout)   hyprctl dispatch exit ;;
+    Lock)     swaylock -f ;;
+esac

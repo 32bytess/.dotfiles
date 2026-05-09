@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+WAYBAR_CONF_DIR="$HOME/.config/waybar"
+
+CHOSEN=$(printf 'Modern\nMinimal' \
+    | rofi -dmenu -p "Appearance" -theme ~/.config/rofi/theme.rasi) || exit 1
+
+if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+    # ── Hyprland ─────────────────────────────────────────────────────────
+    THEMES_DIR="$HOME/.config/hypr/themes"
+    CONF_DIR="$HOME/.config/hypr/conf"
+    case "$CHOSEN" in
+        Modern)
+            ln -sf "$THEMES_DIR/modern.lua"     "$CONF_DIR/appearance.lua"
+            ln -sf themes/modern.css            "$WAYBAR_CONF_DIR/style.css"
+            ln -sf hypr/modern.jsonc            "$WAYBAR_CONF_DIR/config_hypr.jsonc"
+            ln -sf config_hypr.jsonc            "$WAYBAR_CONF_DIR/config.jsonc"
+            hyprctl keyword general:gaps_in  4
+            hyprctl keyword general:gaps_out 2
+            ;;
+        Minimal)
+            ln -sf "$THEMES_DIR/minimal.lua"    "$CONF_DIR/appearance.lua"
+            ln -sf themes/minimal.css           "$WAYBAR_CONF_DIR/style.css"
+            ln -sf hypr/minimal.jsonc           "$WAYBAR_CONF_DIR/config_hypr.jsonc"
+            ln -sf config_hypr.jsonc            "$WAYBAR_CONF_DIR/config.jsonc"
+            hyprctl keyword general:gaps_in  0
+            hyprctl keyword general:gaps_out 0
+            ;;
+    esac
+    hyprctl reload
+
+elif [ -n "${SWAYSOCK:-}" ]; then
+    # ── Sway ─────────────────────────────────────────────────────────────
+    THEMES_DIR="$HOME/.config/sway/themes"
+    CONF_DIR="$HOME/.config/sway/config.d"
+    case "$CHOSEN" in
+        Modern)
+            ln -sf "$THEMES_DIR/appearance_modern.conf" "$CONF_DIR/appearance.conf"
+            ln -sf themes/modern.css                    "$WAYBAR_CONF_DIR/style.css"
+            ln -sf sway/modern.jsonc                    "$WAYBAR_CONF_DIR/config_sway.jsonc"
+            ln -sf config_sway.jsonc                    "$WAYBAR_CONF_DIR/config.jsonc"
+            swaymsg "gaps inner all set 4; gaps outer all set 2"
+            ;;
+        Minimal)
+            ln -sf "$THEMES_DIR/appearance_minimal.conf" "$CONF_DIR/appearance.conf"
+            ln -sf themes/minimal.css                    "$WAYBAR_CONF_DIR/style.css"
+            ln -sf sway/minimal.jsonc                    "$WAYBAR_CONF_DIR/config_sway.jsonc"
+            ln -sf config_sway.jsonc                    "$WAYBAR_CONF_DIR/config.jsonc"
+            swaymsg "gaps inner all set 0; gaps outer all set 0"
+            ;;
+    esac
+    swaymsg reload
+
+else
+    echo "appearance-rofi: unknown compositor" >&2
+    exit 1
+fi
+
+pkill -SIGUSR2 waybar || true

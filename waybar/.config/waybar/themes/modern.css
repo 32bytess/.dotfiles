@@ -65,7 +65,8 @@ window#waybar > box {
 }
 
 
-#workspaces button.focused {
+#workspaces button.focused,
+#workspaces button.active {
 	background-color: @accent;
 	color: @bg;
 }
@@ -74,12 +75,14 @@ window#waybar > box {
 	margin: 0 3px;
 	font-size: 12px;
 }
-#workspaces button.focused label {
+#workspaces button.focused label,
+#workspaces button.active label {
 	font-weight: bold;
 	font-size: 15px;
 }
 
-#workspaces button.visible:not(.focused) {
+#workspaces button.visible:not(.focused),
+#workspaces button.visible:not(.active) {
 	color: @accent;
 }
 
