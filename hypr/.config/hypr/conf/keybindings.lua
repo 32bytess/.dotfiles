@@ -119,7 +119,7 @@ hl.bind(mod .. " + G",          hl.dsp.exec_cmd('brave-browser --app="https://ge
 hl.bind(mod .. " + O",          hl.dsp.exec_cmd("flatpak run md.obsidian.Obsidian"))
 
 -- Pomodoro TUI
-hl.bind(mod .. " + CTRL + P",   hl.dsp.exec_cmd(home .. "/.local/bin/pomodoro-tui"))
+hl.bind(mod .. " + P",   hl.dsp.exec_cmd(home .. "/.local/bin/pomodoro-tui"))
 
 -- Lock screen
 hl.bind(mod .. " + SHIFT + X",  hl.dsp.exec_cmd("swaylock -f"))

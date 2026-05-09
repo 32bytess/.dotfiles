@@ -6,6 +6,7 @@ clearly on that dark surface.
 
 Idempotent — running it twice produces the same output.
 """
+
 import colorsys, json, os, subprocess, sys, tempfile
 
 COLORS_FILE = os.path.expanduser("~/.cache/wallust/current.json")
@@ -49,7 +50,14 @@ def process(colors: dict) -> dict:
         colors[k] = from_hls(h, max(l, 0.88), s)
 
     # Accent colors (normal + bright): boost lightness so they pop on dark bg
-    for k in accents + ["color9", "color10", "color11", "color12", "color13", "color14"]:
+    for k in accents + [
+        "color9",
+        "color10",
+        "color11",
+        "color12",
+        "color13",
+        "color14",
+    ]:
         h, l, s = hls(colors[k])
         new_l = max(l, 0.60)
         new_s = min(s * 1.15, 1.0)
@@ -68,15 +76,20 @@ def main() -> None:
 
     colors = process(colors)
 
-    with tempfile.NamedTemporaryFile(
-        mode="w", suffix=".json", delete=False
-    ) as tmp:
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as tmp:
         json.dump(colors, tmp, indent=2)
         tmp_path = tmp.name
 
     try:
         subprocess.run(
-            [os.path.expanduser("~/.cargo/bin/wallust"), "cs", tmp_path, "-f", "wallust", "--no-hooks"],
+            [
+                os.path.expanduser("~/.cargo/bin/wallust"),
+                "cs",
+                tmp_path,
+                "-f",
+                "wallust",
+                "--no-hooks",
+            ],
             check=True,
         )
     finally:

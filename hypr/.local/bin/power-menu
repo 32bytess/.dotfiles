@@ -7,6 +7,6 @@ CHOSEN=$(printf 'Shutdown\nReboot\nLogout\nLock' \
 case "$CHOSEN" in
     Shutdown) systemctl poweroff ;;
     Reboot)   systemctl reboot ;;
-    Logout)   hyprctl dispatch exit ;;
+    Logout)   loginctl terminate-session "$XDG_SESSION_ID" ;;
     Lock)     swaylock -f ;;
 esac

@@ -13,17 +13,11 @@ if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
     case "$CHOSEN" in
         Modern)
             ln -sf "$THEMES_DIR/modern.lua"     "$CONF_DIR/appearance.lua"
-            ln -sf themes/modern.css            "$WAYBAR_CONF_DIR/style.css"
-            ln -sf hypr/modern.jsonc            "$WAYBAR_CONF_DIR/config_hypr.jsonc"
-            ln -sf config_hypr.jsonc            "$WAYBAR_CONF_DIR/config.jsonc"
             hyprctl keyword general:gaps_in  4
             hyprctl keyword general:gaps_out 2
             ;;
         Minimal)
             ln -sf "$THEMES_DIR/minimal.lua"    "$CONF_DIR/appearance.lua"
-            ln -sf themes/minimal.css           "$WAYBAR_CONF_DIR/style.css"
-            ln -sf hypr/minimal.jsonc           "$WAYBAR_CONF_DIR/config_hypr.jsonc"
-            ln -sf config_hypr.jsonc            "$WAYBAR_CONF_DIR/config.jsonc"
             hyprctl keyword general:gaps_in  0
             hyprctl keyword general:gaps_out 0
             ;;
@@ -37,20 +31,19 @@ elif [ -n "${SWAYSOCK:-}" ]; then
     case "$CHOSEN" in
         Modern)
             ln -sf "$THEMES_DIR/appearance_modern.conf" "$CONF_DIR/appearance.conf"
-            ln -sf themes/modern.css                    "$WAYBAR_CONF_DIR/style.css"
-            ln -sf sway/modern.jsonc                    "$WAYBAR_CONF_DIR/config_sway.jsonc"
-            ln -sf config_sway.jsonc                    "$WAYBAR_CONF_DIR/config.jsonc"
+            ln -sf sway/modern/config.jsonc             "$WAYBAR_CONF_DIR/config.jsonc"
+            ln -sf sway/modern/style.css                "$WAYBAR_CONF_DIR/style.css"
             swaymsg "gaps inner all set 4; gaps outer all set 2"
             ;;
         Minimal)
             ln -sf "$THEMES_DIR/appearance_minimal.conf" "$CONF_DIR/appearance.conf"
-            ln -sf themes/minimal.css                    "$WAYBAR_CONF_DIR/style.css"
-            ln -sf sway/minimal.jsonc                    "$WAYBAR_CONF_DIR/config_sway.jsonc"
-            ln -sf config_sway.jsonc                    "$WAYBAR_CONF_DIR/config.jsonc"
+            ln -sf sway/minimal/config.jsonc             "$WAYBAR_CONF_DIR/config.jsonc"
+            ln -sf sway/minimal/style.css                "$WAYBAR_CONF_DIR/style.css"
             swaymsg "gaps inner all set 0; gaps outer all set 0"
             ;;
     esac
     swaymsg reload
+
 
 else
     echo "appearance-rofi: unknown compositor" >&2
