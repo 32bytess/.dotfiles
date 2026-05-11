@@ -7,6 +7,7 @@ else
 		echo ~/
 		find ~/projects -mindepth 1 -maxdepth 2 -type d 2>/dev/null
 		echo ~/dotfiles
+		echo ~/.config/nvim
 		echo ~/obsidian/main/projects/thesis
 		echo ~/obsidian/main
 	} | fzf)

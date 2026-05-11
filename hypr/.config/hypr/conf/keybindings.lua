@@ -17,7 +17,7 @@ hl.bind("CTRL + SHIFT + space", hl.dsp.exec_cmd(home .. "/.local/bin/prime-menu"
 
 -- Config reload / exit
 hl.bind(mod .. " + SHIFT + C", hl.dsp.exec_cmd("hyprctl reload"))
-hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd(home .. "/.local/bin/power-menu"))
+hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd(home .. "/.config/hypr/scripts/power-menu"))
 
 -- Focus movement (vim keys + arrows)
 hl.bind(mod .. " + H",     hl.dsp.focus({ direction = "left"  }))
@@ -94,7 +94,7 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { loc
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl set 5%+"), { locked = true, repeating = true })
 
 -- Power button
-hl.bind("XF86PowerOff", hl.dsp.exec_cmd(home .. "/.local/bin/power-menu"), { locked = true })
+hl.bind("XF86PowerOff", hl.dsp.exec_cmd(home .. "/.config/hypr/scripts/power-menu"), { locked = true })
 
 -- Screenshots (grim + slurp, same as sway)
 hl.bind(mod .. " + SHIFT + S", hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy'))
