@@ -1,1 +1,11 @@
 .stow-local-ignore
+
+# wallust generated files
+hypr/.config/hypr/conf/colors.lua
+sway/.config/sway/config.d/theme-colors.conf
+rofi/.config/rofi/colors.rasi
+waybar/.config/waybar/colors.css
+swaync/.config/swaync/colors.css
+kitty/.config/kitty/theme.conf
+tmux/.config/tmux/theme.conf
+nvim/.config/nvim/lua/theme/colors.lua
