@@ -1,9 +1,9 @@
 #!/bin/sh
 # Toggle focused window in/out of special:scratch
 win_ws=$(hyprctl activewindow -j | jq -r '.workspace.name')
-echo "$(date) win_ws=$win_ws" >> /tmp/scratch-debug.log
+echo "$(date) win_ws=$win_ws" >>/tmp/scratch-debug.log
 if [ "$win_ws" = "special:scratch" ]; then
-    hyprctl dispatch movetoworkspace current >> /tmp/scratch-debug.log 2>&1
+	hyprctl dispatch movetoworkspace current >>/tmp/scratch-debug.log 2>&1
 else
-    hyprctl dispatch movetoworkspacesilent special:scratch >> /tmp/scratch-debug.log 2>&1
+	hyprctl dispatch movetoworkspacesilent special:scratch >>/tmp/scratch-debug.log 2>&1
 fi

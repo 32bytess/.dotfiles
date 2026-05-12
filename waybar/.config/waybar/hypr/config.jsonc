@@ -4,7 +4,7 @@
 	"font-family": "JetBrainsMono Nerd Font",
 	"reload_style_on_change": true,
 
-	"modules-left": ["custom/launcher", "clock"],
+	"modules-left": ["custom/launcher","custom/separator", "clock"],
 
 	"modules-center": ["hyprland/workspaces" ],
 

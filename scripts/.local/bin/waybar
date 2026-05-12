@@ -1,0 +1,9 @@
+#!/bin/sh
+if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+	wm="hypr"
+elif [ -n "$SWAYSOCK" ]; then
+	wm="sway"
+else
+	wm=$(echo "${XDG_CURRENT_DESKTOP:-}" | tr '[:upper:]' '[:lower:]')
+fi
+exec /usr/bin/waybar -c "${HOME}/.config/waybar/${wm}/config.jsonc" -s "${HOME}/.config/waybar/${wm}/style.css" "$@"
