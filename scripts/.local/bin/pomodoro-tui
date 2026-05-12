@@ -6,14 +6,14 @@
 # pkill -f "waybar-pomodoro daemon" 2>/dev/null
 
 # Start the daemon in the background
-/home/alberto/.local/bin/waybar-pomodoro daemon &
+~/.local/bin/waybar-pomodoro daemon &
 DAEMON_PID=$!
 
 # Give it a moment to start up before opening the TUI
 sleep 0.7
 
 # Open the TUI in kitty (this blocks until kitty is closed)
-kitty --class 'pomodoro-timer' -o font_size=14 /home/alberto/.local/bin/waybar-pomodoro tui
+kitty --class 'pomodoro-timer' -o font_size=14 ~/.local/bin/waybar-pomodoro tui
 
 # Kill the daemon when the TUI is closed
 kill $DAEMON_PID 2>/dev/null

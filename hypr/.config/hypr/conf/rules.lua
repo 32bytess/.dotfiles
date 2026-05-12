@@ -29,4 +29,4 @@ hl.window_rule({ name = "float-pomodoro", match = { class = "pomodoro-timer" }, 
 -- Layer rules for blur on swaync panels
 hl.layer_rule({ name = "swaync-cc", match = { namespace = "swaync-control-center" }, blur = true, xray = false })
 hl.layer_rule({ name = "swaync-notif", match = { namespace = "swaync-notification-window" }, blur = true, xray = false })
-hl.layer_rule({ name = "waybar-blur", match = { namespace = "waybar" }, blur = false, xray = true })
+hl.layer_rule({ name = "waybar-blur", match = { namespace = "waybar" }, blur = true, xray = false })

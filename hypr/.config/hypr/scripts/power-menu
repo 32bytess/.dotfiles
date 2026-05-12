@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-CHOSEN=$(printf 'Shutdown\nReboot\nLogout\nLock' \
-    | rofi -dmenu -p "Power" -theme ~/.config/rofi/theme.rasi) || exit 1
+CHOSEN=$(printf 'Shutdown\nReboot\nLogout\nLock' |
+	rofi -dmenu -p "Power" -theme ~/.config/rofi/theme.rasi) || exit 1
 
 case "$CHOSEN" in
-    Shutdown) systemctl poweroff ;;
-    Reboot)   systemctl reboot ;;
-    Logout)   loginctl terminate-session "$XDG_SESSION_ID" ;;
-    Lock)     swaylock -f ;;
+Shutdown) systemctl poweroff ;;
+Reboot) systemctl reboot ;;
+Logout) loginctl terminate-session "$XDG_SESSION_ID" ;;
+Lock) swaylock -f ;;
 esac

@@ -15,37 +15,37 @@ window#waybar {
 
 
 window#waybar > box {
-	margin: 5px 0px 5px 2px;
+	background-color:@bg;
+	padding: 10px 0px;
 }
 
 
 
-#custom-launcher,
-#clock,
-#workspaces,
-.modules-center,
-.modules-right,
-#group-tray,
-#group-audio{
-	background-color: @bg;
-	border-radius: 15px;
-	margin: 2px 0px;
-	padding: 10px 0;
-}
+/* #custom-launcher, */
+/* #clock, */
+/* #workspaces, */
+/* .modules-center, */
+/* .modules-right, */
+/* #group-tray, */
+/* #group-audio{ */
+/* 	background-color: @bg; */
+/* 	border-radius: 15px; */
+/* 	margin: 2px 0px; */
+/* 	padding: 10px 0; */
+/* } */
 
 
 #clock {
 	font-family: "Fira Code", monospace;
 	font-size: 15px;
 	font-weight: bold;
-	padding: 15px 0;
+	padding: 10px 0;
 	color: @accent;
 }
 
 #custom-launcher {
 	font-size: 22px;
 	color: @accent;
-	padding: 0 6px;
 }
 
 
@@ -127,7 +127,7 @@ window#waybar > box {
 	background: transparent;
 	border-radius: 15px;
 	transition: all 0.1s ease;
-	margin: 0 2px;
+	margin: 0px;
 }
 
 #scratchpad {

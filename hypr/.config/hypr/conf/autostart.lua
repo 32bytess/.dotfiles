@@ -1,7 +1,7 @@
 hl.on("hyprland.start", function()
 	hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland")
 
-	hl.exec_cmd("waybar -c ~/.config/waybar/hypr/config.jsonc -s ~/.config/waybar/hypr/style.css")
+	hl.exec_cmd(os.getenv("HOME") .. "/.local/bin/waybar")
 	hl.exec_cmd("kwalletd6")
 	hl.exec_cmd("swaync")
 	hl.exec_cmd("nm-applet --indicator")
