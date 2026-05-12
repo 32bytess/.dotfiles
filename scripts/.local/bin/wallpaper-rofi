@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-WALL_DIR="$HOME/.config/wallpapers"
+WALL_DIR="${1:-$HOME/.config/wallpapers}"
 
 CHOSEN=$(
 	for f in "$WALL_DIR"/*; do
