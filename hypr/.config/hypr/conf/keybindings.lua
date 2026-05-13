@@ -2,7 +2,7 @@
 
 local mod = "SUPER"
 local home = os.getenv("HOME")
-local wallpaper_dir = home .. "Pictures/wallpapers"
+local wallpaper_dir = home .. "/Pictures/wallpapers"
 
 -- Terminal
 hl.bind(mod .. " + Return", hl.dsp.exec_cmd("kitty"))
