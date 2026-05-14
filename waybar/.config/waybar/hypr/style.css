@@ -209,3 +209,35 @@ window#waybar > box {
 
 /* Notifications */
 #custom-notification.dnd { color: @muted; }
+
+/* Media player group */
+#group-player {
+	padding: 4px 0;
+}
+
+#mpris {
+	font-size: 22px;
+	padding: 4px 4px;
+	color: @ok;
+	background: transparent;
+	transition: all 0.1s ease;
+}
+
+#mpris.paused {
+	color: @muted;
+}
+
+#mpris:hover,
+#custom-player-prev:hover,
+#custom-player-next:hover {
+	color: @fg;
+}
+
+#custom-player-prev,
+#custom-player-next {
+	font-size: 14px;
+	padding: 2px 4px;
+	color: @muted;
+	background: transparent;
+	transition: all 0.1s ease;
+}
