@@ -10,5 +10,5 @@ This repo contains my personal configuration files managed using **GNU Stow**. T
 - **Shell:** Zsh
 - **Editor:** [Neovim](https://neovim.io/) ([my config](https://github.com/albertoodev/nvim))
 - **Multiplexer:** Tmux
-- **File Manager:** Yazi
+- **File Manager:** Thunar
 - **Launcher:** Rofi 

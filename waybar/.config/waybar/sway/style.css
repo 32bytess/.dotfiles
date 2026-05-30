@@ -122,7 +122,8 @@ window#waybar > box {
 #network,
 #battery,
 #tray,
-#custom-notification {
+#custom-notification,
+#custom-nordvpn {
 	padding: 0 4px;
 	color: @accent;
 	background: transparent;
@@ -210,3 +211,7 @@ window#waybar > box {
 
 /* Notifications */
 #custom-notification.dnd { color: @muted; }
+
+/* NordVPN */
+#custom-nordvpn.connected    { color: @ok; }
+#custom-nordvpn.disconnected { color: @muted; }

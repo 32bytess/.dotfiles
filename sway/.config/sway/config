@@ -12,7 +12,6 @@ set $up k
 set $right l
 set $term kitty
 set $menu pkill rofi || rofi -show drun
-set $opacity 1
 
 
 include config.d/*

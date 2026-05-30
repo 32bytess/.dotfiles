@@ -16,8 +16,8 @@ hl.config({
 			offset = "2 2",
 		},
 		blur = {
-			enabled = false,
-			size = 6,
+			enabled = true,
+			size = 2,
 			passes = 2,
 			vibrancy = 0.17,
 			new_optimizations = true,
@@ -36,10 +36,8 @@ hl.curve("quick", { type = "bezier", points = { { 0.15, 0 }, { 0.1, 1 } } })
 hl.curve("easy", { type = "spring", mass = 1, stiffness = 71.26, dampening = 15.83 })
 
 hl.animation({ leaf = "global", enabled = true, speed = 10, bezier = "default" })
-hl.animation({ leaf = "windows", enabled = true, speed = 4.8, spring = "easy" })
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 3.0, bezier = "easeOutQuint", style = "popin 80%" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 2.5, bezier = "easeOutQuint", style = "popin 80%" })
+hl.animation({ leaf = "windows", enabled = true, speed = 5, bezier = "default" })
 hl.animation({ leaf = "border", enabled = true, speed = 5.4, bezier = "easeOutQuint" })
 hl.animation({ leaf = "fade", enabled = true, speed = 3.0, bezier = "quick" })
 hl.animation({ leaf = "layers", enabled = true, speed = 3.8, bezier = "easeOutQuint" })
-hl.animation({ leaf = "workspaces", enabled = false, speed = 2.0, bezier = "almostLinear", style = "slidevert" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 1.0, bezier = "almostLinear", style = "slidevert" })

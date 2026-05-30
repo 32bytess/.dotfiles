@@ -129,8 +129,8 @@ hl.bind(mod .. " + F10", hl.dsp.exec_cmd("blueman-manager"))
 hl.bind(mod .. " + F11", hl.dsp.exec_cmd("wdisplays"))
 
 -- App launchers
-hl.bind(mod .. " + E", hl.dsp.exec_cmd("kitty yazi"))
-hl.bind(mod .. " + B", hl.dsp.exec_cmd("sh -c 'hyprctl dispatch focuswindow class:zen || zen-browser'"))
+hl.bind(mod .. " + E", hl.dsp.exec_cmd("thunar"))
+hl.bind(mod .. " + B", hl.dsp.exec_cmd("zen-browser"))
 hl.bind(mod .. " + SHIFT + V", hl.dsp.exec_cmd("zen-browser -P Academic"))
 hl.bind(mod .. " + G", hl.dsp.exec_cmd('brave-browser --app="https://gemini.google.com"'))
 hl.bind(mod .. " + O", hl.dsp.exec_cmd("flatpak run md.obsidian.Obsidian"))

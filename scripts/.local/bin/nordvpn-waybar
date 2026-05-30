@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+status=$(nordvpn status 2>/dev/null)
+
+if echo "$status" | grep -q "Status: Connected"; then
+	city=$(echo "$status" | grep "City:" | awk '{print $2}')
+	country=$(echo "$status" | grep "Country:" | awk '{print $2}')
+	ip=$(echo "$status" | grep "IP:" | awk '{print $2}')
+	printf '{"text":"󰒃","class":"connected","tooltip":"NordVPN: Connected\\n%s, %s\\nIP: %s"}\n' \
+		"$country" "$city" "$ip"
+else
+	printf '{"text":"󰒃","class":"disconnected","tooltip":"NordVPN: Disconnected"}\n'
+fi
