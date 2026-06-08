@@ -24,9 +24,10 @@ hl.window_rule({ name = "spotify-ws7", match = { class = "com.spotify.Client" },
 hl.window_rule({ name = "float-pavucontrol", match = { class = "pavucontrol" }, float = true, center = true })
 hl.window_rule({ name = "float-blueman", match = { class = "Blueman-manager" }, float = true, center = true })
 hl.window_rule({ name = "float-wdisplays", match = { class = "wdisplays" }, float = true, center = true })
+hl.window_rule({ name = "float-calendar", match = { class = "org.gnome.Calendar" }, float = true, center = true })
 hl.window_rule({ name = "float-pomodoro", match = { class = "pomodoro-timer" }, float = true, center = true })
 
 -- Layer rules for blur on swaync panels
 hl.layer_rule({ name = "swaync-cc", match = { namespace = "swaync-control-center" }, blur = true, xray = false })
-hl.layer_rule({ name = "swaync-notif", match = { namespace = "swaync-notification-window" }, blur = true, xray = false })
+hl.layer_rule({ name = "swaync-notif", match = { namespace = "swaync-notification-window" }, blur = false })
 hl.layer_rule({ name = "waybar-blur", match = { namespace = "waybar" }, blur = true, xray = false })

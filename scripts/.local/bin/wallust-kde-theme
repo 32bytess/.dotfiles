@@ -1,0 +1,281 @@
+#!/usr/bin/env python3
+"""Apply the current wallust palette to KDE/Qt and GTK apps.
+
+wallust can only emit hex, but KDE `.colors` schemes need decimal R,G,B, so
+this runs as a post-step after `wallust run`. It reads the palette wallust
+already cached and writes:
+
+  * ~/.config/gtk-3.0/colors.css  (hex, `_breeze` names the Breeze GTK theme
+    maps from)  -> themes GTK3 apps like pavucontrol via colorreload-gtk-module
+  * ~/.config/gtk-4.0/colors.css  (same content, imported by gtk-4.0/gtk.css)
+  * ~/.local/share/color-schemes/Wallust.colors (decimal) -> KDE/Qt apps, and
+    keeps kde-gtk-config from regenerating an all-black colors.css.
+
+Then it best-effort applies the KDE scheme so Qt apps update live.
+"""
+
+import json
+import os
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+HOME = Path.home()
+PALETTE = HOME / ".cache/wallust/current.json"
+
+
+def hexc(s: str) -> str:
+    """Normalise a #rrggbb string."""
+    return "#" + s.lstrip("#").lower()
+
+
+def rgb(s: str) -> tuple[int, int, int]:
+    s = s.lstrip("#")
+    return int(s[0:2], 16), int(s[2:4], 16), int(s[4:6], 16)
+
+
+def rgbstr(s: str) -> str:
+    return "{},{},{}".format(*rgb(s))
+
+
+def lighten(s: str, amount: int) -> str:
+    """Lift each channel toward white by a fixed amount (0-255)."""
+    r, g, b = rgb(s)
+    f = lambda c: min(255, c + amount)
+    return "#{:02x}{:02x}{:02x}".format(f(r), f(g), f(b))
+
+
+def load_palette() -> dict:
+    if not PALETTE.exists():
+        sys.exit(f"wallust-kde-theme: palette not found at {PALETTE}; run wallust first")
+    return json.loads(PALETTE.read_text())
+
+
+def build_roles(p: dict) -> dict:
+    """Map the 16-color palette onto semantic theme roles."""
+    bg = hexc(p["background"])
+    fg = hexc(p["foreground"])
+    return {
+        "bg": bg,
+        "bg_alt": lighten(bg, 18),       # alternate rows / buttons / headers
+        "bg_alt2": lighten(bg, 30),      # hovered button
+        "fg": fg,
+        "fg_dim": hexc(p["color8"]),     # inactive / insensitive text
+        "border": lighten(bg, 40),
+        "accent": hexc(p["color4"]),     # focus / selection
+        "accent_lt": hexc(p["color12"]), # hover decoration
+        # semantic colours: keep readable Breeze-ish defaults
+        "error": "#da4453",
+        "neutral": "#f67400",
+        "positive": "#27ae60",
+        "link": hexc(p["color4"]),
+        "visited": hexc(p["color5"]),
+    }
+
+
+# ---------------------------------------------------------------------------
+# GTK colors.css  (hex; names carry the `_breeze` suffix so they override the
+# source colours the Breeze GTK theme reads before it maps them to the
+# standard theme_* names)
+# ---------------------------------------------------------------------------
+def gtk_colors_css(r: dict) -> str:
+    bg, bg_alt, bg_alt2 = r["bg"], r["bg_alt"], r["bg_alt2"]
+    fg, fg_dim, border = r["fg"], r["fg_dim"], r["border"]
+    accent, accent_lt = r["accent"], r["accent_lt"]
+
+    pairs = {
+        "borders": border,
+        "content_view_bg": bg,
+        "error_color_backdrop": r["error"],
+        "error_color": r["error"],
+        "error_color_insensitive_backdrop": "#49171c",
+        "error_color_insensitive": "#49171c",
+        "insensitive_base_color": bg,
+        "insensitive_base_fg_color": fg_dim,
+        "insensitive_bg_color": bg_alt,
+        "insensitive_borders": border,
+        "insensitive_fg_color": fg_dim,
+        "insensitive_selected_bg_color": bg_alt2,
+        "insensitive_selected_fg_color": fg_dim,
+        "insensitive_unfocused_bg_color": bg_alt,
+        "insensitive_unfocused_fg_color": fg_dim,
+        "insensitive_unfocused_selected_bg_color": bg_alt2,
+        "insensitive_unfocused_selected_fg_color": fg_dim,
+        "link_color": r["link"],
+        "link_visited_color": r["visited"],
+        "success_color_backdrop": r["positive"],
+        "success_color": r["positive"],
+        "success_color_insensitive_backdrop": "#0d3a20",
+        "success_color_insensitive": "#0d3a20",
+        "theme_base_color": bg,
+        "theme_bg_color": bg,
+        "theme_button_background_backdrop": bg_alt,
+        "theme_button_background_backdrop_insensitive": bg_alt,
+        "theme_button_background_insensitive": bg_alt,
+        "theme_button_background_normal": bg_alt,
+        "theme_button_decoration_focus_backdrop": accent,
+        "theme_button_decoration_focus_backdrop_insensitive": border,
+        "theme_button_decoration_focus": accent,
+        "theme_button_decoration_focus_insensitive": border,
+        "theme_button_decoration_hover_backdrop": accent_lt,
+        "theme_button_decoration_hover_backdrop_insensitive": border,
+        "theme_button_decoration_hover": accent_lt,
+        "theme_button_decoration_hover_insensitive": border,
+        "theme_button_foreground_active_backdrop": fg,
+        "theme_button_foreground_active_backdrop_insensitive": fg_dim,
+        "theme_button_foreground_active": fg,
+        "theme_button_foreground_active_insensitive": fg_dim,
+        "theme_button_foreground_backdrop": fg,
+        "theme_button_foreground_backdrop_insensitive": fg_dim,
+        "theme_button_foreground_insensitive": fg_dim,
+        "theme_button_foreground_normal": fg,
+        "theme_fg_color": fg,
+        "theme_header_background_backdrop": bg,
+        "theme_header_background": bg_alt,
+        "theme_header_background_light": bg_alt2,
+        "theme_header_foreground_backdrop": fg_dim,
+        "theme_header_foreground": fg,
+        "theme_header_foreground_insensitive_backdrop": fg_dim,
+        "theme_header_foreground_insensitive": fg_dim,
+        "theme_hovering_selected_bg_color": accent_lt,
+        "theme_selected_bg_color": accent,
+        "theme_selected_fg_color": fg,
+        "theme_text_color": fg,
+        "theme_titlebar_background_backdrop": bg,
+        "theme_titlebar_background": bg_alt,
+        "theme_titlebar_background_light": bg_alt2,
+        "theme_titlebar_foreground_backdrop": fg_dim,
+        "theme_titlebar_foreground": fg,
+        "theme_titlebar_foreground_insensitive_backdrop": fg_dim,
+        "theme_titlebar_foreground_insensitive": fg_dim,
+        "theme_unfocused_base_color": bg,
+        "theme_unfocused_bg_color": bg,
+        "theme_unfocused_fg_color": fg_dim,
+        "theme_unfocused_selected_bg_color_alt": bg_alt2,
+        "theme_unfocused_selected_bg_color": accent,
+        "theme_unfocused_selected_fg_color": fg,
+        "theme_unfocused_text_color": fg_dim,
+        "theme_unfocused_view_bg_color": bg,
+        "theme_unfocused_view_text_color": fg_dim,
+        "theme_view_active_decoration_color": accent,
+        "theme_view_hover_decoration_color": accent_lt,
+        "tooltip_background": bg_alt,
+        "tooltip_border": border,
+        "tooltip_text": fg,
+        "unfocused_borders": border,
+        "unfocused_insensitive_borders": border,
+        "warning_color_backdrop": r["neutral"],
+        "warning_color": r["neutral"],
+        "warning_color_insensitive_backdrop": "#522700",
+        "warning_color_insensitive": "#522700",
+    }
+
+    lines = ["/* generated by wallust-kde-theme — do not edit */"]
+    for name, value in sorted(pairs.items()):
+        lines.append(f"@define-color {name}_breeze {value};")
+        lines.append(f"@define-color {name} {value};")
+    return "\n".join(lines) + "\n"
+
+
+# ---------------------------------------------------------------------------
+# KDE .colors  (decimal R,G,B)
+# ---------------------------------------------------------------------------
+def kde_colorset(r: dict, bg_key: str) -> str:
+    return "\n".join([
+        f"BackgroundAlternate={rgbstr(r['bg_alt'])}",
+        f"BackgroundNormal={rgbstr(r[bg_key])}",
+        f"DecorationFocus={rgbstr(r['accent'])}",
+        f"DecorationHover={rgbstr(r['accent_lt'])}",
+        f"ForegroundActive={rgbstr(r['accent'])}",
+        f"ForegroundInactive={rgbstr(r['fg_dim'])}",
+        f"ForegroundLink={rgbstr(r['link'])}",
+        f"ForegroundNegative={rgbstr(r['error'])}",
+        f"ForegroundNeutral={rgbstr(r['neutral'])}",
+        f"ForegroundNormal={rgbstr(r['fg'])}",
+        f"ForegroundPositive={rgbstr(r['positive'])}",
+        f"ForegroundVisited={rgbstr(r['visited'])}",
+    ])
+
+
+def kde_colors(r: dict) -> str:
+    sections = []
+    sections.append("[ColorEffects:Disabled]\n"
+                    "Color=56,56,56\nColorAmount=0\nColorEffect=0\n"
+                    "ContrastAmount=0.65\nContrastEffect=1\n"
+                    "IntensityAmount=0.1\nIntensityEffect=2")
+    sections.append("[ColorEffects:Inactive]\n"
+                    "ChangeSelectionColor=true\n"
+                    f"Color={rgbstr(r['fg_dim'])}\nColorAmount=0.025\nColorEffect=2\n"
+                    "ContrastAmount=0.1\nContrastEffect=2\nEnable=false\n"
+                    "IntensityAmount=0\nIntensityEffect=0")
+    for sec, bg in [("Button", "bg_alt"), ("Complementary", "bg"),
+                    ("Header", "bg_alt"), ("Tooltip", "bg_alt"),
+                    ("View", "bg"), ("Window", "bg")]:
+        sections.append(f"[Colors:{sec}]\n{kde_colorset(r, bg)}")
+    # selection uses the accent as its background
+    sel = kde_colorset(r, "accent").replace(
+        f"BackgroundNormal={rgbstr(r['bg'])}", f"BackgroundNormal={rgbstr(r['accent'])}")
+    sections.append("[Colors:Selection]\n" + "\n".join([
+        f"BackgroundAlternate={rgbstr(r['accent_lt'])}",
+        f"BackgroundNormal={rgbstr(r['accent'])}",
+        f"DecorationFocus={rgbstr(r['accent'])}",
+        f"DecorationHover={rgbstr(r['accent_lt'])}",
+        f"ForegroundActive={rgbstr(r['fg'])}",
+        f"ForegroundInactive={rgbstr(r['fg_dim'])}",
+        f"ForegroundLink={rgbstr(r['link'])}",
+        f"ForegroundNegative={rgbstr(r['error'])}",
+        f"ForegroundNeutral={rgbstr(r['neutral'])}",
+        f"ForegroundNormal={rgbstr(r['fg'])}",
+        f"ForegroundPositive={rgbstr(r['positive'])}",
+        f"ForegroundVisited={rgbstr(r['visited'])}",
+    ]))
+    sections.append("[General]\nColorScheme=Wallust\nName=Wallust\nshadeSortColumn=true")
+    sections.append("[KDE]\ncontrast=4")
+    sections.append("[WM]\n" + "\n".join([
+        f"activeBackground={rgbstr(r['bg_alt'])}",
+        f"activeBlend={rgbstr(r['fg'])}",
+        f"activeForeground={rgbstr(r['fg'])}",
+        f"inactiveBackground={rgbstr(r['bg'])}",
+        f"inactiveBlend={rgbstr(r['fg_dim'])}",
+        f"inactiveForeground={rgbstr(r['fg_dim'])}",
+    ]))
+    return "\n\n".join(sections) + "\n"
+
+
+def write(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content)
+
+
+def main() -> None:
+    roles = build_roles(load_palette())
+
+    css = gtk_colors_css(roles)
+    for gtk in ("gtk-3.0", "gtk-4.0"):
+        d = HOME / ".config" / gtk
+        write(d / "colors.css", css)
+        # ensure gtk.css actually imports the colours (the old gtk-3.0/gtk.css
+        # was a dangling symlink into a removed package)
+        gtkcss = d / "gtk.css"
+        if gtkcss.is_symlink() and not gtkcss.exists():
+            gtkcss.unlink()
+        imports = "@import 'colors.css';\n"
+        if (d / "window_decorations.css").exists():
+            imports += "@import 'window_decorations.css';\n"
+        if not gtkcss.exists() or "colors.css" not in gtkcss.read_text():
+            write(gtkcss, imports)
+
+    write(HOME / ".local/share/color-schemes/Wallust.colors", kde_colors(roles))
+
+    if shutil.which("plasma-apply-colorscheme"):
+        # plasma-apply-colorscheme no-ops when the requested scheme is already
+        # current, so it never re-reads the regenerated Wallust.colors. Toggle
+        # through another scheme to force a reload + live update of Qt apps.
+        for scheme in ("BreezeDark", "Wallust"):
+            subprocess.run(["plasma-apply-colorscheme", scheme],
+                           check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+
+if __name__ == "__main__":
+    main()

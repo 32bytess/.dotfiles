@@ -1,0 +1,33 @@
+#!/bin/sh
+# Waybar helper for NordVPN.
+#   nordvpn-waybar status  -> emit JSON for a custom module
+#   nordvpn-waybar toggle  -> connect (quick) when down, disconnect when up
+
+status_json() {
+	out=$(nordvpn status 2>/dev/null)
+	state=$(printf '%s\n' "$out" | sed -n 's/^Status: *//p')
+
+	if [ "$state" = "Connected" ]; then
+		country=$(printf '%s\n' "$out" | sed -n 's/^Country: *//p')
+		city=$(printf '%s\n' "$out" | sed -n 's/^City: *//p')
+		server=$(printf '%s\n' "$out" | sed -n 's/^Server: *//p')
+		ip=$(printf '%s\n' "$out" | sed -n 's/^IP: *//p')
+		tooltip="NordVPN: Connected\n$server\n$city, $country\n$ip"
+		printf '{"text":"\xf3\xb0\xa6\x9d","class":"connected","tooltip":"%s"}\n' "$tooltip"
+	else
+		printf '{"text":"\xf3\xb0\xa6\x9e","class":"disconnected","tooltip":"NordVPN: Disconnected"}\n'
+	fi
+}
+
+toggle() {
+	if nordvpn status 2>/dev/null | grep -q '^Status: Connected'; then
+		nordvpn disconnect
+	else
+		nordvpn connect
+	fi
+}
+
+case "$1" in
+	toggle) toggle ;;
+	*)      status_json ;;
+esac

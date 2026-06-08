@@ -16,7 +16,7 @@ hl.config({
 			offset = "2 2",
 		},
 		blur = {
-			enabled = false,
+			enabled = true,
 			size = 6,
 			passes = 2,
 			vibrancy = 0.17,
@@ -42,4 +42,4 @@ hl.animation({ leaf = "windowsOut", enabled = true, speed = 2.5, bezier = "easeO
 hl.animation({ leaf = "border", enabled = true, speed = 5.4, bezier = "easeOutQuint" })
 hl.animation({ leaf = "fade", enabled = true, speed = 3.0, bezier = "quick" })
 hl.animation({ leaf = "layers", enabled = true, speed = 3.8, bezier = "easeOutQuint" })
-hl.animation({ leaf = "workspaces", enabled = false, speed = 2.0, bezier = "almostLinear", style = "slidevert" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 2.0, bezier = "almostLinear", style = "slidevert" })

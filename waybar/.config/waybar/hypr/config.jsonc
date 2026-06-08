@@ -11,6 +11,7 @@
 	"modules-right": [
 		"tray",
 		"custom/separator",
+		"custom/nordvpn",
 		"group/audio",
 		"battery",
 		"custom/notification"
@@ -135,5 +136,16 @@
 	"custom/separator": {
 		"format": "─",
 		"tooltip": false,
+	},
+
+	"custom/nordvpn": {
+		"format": "{}",
+		"return-type": "json",
+		"exec-if": "command -v nordvpn",
+		"exec": "nordvpn-waybar status",
+		"interval": 10,
+		"on-click": "nordvpn-waybar toggle",
+		"on-click-right": "nordvpn settings",
+		"escape": true,
 	},
 }

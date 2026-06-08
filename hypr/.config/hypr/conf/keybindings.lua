@@ -130,13 +130,13 @@ hl.bind(mod .. " + F11", hl.dsp.exec_cmd("wdisplays"))
 
 -- App launchers
 hl.bind(mod .. " + E", hl.dsp.exec_cmd("kitty yazi"))
-hl.bind(mod .. " + B", hl.dsp.exec_cmd("sh -c 'hyprctl dispatch focuswindow class:zen || zen-browser'"))
+hl.bind(mod .. " + B", hl.dsp.exec_cmd([[sh -c 'hyprctl clients -j | grep -q "\"class\": \"zen\"" && hyprctl dispatch "hl.dsp.focus({ window = \"class:zen\" })" || zen-browser']]))
 hl.bind(mod .. " + SHIFT + V", hl.dsp.exec_cmd("zen-browser -P Academic"))
 hl.bind(mod .. " + G", hl.dsp.exec_cmd('brave-browser --app="https://gemini.google.com"'))
 hl.bind(mod .. " + O", hl.dsp.exec_cmd("flatpak run md.obsidian.Obsidian"))
 
--- Pomodoro TUI
-hl.bind(mod .. " + P", hl.dsp.exec_cmd(home .. "/.local/bin/pomodoro-tui"))
+-- Pomodoro TUI (mod+P is taken by pseudo above)
+hl.bind(mod .. " + SHIFT + P", hl.dsp.exec_cmd(home .. "/.local/bin/pomodoro-tui"))
 
 -- Lock screen
 hl.bind(mod .. " + SHIFT + X", hl.dsp.exec_cmd("swaylock -f"))
@@ -147,11 +147,6 @@ hl.bind(mod .. " + semicolon", hl.dsp.focus({ monitor = "next" }))
 -- Toggle waybar visibility
 hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("pkill -USR1 waybar"))
 
--- Wallpaper / theme / appearance
+-- Wallpaper / theme
 hl.bind(mod .. " + SHIFT + U", hl.dsp.exec_cmd(home .. "/.local/bin/wallpaper-rofi " .. wallpaper_dir))
 hl.bind(mod .. " + SHIFT + T", hl.dsp.exec_cmd(home .. "/.local/bin/theme-rofi"))
-hl.bind(mod .. " + SHIFT + A", hl.dsp.exec_cmd(home .. "/.local/bin/appearance-rofi"))
-
--- Toggle per-window opacity / blur
-hl.bind(mod .. " + SHIFT + O", hl.dsp.exec_cmd(home .. "/.config/hypr/scripts/toggle-opacity.sh"))
-hl.bind(mod .. " + SHIFT + I", hl.dsp.exec_cmd(home .. "/.config/hypr/scripts/toggle-blur.sh"))

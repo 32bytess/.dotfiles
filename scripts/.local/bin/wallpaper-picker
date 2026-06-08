@@ -3,23 +3,30 @@ set -euo pipefail
 
 FULL_PATH=$(realpath "$1")
 
+# Set the wallpaper immediately
 pkill swaybg || true
 swaybg -i "$FULL_PATH" -m fill &
-# ~/.cargo/bin/wallust run "$FULL_PATH" && {
-# 	sleep 0.5
-#
-# 	if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
-# 		hyprctl reload
-# 	elif [ -n "${SWAYSOCK:-}" ]; then
-# 		swaymsg reload
-# 	fi
-#
-# 	swaync-client --reload-css 2>/dev/null || true
-# 	pkill -SIGUSR1 kitty 2>/dev/null || true
-# 	tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true
-# 	pkill -SIGUSR1 nvim 2>/dev/null || true
-# 	pkill -SIGUSR2 waybar 2>/dev/null || true
-# }
-#
+
+# Regenerate the color palette from the wallpaper, then reload everything
+~/.cargo/bin/wallust run "$FULL_PATH" && {
+	sleep 0.5
+
+	if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+		hyprctl reload
+	elif [ -n "${SWAYSOCK:-}" ]; then
+		swaymsg reload
+	fi
+
+	pkill -SIGUSR2 waybar 2>/dev/null || true
+	swaync-client --reload-css 2>/dev/null || true
+	pkill -SIGUSR1 kitty 2>/dev/null || true
+	tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true
+	pkill -SIGUSR1 nvim 2>/dev/null || true
+
+	# Theme GTK (pavucontrol etc.) and KDE/Qt apps from the wallust palette
+	wallust-kde-theme 2>/dev/null || true
+}
+
+# Remember the wallpaper so it is restored on next login
 mkdir -p "$HOME/.local/state"
 echo "$FULL_PATH" >"$HOME/.local/state/current-wall"

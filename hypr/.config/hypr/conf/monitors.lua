@@ -14,7 +14,7 @@ hl.monitor({
 	mode = "1920x1080",
 	position = "1920x0",
 	scale = "1",
-	transform = 1,
+	-- transform = 1,
 })
 
 -- Fallback for any other monitor
