@@ -1,8 +1,8 @@
 @import "../colors.css";
 
 * {
-	font-family: "JetBrainsMono Nerd Font";
-	font-size: 18px;
+	font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", monospace;
+	font-size: 14px;
 	border: none ;
 	border-radius: 0;
 	min-height: 0;
@@ -36,15 +36,15 @@ window#waybar > box {
 
 
 #clock {
-	font-family: "Fira Code", monospace;
-	font-size: 15px;
+	font-family: "JetBrainsMono Nerd Font", monospace;
+	font-size: 13px;
 	font-weight: bold;
 	padding: 10px 0;
 	color: @accent;
 }
 
 #custom-launcher {
-	font-size: 22px;
+	font-size: 13px;
 	color: @accent;
 }
 
@@ -111,7 +111,7 @@ window#waybar > box {
 }
 
 #pulseaudio {
-	font-size: 22px;
+	font-size: 16px;
 }
 
 #cpu,
@@ -221,7 +221,7 @@ window#waybar > box {
 }
 
 #mpris {
-	font-size: 22px;
+	font-size: 18px;
 	padding: 4px 4px;
 	color: @ok;
 	background: transparent;

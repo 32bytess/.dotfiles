@@ -134,7 +134,7 @@
   "extensions.ignoreRecommendations": true,
   "window.menuBarVisibility": "compact",
   "workbench.editor.showTabs": "single",
-  "editor.fontFamily": "'Fira Code','Droid Sans Mono', monospace",
+  "editor.fontFamily": "'JetBrainsMono Nerd Font','Droid Sans Mono', monospace",
   "editor.fontLigatures": true,
   "chat.viewSessions.orientation": "stacked",
 }

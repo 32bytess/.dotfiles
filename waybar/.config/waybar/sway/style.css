@@ -2,7 +2,7 @@
 
 
 * {
-	font-family: "JetBrainsMono Nerd Font";
+	font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", monospace;
 	font-size: 18px;
 	border: none ;
 	border-radius: 0;
@@ -37,7 +37,7 @@ window#waybar > box {
 
 
 #clock {
-	font-family: "Fira Code", monospace;
+	font-family: "JetBrainsMono Nerd Font", monospace;
 	font-size: 15px;
 	font-weight: bold;
 	padding: 10px 0;
@@ -45,7 +45,7 @@ window#waybar > box {
 }
 
 #custom-launcher {
-	font-size: 22px;
+	font-size: 13px;
 	color: @accent;
 }
 

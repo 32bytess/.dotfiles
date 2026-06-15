@@ -1,0 +1,27 @@
+#!/bin/sh
+# Force a fresh modeset on the laptop panel (eDP-1) a couple seconds into login.
+#
+# On a cold first boot the AMD-driven primary output sometimes never gets a
+# clean modeset under the NVIDIA(card0)+AMD(card1) multi-GPU setup and stays
+# black, while the NVIDIA-driven HDMI output comes up fine. A full re-login
+# fixes it by redoing the modeset; this replicates that by briefly switching
+# eDP-1 to a throwaway mode and back, which forces a new modeset commit and
+# lights up the panel.
+#
+# IMPORTANT: do NOT disable/re-enable the output to force the modeset.
+# Disabling removes the wl_output, which crashes xdg-desktop-portal-hyprland
+# (CSharedPointer<CCWlOutput>::_delete) and breaks screen sharing. A mode
+# switch keeps the output present, so the portal survives.
+#
+# This config uses Hyprland's Lua (non-legacy) parser, so `hyprctl keyword
+# monitor` does NOT work — runtime monitor changes must go through `hyprctl
+# eval hl.monitor(...)`. Values must match conf/monitors.lua.
+
+pos='position = "0x0", scale = "1"'
+
+sleep 2
+# Throwaway mode (any mode eDP-1 advertises) to force a real modeset...
+hyprctl eval "hl.monitor({ output = \"eDP-1\", mode = \"1280x720\", $pos })"
+sleep 1
+# ...then back to the configured mode.
+hyprctl eval "hl.monitor({ output = \"eDP-1\", mode = \"1920x1080\", $pos })"

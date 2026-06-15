@@ -34,8 +34,8 @@
 			"9": "9",
 			"10": "10"
 		},
-		"on-scroll-up":   "hyprctl dispatch workspace e-1",
-		"on-scroll-down": "hyprctl dispatch workspace e+1",
+		"on-scroll-up":   "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e-1\" })'",
+		"on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e+1\" })'",
 	},
 
 	"group/audio": {
@@ -142,9 +142,9 @@
 		"format": "{}",
 		"return-type": "json",
 		"exec-if": "command -v nordvpn",
-		"exec": "nordvpn-waybar status",
+		"exec": "$HOME/.local/bin/nordvpn-waybar status",
 		"interval": 10,
-		"on-click": "nordvpn-waybar toggle",
+		"on-click": "$HOME/.local/bin/nordvpn-waybar toggle",
 		"on-click-right": "nordvpn settings",
 		"escape": true,
 	},
