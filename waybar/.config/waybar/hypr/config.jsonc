@@ -11,11 +11,18 @@
 	"modules-right": [
 		"tray",
 		"custom/separator",
+		"hyprland/language",
 		"custom/nordvpn",
 		"group/audio",
 		"battery",
 		"custom/notification"
 	],
+
+	"hyprland/language": {
+		"format": "{short}",
+		"on-click": "hyprctl switchxkblayout current next",
+		"tooltip-format": "{long}",
+	},
 
 
 	"hyprland/workspaces": {

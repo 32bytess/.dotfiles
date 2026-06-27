@@ -3,7 +3,7 @@
 
 * {
 	font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", monospace;
-	font-size: 18px;
+	font-size: 14px;
 	border: none ;
 	border-radius: 0;
 	min-height: 0;
@@ -112,7 +112,7 @@ window#waybar > box {
 }
 
 #pulseaudio {
-	font-size: 22px;
+	font-size: 16px;
 }
 
 #cpu,
@@ -122,6 +122,7 @@ window#waybar > box {
 #network,
 #battery,
 #tray,
+#language,
 #custom-notification {
 	padding: 0 4px;
 	color: @accent;

@@ -11,10 +11,17 @@
 	"modules-right": [
 		"tray",
 		"custom/separator",
+		"sway/language",
 		"group/audio",
 		"battery",
 		"custom/notification"
 	],
+
+	"sway/language": {
+		"format": "{short}",
+		"on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+		"tooltip-format": "{long}",
+	},
 
 	"sway/scratchpad": {
 		"format": "{icon}\n{count}",
@@ -112,7 +119,7 @@
 	},
 
 	"tray": {
-		"icon-size": 18,
+		"icon-size": 16,
 		"spacing": 8,
 	},
 

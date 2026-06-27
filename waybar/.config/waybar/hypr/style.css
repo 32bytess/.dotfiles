@@ -121,6 +121,7 @@ window#waybar > box {
 #network,
 #battery,
 #tray,
+#language,
 #custom-nordvpn,
 #custom-notification {
 	padding: 0 4px;
