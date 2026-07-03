@@ -10,28 +10,30 @@
 # On a cold first boot the AMD-driven primary output sometimes never gets a
 # clean modeset under the NVIDIA(card0)+AMD(card1) multi-GPU setup and stays
 # black, while the NVIDIA-driven HDMI output comes up fine. A full re-login
-# fixes it by redoing the modeset; this replicates that by toggling DPMS on
-# eDP-1, which forces a fresh modeset and lights up the panel.
+# fixes it by redoing the modeset; this replicates that by briefly switching
+# eDP-1 to a throwaway mode and back, which forces a new modeset commit and
+# lights up the panel.
 #
-# Why DPMS and not a mode-switch: switching eDP-1 to a throwaway resolution and
-# back also forces a modeset, but it leaves the panel powered on the whole time
-# and stamps a frozen software-cursor "ghost" onto the screen that never gets
-# repainted. DPMS physically blanks the panel, so nothing can linger.
+# Why a mode-switch and not DPMS: DPMS off/on is power management and does NOT
+# reliably force a fresh modeset commit, so eDP-1 can stay black. A mode switch
+# forces a real modeset, which is what re-lights the panel. The frozen
+# software-cursor "ghost" the mode-switch used to leave behind is now handled
+# separately by `cursor:use_cpu_buffer = true` in conf/input.lua.
 #
 # IMPORTANT: do NOT disable/re-enable the output to force the modeset.
 # Disabling removes the wl_output, which crashes xdg-desktop-portal-hyprland
-# (CSharedPointer<CCWlOutput>::_delete) and breaks screen sharing. DPMS keeps
-# the output present, so the portal survives.
+# (CSharedPointer<CCWlOutput>::_delete) and breaks screen sharing. A mode
+# switch keeps the output present, so the portal survives.
+#
+# This config uses Hyprland's Lua (non-legacy) parser, so `hyprctl keyword
+# monitor` does NOT work -- runtime monitor changes must go through `hyprctl
+# eval hl.monitor(...)`. Values must match conf/monitors.lua.
+
+pos='position = "0x0", scale = "1"'
 
 sleep 2
-# Power the panel off and back on. This forces the same fresh modeset that a
-# re-login does, lighting up eDP-1 — but unlike a mode-switch it physically
-# blanks the panel, so it cannot leave a stale software-cursor "ghost" stamped
-# on screen. DPMS keeps the wl_output present, so it does NOT crash
-# xdg-desktop-portal-hyprland the way disabling the output would.
-#
-# This config uses Hyprland's Lua parser, where `hyprctl dispatch` is dead —
-# dispatchers must be run as hl.dispatch(hl.dsp.<name>(...)) via `hyprctl eval`.
-hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = "disable" }))'
+# Throwaway mode (any mode eDP-1 advertises) to force a real modeset...
+hyprctl eval "hl.monitor({ output = \"eDP-1\", mode = \"1280x720\", $pos })"
 sleep 1
-hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = "enable" }))'
+# ...then back to the configured mode.
+hyprctl eval "hl.monitor({ output = \"eDP-1\", mode = \"1920x1080\", $pos })"
