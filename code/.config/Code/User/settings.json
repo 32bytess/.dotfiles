@@ -137,4 +137,5 @@
   "editor.fontFamily": "'JetBrainsMono Nerd Font','Droid Sans Mono', monospace",
   "editor.fontLigatures": true,
   "chat.viewSessions.orientation": "stacked",
+  "claudeCode.preferredLocation": "panel",
 }

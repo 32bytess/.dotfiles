@@ -23,8 +23,8 @@ swaybg -i "$FULL_PATH" -m fill &
 	tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true
 	pkill -SIGUSR1 nvim 2>/dev/null || true
 
-	# Theme GTK (pavucontrol etc.) and KDE/Qt apps from the wallust palette
-	wallust-kde-theme 2>/dev/null || true
+	# Qt/KDE and GTK apps (LibreOffice, Dolphin, pavucontrol, ...) are left on a
+	# fixed system theme and intentionally not re-themed from the wallust palette.
 }
 
 # Remember the wallpaper so it is restored on next login

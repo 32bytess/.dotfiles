@@ -2,7 +2,7 @@
 
 local mod = "SUPER"
 local home = os.getenv("HOME")
-local wallpaper_dir = home .. "/Pictures/wallpapers"
+local wallpaper_dir = home .. "/Pictures/wallpapers/wallpapers"
 
 -- Terminal
 hl.bind(mod .. " + Return", hl.dsp.exec_cmd("kitty"))
@@ -130,7 +130,12 @@ hl.bind(mod .. " + F11", hl.dsp.exec_cmd("wdisplays"))
 
 -- App launchers
 hl.bind(mod .. " + E", hl.dsp.exec_cmd("kitty yazi"))
-hl.bind(mod .. " + B", hl.dsp.exec_cmd([[sh -c 'hyprctl clients -j | grep -q "\"class\": \"zen\"" && hyprctl dispatch "hl.dsp.focus({ window = \"class:zen\" })" || zen-browser']]))
+hl.bind(
+	mod .. " + B",
+	hl.dsp.exec_cmd(
+		[[sh -c 'hyprctl clients -j | grep -q "\"class\": \"zen\"" && hyprctl dispatch "hl.dsp.focus({ window = \"class:zen\" })" || zen-browser']]
+	)
+)
 hl.bind(mod .. " + SHIFT + V", hl.dsp.exec_cmd("zen-browser -P Academic"))
 hl.bind(mod .. " + G", hl.dsp.exec_cmd('brave-browser --app="https://gemini.google.com"'))
 hl.bind(mod .. " + O", hl.dsp.exec_cmd("flatpak run md.obsidian.Obsidian"))

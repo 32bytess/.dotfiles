@@ -20,6 +20,9 @@ hl.window_rule({ name = "obsidian-ws3", match = { class = "md.obsidian.Obsidian"
 hl.window_rule({ name = "discord-ws7", match = { class = "^[Dd]iscord$" }, workspace = "7" })
 hl.window_rule({ name = "spotify-ws7", match = { class = "com.spotify.Client" }, workspace = "7" })
 
+-- Float file-picker / portal dialogs (covers Open/Save dialogs across most apps)
+hl.window_rule({ name = "float-portal-gtk", match = { class = "^xdg-desktop-portal-gtk$" }, float = true, center = true })
+
 -- Float and center specific dialogs
 hl.window_rule({ name = "float-pavucontrol", match = { class = "pavucontrol" }, float = true, center = true })
 hl.window_rule({ name = "float-blueman", match = { class = "Blueman-manager" }, float = true, center = true })

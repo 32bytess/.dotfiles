@@ -15,6 +15,7 @@ hl.on("hyprland.start", function()
 	)
 
 	hl.exec_cmd(os.getenv("HOME") .. "/.local/bin/waybar")
+	hl.exec_cmd("/usr/libexec/kf6/polkit-kde-authentication-agent-1")
 	hl.exec_cmd("kwalletd6")
 	hl.exec_cmd("swaync")
 
