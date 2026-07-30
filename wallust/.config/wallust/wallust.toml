@@ -5,6 +5,8 @@ palette = "dark16"
 filter = "vibrant"
 check_contrast = true
 
+[hooks]
+herdr = '"$HOME/.local/bin/herdr" server reload-config >/dev/null 2>&1 || true'
 
 [templates]
 sway.template = "sway.conf"
@@ -27,6 +29,9 @@ kitty.target = "~/.config/kitty/theme.conf"
 
 tmux.template = "tmux.conf"
 tmux.target = "~/.config/tmux/theme.conf"
+
+herdr.template = "herdr.toml"
+herdr.target = "~/.config/herdr/config.toml"
 
 nvim.template = "nvim.lua"
 nvim.target = "~/.config/nvim/lua/theme/colors.lua"

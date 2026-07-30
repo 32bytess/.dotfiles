@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+list_projects() {
+	printf '%s\n' "$HOME"
+
+	if [[ -d "$HOME/projects" ]]; then
+		find "$HOME/projects" -mindepth 1 -maxdepth 2 -type d \
+			-exec test -e '{}/.git' \; -print 2>/dev/null
+	fi
+
+	local path
+	for path in \
+		"$HOME/dotfiles" \
+		"$HOME/.config/nvim" \
+		"$HOME/obsidian/main/projects/thesis" \
+		"$HOME/obsidian/main"; do
+		[[ -d "$path" ]] && printf '%s\n' "$path"
+	done
+}
+
+case $# in
+0)
+	selected=$(list_projects | awk '!seen[$0]++' | fzf) || exit 0
+	;;
+1)
+	selected=$1
+	;;
+*)
+	printf 'usage: %s [directory]\n' "${0##*/}" >&2
+	exit 2
+	;;
+esac
+
+if [[ -z "${selected:-}" ]]; then
+	exit 0
+fi
+
+selected=$(realpath "$selected")
+
+if [[ "$selected" == "$HOME" ]]; then
+	selected_name="~"
+elif git_root=$(git -C "$selected" rev-parse --show-toplevel 2>/dev/null); then
+	selected_name=$(basename "$git_root")
+else
+	selected_name=$(basename "$selected")
+fi
+selected_name=${selected_name//./_}
+
+workspace_json=$(herdr workspace list)
+if ! jq -e '(.result.workspaces // .workspaces) | type == "array"' \
+	<<<"$workspace_json" >/dev/null; then
+	printf 'error: unexpected response from herdr workspace list\n' >&2
+	exit 1
+fi
+
+mapfile -t workspace_rows < <(
+	jq -r '
+		(.result.workspaces // .workspaces // [])[]
+		| [(.workspace_id // .id), .label]
+		| @tsv
+	' <<<"$workspace_json"
+)
+
+workspace_id=
+for row in "${workspace_rows[@]}"; do
+	IFS=$'\t' read -r candidate_id _ <<<"$row"
+	pane_json=$(herdr pane list --workspace "$candidate_id") || continue
+
+	while IFS= read -r pane_cwd; do
+		[[ -n "$pane_cwd" ]] || continue
+		pane_cwd=$(realpath -m "$pane_cwd")
+
+		if [[ "$pane_cwd" == "$selected" ]] \
+			|| [[ "$selected" != "$HOME" && "$pane_cwd" == "$selected/"* ]]; then
+			workspace_id=$candidate_id
+			break 2
+		fi
+	done < <(
+		jq -r '
+			(.result.panes // .panes // [])[]
+			| (.foreground_cwd // .cwd // empty)
+		' <<<"$pane_json"
+	)
+done
+
+if [[ -n "$workspace_id" ]]; then
+	herdr workspace focus "$workspace_id" >/dev/null
+	exit 0
+fi
+
+mapfile -t workspace_labels < <(
+	jq -r '(.result.workspaces // .workspaces // [])[].label' <<<"$workspace_json"
+)
+
+label_in_use() {
+	local label
+	for label in "${workspace_labels[@]}"; do
+		[[ "$label" == "$1" ]] && return 0
+	done
+	return 1
+}
+
+if label_in_use "$selected_name"; then
+	parent_name=$(basename "$(dirname "$selected")")
+	selected_name="${parent_name//./_}_${selected_name}"
+fi
+
+base_name=$selected_name
+suffix=2
+while label_in_use "$selected_name"; do
+	selected_name="${base_name}_${suffix}"
+	((suffix += 1))
+done
+
+herdr workspace create --cwd "$selected" --label "$selected_name" --focus >/dev/null

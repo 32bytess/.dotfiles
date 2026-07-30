@@ -1,0 +1,11 @@
+.stow-local-ignore
+\.git
+\.gitignore
+\.gitmodules
+\.claude
+# You can also ignore READMEs or Licenses
+^README.*
+^LICENSE.*
+
+# wallust generated files
+^/\.config/herdr/config\.toml$

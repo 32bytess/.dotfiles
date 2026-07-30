@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -ne 1 ]]; then
+	printf 'usage: %s <tab-number|toggle>\n' "${0##*/}" >&2
+	exit 2
+fi
+
+workspace_id=${HERDR_ACTIVE_WORKSPACE_ID:-}
+active_tab_id=${HERDR_ACTIVE_TAB_ID:-}
+
+if [[ -z "$workspace_id" || -z "$active_tab_id" ]]; then
+	printf 'error: this command must run from an active Herdr tab\n' >&2
+	exit 1
+fi
+
+tab_json=$(herdr tab list --workspace "$workspace_id")
+if ! jq -e '(.result.tabs // .tabs) | type == "array"' \
+	<<<"$tab_json" >/dev/null; then
+	printf 'error: unexpected response from herdr tab list\n' >&2
+	exit 1
+fi
+
+target_number=$1
+if [[ "$target_number" == "toggle" ]]; then
+	active_number=$(
+		jq -er --arg tab_id "$active_tab_id" '
+			(.result.tabs // .tabs // [])[]
+			| select((.tab_id // .id) == $tab_id)
+			| .number
+		' <<<"$tab_json"
+	)
+
+	if [[ "$active_number" -eq 1 ]]; then
+		target_number=2
+	else
+		target_number=1
+	fi
+elif [[ ! "$target_number" =~ ^[1-9][0-9]*$ ]]; then
+	printf 'error: tab number must be a positive integer or "toggle"\n' >&2
+	exit 2
+fi
+
+target_tab_id=$(
+	jq -r --argjson number "$target_number" '
+		first(
+			(.result.tabs // .tabs // [])[]
+			| select(.number == $number)
+			| (.tab_id // .id)
+		) // empty
+	' <<<"$tab_json"
+)
+
+if [[ -n "$target_tab_id" ]]; then
+	herdr tab focus "$target_tab_id" >/dev/null
+elif [[ "$1" == "toggle" && "$target_number" -eq 2 ]]; then
+	herdr tab create --workspace "$workspace_id" --focus >/dev/null
+fi
