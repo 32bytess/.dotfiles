@@ -1,0 +1,79 @@
+onboarding = false
+
+[terminal]
+shell_mode = "auto"
+new_cwd = "follow"
+
+[theme]
+name = "catppuccin"
+
+[theme.custom]
+accent = "{{color4}}"
+panel_bg = "{{background}}"
+surface0 = "{{color0}}"
+surface1 = "{{color8}}"
+surface_dim = "{{background}}"
+overlay0 = "{{color8}}"
+overlay1 = "{{color7}}"
+text = "{{foreground}}"
+subtext0 = "{{color7}}"
+mauve = "#cba6f7"
+green = "#a6e3a1"
+yellow = "#f9e2af"
+red = "#f38ba8"
+blue = "#89b4fa"
+teal = "#94e2d5"
+peach = "#fab387"
+
+[ui]
+accent = "{{color4}}"
+
+[keys]
+prefix = "ctrl+s"
+
+reload_config = "prefix+r"
+resize_mode = "prefix+shift+r"
+
+new_tab = "prefix+c"
+next_tab = "prefix+n"
+previous_tab = "prefix+p"
+switch_tab = ["prefix+1..9", "alt+1..9"]
+switch_workspace = "ctrl+1..9"
+
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+navigate_pane_left = "h"
+navigate_pane_down = "j"
+navigate_pane_up = "k"
+navigate_pane_right = "l"
+
+split_vertical = "prefix+%"
+split_horizontal = "prefix+\""
+close_pane = "prefix+x"
+zoom = "prefix+z"
+
+detach = "prefix+d"
+goto = "prefix+g"
+toggle_sidebar = "prefix+y"
+
+[[keys.command]]
+key = "prefix+f"
+type = "popup"
+command = "~/.local/bin/herdr-sessionizer"
+description = "open project"
+width = "80%"
+height = "80%"
+
+[[keys.command]]
+key = "ctrl+_"
+type = "shell"
+command = "~/.local/bin/herdr-tab-switcher toggle"
+description = "toggle tabs 1 and 2"
+
+[[keys.command]]
+key = "alt+0"
+type = "shell"
+command = "~/.local/bin/herdr-tab-switcher 10"
+description = "switch to tab 10"

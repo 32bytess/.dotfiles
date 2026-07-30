@@ -23,5 +23,6 @@ CHOSEN=$(
 	swaync-client --reload-css 2>/dev/null || true
 	pkill -SIGUSR1 kitty 2>/dev/null || true
 	tmux source-file ~/.config/tmux/theme.conf 2>/dev/null || true
+	"$HOME/.local/bin/herdr" server reload-config 2>/dev/null || true
 	pkill -SIGUSR1 nvim 2>/dev/null || true
 }
