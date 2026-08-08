@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# wallust may be a distro package (on PATH) or a `cargo install`.
+WALLUST=$(command -v wallust || echo "$HOME/.cargo/bin/wallust")
+if [ ! -x "$WALLUST" ]; then
+	echo "theme-rofi: wallust not found" >&2
+	exit 1
+fi
+
 CHOSEN=$(
-	~/.cargo/bin/wallust theme list 2>&1 |
+	"$WALLUST" theme list 2>&1 |
 		sed 's/\x1b\[[0-9;]*m//g' |
 		grep -v "^Available" |
 		grep -v "^$" |
@@ -10,7 +17,7 @@ CHOSEN=$(
 		rofi -dmenu -p "Theme" -theme ~/.config/rofi/theme.rasi
 ) || exit 1
 
-~/.cargo/bin/wallust theme "$CHOSEN" && {
+"$WALLUST" theme "$CHOSEN" && {
 	sleep 0.5
 
 	if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then

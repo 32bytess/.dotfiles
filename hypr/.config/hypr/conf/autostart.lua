@@ -1,3 +1,36 @@
+local hw = require("conf.hardware")
+
+-- Distros disagree on where non-PATH helpers live (/usr/libexec on Fedora and
+-- Debian, /usr/lib on Arch), and some of these are simply not installed
+-- everywhere. Build a shell snippet that runs the first candidate that exists
+-- and stays quiet when none does, instead of hardcoding one distro's layout.
+local function try_exec(candidates, args)
+	local list = {}
+	for _, path in ipairs(candidates) do
+		list[#list + 1] = '"' .. path .. '"'
+	end
+	return "for p in "
+		.. table.concat(list, " ")
+		.. '; do if [ -x "$p" ]; then "$p" '
+		.. (args or "")
+		.. " & break; fi; done"
+end
+
+local XDG_PORTAL = {
+	"/usr/libexec/xdg-desktop-portal",
+	"/usr/lib/xdg-desktop-portal",
+	"/usr/lib64/xdg-desktop-portal",
+}
+
+local POLKIT_AGENT = {
+	"/usr/libexec/kf6/polkit-kde-authentication-agent-1",
+	"/usr/lib/kf6/polkit-kde-authentication-agent-1",
+	"/usr/lib/polkit-kde-authentication-agent-1",
+	"/usr/libexec/polkit-gnome-authentication-agent-1",
+	"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1",
+	"/usr/bin/lxpolkit",
+}
+
 hl.on("hyprland.start", function()
 	-- Export the session env to dbus & systemd, then bring up the screen-share
 	-- portal stack. Done in one ordered sh -c so the portal sees WAYLAND_DISPLAY /
@@ -10,12 +43,12 @@ hl.on("hyprland.start", function()
 			.. "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE; "
 			.. "systemctl --user stop xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk; "
 			.. "systemctl --user start xdg-desktop-portal-hyprland xdg-desktop-portal-gtk; "
-			.. "/usr/libexec/xdg-desktop-portal --replace &"
+			.. try_exec(XDG_PORTAL, "--replace")
 			.. "'"
 	)
 
 	hl.exec_cmd(os.getenv("HOME") .. "/.local/bin/waybar")
-	hl.exec_cmd("/usr/libexec/kf6/polkit-kde-authentication-agent-1")
+	hl.exec_cmd("sh -c '" .. try_exec(POLKIT_AGENT) .. "'")
 	hl.exec_cmd("kwalletd6")
 	hl.exec_cmd("swaync")
 
@@ -35,13 +68,4 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd(
 		'sh -c \'f="${XDG_STATE_HOME:-$HOME/.local/state}/current-wall"; [ -r "$f" ] && swaybg -i "$(cat "$f")" -m fill\''
 	)
-
-	-- On a cold first login the AMD-driven primary output (eDP-1) sometimes
-	-- never gets a clean modeset under the NVIDIA+AMD multi-GPU setup and stays
-	-- black, while the NVIDIA-driven HDMI output comes up fine. monitor-kick
-	-- briefly switches eDP-1 to a throwaway mode and back a couple seconds in,
-	-- forcing a fresh modeset (the same effect as the re-login that works around
-	-- it). It must NOT disable the output: removing the wl_output crashes
-	-- xdg-desktop-portal-hyprland and breaks screen sharing.
-	hl.exec_cmd(os.getenv("HOME") .. "/.local/bin/monitor-kick")
 end)

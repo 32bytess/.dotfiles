@@ -3,12 +3,19 @@ set -euo pipefail
 
 FULL_PATH=$(realpath "$1")
 
+# wallust may be a distro package (on PATH) or a `cargo install`.
+WALLUST=$(command -v wallust || echo "$HOME/.cargo/bin/wallust")
+if [ ! -x "$WALLUST" ]; then
+	echo "wallpaper-picker: wallust not found" >&2
+	exit 1
+fi
+
 # Set the wallpaper immediately
 pkill swaybg || true
 swaybg -i "$FULL_PATH" -m fill &
 
 # Regenerate the color palette from the wallpaper, then reload everything
-~/.cargo/bin/wallust run "$FULL_PATH" && {
+"$WALLUST" run "$FULL_PATH" && {
 	sleep 0.5
 
 	if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
@@ -27,6 +34,8 @@ swaybg -i "$FULL_PATH" -m fill &
 	# fixed system theme and intentionally not re-themed from the wallust palette.
 }
 
-# Remember the wallpaper so it is restored on next login
-mkdir -p "$HOME/.local/state"
-echo "$FULL_PATH" >"$HOME/.local/state/current-wall"
+# Remember the wallpaper so it is restored on next login. Must honour
+# XDG_STATE_HOME: the autostart entries that read this file back do.
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}"
+mkdir -p "$STATE_DIR"
+echo "$FULL_PATH" >"$STATE_DIR/current-wall"

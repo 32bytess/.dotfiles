@@ -1,9 +1,38 @@
 #!/bin/sh
-if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+# Launch waybar with the config for the running compositor.
+
+if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
 	wm="hypr"
-elif [ -n "$SWAYSOCK" ]; then
+elif [ -n "${SWAYSOCK:-}" ]; then
 	wm="sway"
 else
-	wm=$(echo "${XDG_CURRENT_DESKTOP:-}" | tr '[:upper:]' '[:lower:]')
+	# XDG_CURRENT_DESKTOP can be a colon-separated list ("sway:wlroots").
+	wm=$(printf '%s' "${XDG_CURRENT_DESKTOP:-}" | tr '[:upper:]' '[:lower:]')
+	wm=${wm%%:*}
+	# It reports "Hyprland", but the config directory is named "hypr".
+	[ "$wm" = "hyprland" ] && wm="hypr"
 fi
-exec /usr/bin/waybar -c "${HOME}/.config/waybar/${wm}/config.jsonc" -s "${HOME}/.config/waybar/${wm}/style.css" "$@"
+
+# Find the real waybar on PATH. This wrapper is itself named `waybar` and lives
+# on PATH, so a plain `command -v waybar` would find it and fork-bomb -- skip
+# any candidate that resolves back to this script.
+self=$(readlink -f "$0")
+bin=""
+oldifs=$IFS
+IFS=:
+for dir in $PATH; do
+	[ -n "$dir" ] || dir=.
+	candidate="$dir/waybar"
+	[ -x "$candidate" ] || continue
+	[ "$(readlink -f "$candidate")" = "$self" ] && continue
+	bin=$candidate
+	break
+done
+IFS=$oldifs
+
+if [ -z "$bin" ]; then
+	echo "waybar: not installed" >&2
+	exit 1
+fi
+
+exec "$bin" -c "${HOME}/.config/waybar/${wm}/config.jsonc" -s "${HOME}/.config/waybar/${wm}/style.css" "$@"

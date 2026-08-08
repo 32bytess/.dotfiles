@@ -129,7 +129,7 @@ hl.bind(mod .. " + F10", hl.dsp.exec_cmd("blueman-manager"))
 hl.bind(mod .. " + F11", hl.dsp.exec_cmd("wdisplays"))
 
 -- App launchers
-hl.bind(mod .. " + E", hl.dsp.exec_cmd("kitty yazi"))
+hl.bind(mod .. " + E", hl.dsp.exec_cmd("thunar"))
 hl.bind(
 	mod .. " + B",
 	hl.dsp.exec_cmd(
