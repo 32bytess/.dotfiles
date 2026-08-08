@@ -1,3 +1,5 @@
+-- Hardware detection runs first; every module below branches on its result.
+require("conf.hardware")
 require("conf.env")
 require("conf.monitors")
 require("conf.input")
