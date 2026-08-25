@@ -1,0 +1,57 @@
+#!/bin/sh
+# Hyprland session launcher: wait for the greeter to let go of the seat, then
+# hand off to the distro's session binary.
+#
+# Installed to /usr/local/bin and pointed at by
+# /usr/local/share/wayland-sessions/hyprland.desktop -- not stowed into $HOME,
+# because that .desktop's Exec cannot expand $HOME. See system/README.md.
+#
+# SDDM starts the user session *before* its greeter session is torn down. On
+# this machine logind opens the user session and only removes the greeter
+# session ~0.8s later, so Hyprland races it. When Hyprland loses, aquamarine's
+# libseat take_device on the GPU that is still held by the greeter fails:
+#
+#   [libseat] Could not take device: Device or resource busy
+#   libseat: Couldn't open device at /dev/dri/card1
+#   drm: Skipping device .../card1, not a KMS device
+#   drm: Found 1 GPUs
+#
+# Hyprland then comes up on whatever GPU it *could* open. On a hybrid laptop
+# that is the discrete card, whose only connector is the external one -- so the
+# session runs fine but paints to a display that isn't there: a black internal
+# panel. Plugging in an external monitor "fixes" it only because that GPU
+# suddenly has somewhere to draw. It is not a config problem; Hyprland never
+# even sees the GPU driving the built-in panel.
+#
+# logind frees a session's devices when the session is *removed*, not when it
+# goes inactive, so the condition to wait on is "no greeter-class session left
+# on our seat". Bounded, because a login that never starts is worse than a
+# racy one.
+
+SEAT="${XDG_SEAT:-seat0}"
+DEADLINE_SECONDS=10
+POLL_INTERVAL=0.1
+
+greeter_present() {
+	loginctl list-sessions --no-legend 2>/dev/null | awk '{print $1}' | while read -r session; do
+		[ "$(loginctl show-session "$session" -p Seat --value 2>/dev/null)" = "$SEAT" ] || continue
+		[ "$(loginctl show-session "$session" -p Class --value 2>/dev/null)" = "greeter" ] || continue
+		echo yes
+		break
+	done | grep -q yes
+}
+
+waited=0
+while greeter_present; do
+	# `expr` keeps this POSIX; the shell here has no float arithmetic.
+	waited=$(expr "$waited" + 1)
+	[ "$waited" -gt "$(expr $DEADLINE_SECONDS \* 10)" ] && break
+	sleep "$POLL_INTERVAL"
+done
+
+# The greeter session is gone from logind's books, but its processes may still
+# be on their way out. Nothing left to poll for at this point, so settle
+# briefly rather than racing the tail of the teardown.
+sleep 0.3
+
+exec /usr/bin/start-hyprland "$@"

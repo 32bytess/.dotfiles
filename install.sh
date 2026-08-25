@@ -11,8 +11,10 @@ set -euo pipefail
 
 cd "$(dirname "$(readlink -f "$0")")"
 
-# Directories that are not stow packages.
-NON_PACKAGES=(.git .claude)
+# Directories that are not stow packages. `system/` holds the few files that
+# have to live outside $HOME (see system/README.md); they are installed by hand
+# with sudo, never symlinked.
+NON_PACKAGES=(.git .claude system)
 
 # Runtime commands each package expects. Purely advisory: missing entries are
 # reported at the end and never abort the run, since a config is still worth

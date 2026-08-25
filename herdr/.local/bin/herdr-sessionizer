@@ -5,7 +5,7 @@ list_projects() {
 	printf '%s\n' "$HOME"
 
 	if [[ -d "$HOME/projects" ]]; then
-		find "$HOME/projects" -mindepth 1 -maxdepth 2 -type d \
+		find "$HOME/projects" -maxdepth 2 -type d \
 			-exec test -e '{}/.git' \; -print 2>/dev/null
 	fi
 
@@ -14,6 +14,7 @@ list_projects() {
 		"$HOME/dotfiles" \
 		"$HOME/.config/nvim" \
 		"$HOME/obsidian/main/projects/thesis" \
+		"$HOME/obsidian/main/projects/thesis-submission" \
 		"$HOME/obsidian/main"; do
 		[[ -d "$path" ]] && printf '%s\n' "$path"
 	done
@@ -71,8 +72,8 @@ for row in "${workspace_rows[@]}"; do
 		[[ -n "$pane_cwd" ]] || continue
 		pane_cwd=$(realpath -m "$pane_cwd")
 
-		if [[ "$pane_cwd" == "$selected" ]] \
-			|| [[ "$selected" != "$HOME" && "$pane_cwd" == "$selected/"* ]]; then
+		if [[ "$pane_cwd" == "$selected" ]] ||
+			[[ "$selected" != "$HOME" && "$pane_cwd" == "$selected/"* ]]; then
 			workspace_id=$candidate_id
 			break 2
 		fi

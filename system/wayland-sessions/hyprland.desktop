@@ -1,0 +1,16 @@
+[Desktop Entry]
+# Overrides /usr/share/wayland-sessions/hyprland.desktop. SDDM reads
+# /usr/local/share/wayland-sessions first, so this entry wins while leaving the
+# packaged one untouched across hyprland updates.
+#
+# The only change is Exec: it goes through hyprland-session, which waits for the
+# SDDM greeter to release the seat before starting the compositor (see
+# system/README.md). Exec must stay a single whitespace-free token: SDDM hands
+# this line to /etc/sddm/wayland-session, which ends in an unquoted `exec $@`,
+# so anything quoted here is word-split and the quotes are never re-interpreted.
+Name=Hyprland
+Comment=An intelligent dynamic tiling Wayland compositor
+Exec=/usr/local/bin/hyprland-session
+Type=Application
+DesktopNames=Hyprland
+Keywords=tiling;wayland;compositor;

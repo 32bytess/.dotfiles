@@ -138,4 +138,5 @@
   "editor.fontLigatures": true,
   "chat.viewSessions.orientation": "stacked",
   "claudeCode.preferredLocation": "panel",
+  "chat.byokUtilityModelDefault": "mainAgent",
 }

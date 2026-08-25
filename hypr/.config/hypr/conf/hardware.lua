@@ -23,6 +23,7 @@ local M = {
 	ok = false,
 	gpus = {}, -- { card, driver, vendor, slot, path, outputs, connected }
 	outputs = {}, -- { name, card, connected, internal }
+	descriptions = {}, -- output name -> "<vendor> <model>" from EDID, when readable
 	connected = {}, -- output names, internal panel first, then alphabetical
 	internal = nil, -- name of the built-in panel, if any
 	has_nvidia = false,
@@ -86,6 +87,53 @@ local function read_uevent(path)
 		fields[key] = value
 	end
 	return fields
+end
+
+-- EDID -> "<vendor> <model>", so preferences can be keyed to a physical panel
+-- instead of the connector it happened to land on (the same display shows up as
+-- DP-3 on one port and HDMI-A-1 on another). Best effort: an absent, short or
+-- malformed blob yields nil and callers fall back to matching on the name.
+--
+-- Layout of the 128-byte base block: 8-byte magic header, then bytes 9-10 pack
+-- the three-letter PnP vendor id as 5-bit values (A=1), then four 18-byte
+-- descriptors at 55/73/91/109 (1-based); the one tagged 0x00 0x00 0x00 0xFC
+-- holds the model name, newline-terminated and space-padded.
+local function read_edid_description(path)
+	local f = io.open(path, "rb")
+	if not f then
+		return nil
+	end
+	local data = f:read(128)
+	f:close()
+	if not data or #data < 128 or data:sub(1, 8) ~= "\0\255\255\255\255\255\255\0" then
+		return nil
+	end
+
+	local id = data:byte(9) * 256 + data:byte(10)
+	local letters = {}
+	for _, divisor in ipairs({ 1024, 32, 1 }) do
+		local code = math.floor(id / divisor) % 32
+		if code < 1 or code > 26 then
+			letters = nil
+			break
+		end
+		letters[#letters + 1] = string.char(64 + code)
+	end
+	local vendor = letters and table.concat(letters) or nil
+
+	local model
+	for _, offset in ipairs({ 55, 73, 91, 109 }) do
+		local tag = data:sub(offset, offset + 3)
+		if tag == "\0\0\0\252" then
+			model = data:sub(offset + 5, offset + 17):gsub("\n.*$", ""):gsub("%s+$", "")
+			break
+		end
+	end
+	if not model or model == "" then
+		return nil
+	end
+
+	return vendor and (vendor .. " " .. model) or model
 end
 
 local function is_internal(connector)
@@ -153,6 +201,9 @@ local function detect()
 				internal = is_internal(connector),
 			}
 			M.outputs[#M.outputs + 1] = output
+			if output.connected then
+				M.descriptions[connector] = read_edid_description(SYS_DRM .. "/" .. name .. "/edid")
+			end
 			local gpu = cards[card]
 			gpu.outputs[#gpu.outputs + 1] = output
 			if output.connected then
