@@ -4,7 +4,8 @@
 -- actually connected (see conf/hardware.lua). The built-in panel, if there is
 -- one, is declared first and placed at the origin; every other connected output
 -- is appended with `position = "auto-left"`, which stacks them off the left edge
--- of the layout in declaration order.
+-- of the layout in declaration order, unless the `preferences` table below sends
+-- a particular panel somewhere else (the Samsung sits above the laptop).
 --
 -- Detection runs at parse time, but a display plugged in later is not left
 -- behind: `monitor.added` / `monitor.removed` re-run the same layout against
@@ -19,15 +20,25 @@ local hw = require("conf.hardware")
 -- monitor rule, so the catch-all below has to come first or it clobbers this.
 local default_scale = 1
 
--- Per-display preferences, for genuine per-panel choices (rotation, scale,
--- refresh rate) -- never for layout. Each key is matched case-insensitively
--- against both the connector name and the panel's EDID "<vendor> <model>"
--- description, so keying on the model is the durable choice: the same display
--- comes up as DP-3 on one port and HDMI-A-1 on another, but its EDID does not
--- change. Use a connector name only when the preference really is about the
--- port rather than the panel.
+-- Per-display preferences: genuine per-panel choices (rotation, scale, refresh
+-- rate) and where the panel sits on the desk. Each key is matched
+-- case-insensitively against both the connector name and the panel's EDID
+-- "<vendor> <model>" description, so keying on the model is the durable choice:
+-- the same display comes up as DP-3 on one port and HDMI-A-1 on another, but
+-- its EDID does not change. Use a connector name only when the preference
+-- really is about the port rather than the panel.
+--
+-- `position` accepts "auto-left" (the default for every non-anchor output
+-- here), "auto-right", "auto-up", "auto-down", or an explicit "XxY" origin.
+-- Hyprland places an auto-<dir> output against the far edge of the outputs it
+-- has already placed and pins the *other* axis to 0, so the directions do not
+-- interfere: with the 1920x1080 panel anchored at 0x0, "auto-up" puts a
+-- 1360x768 screen at 0x-768 (top-left aligned above it) while "auto-left"
+-- keeps measuring only the x extent. Two auto-left outputs is what produces a
+-- row: -1080x0, then -2440x0.
 local preferences = {
 	["ARZOPA"] = { transform = 1 }, -- portable second screen, stood on its side
+	["SAMSUNG"] = { position = "auto-up", scale = 0.5 }, -- desk monitor, above the laptop panel
 	-- ["DP-1"] = { scale = 2 }, -- a HiDPI display that does want scaling
 }
 
@@ -55,28 +66,54 @@ local function spec_for(name, description, index)
 	local monitor = {
 		output = name,
 		mode = "preferred",
-		-- The first output anchors the layout; the rest flow off its left edge.
+		-- The first output anchors the layout; the rest flow off its left edge
+		-- unless a preference above sends them somewhere else.
 		position = index == 1 and "0x0" or "auto-left",
 		scale = default_scale,
 	}
 	for field, value in pairs(preferences_for(name, description)) do
-		monitor[field] = value
+		-- Where the anchor sits is not a preference: every other output is
+		-- placed relative to it, so floating it drags the whole desktop.
+		if not (field == "position" and index == 1) then
+			monitor[field] = value
+		end
 	end
 	return monitor
 end
 
--- Workspaces 1-6 on the primary display, 7-10 on the secondary. With only one
--- display connected all ten go to it -- otherwise those workspaces would be
--- pinned to an output that does not exist and become unreachable.
-local function assign_workspaces(primary, secondary)
-	if not primary then
+-- Workspaces 1-6 live on the primary display; 7-10 go to the externals -- one
+-- external takes all four, two split them 7-8 / 9-10. With nothing else
+-- connected all ten stay on the primary, otherwise they would be pinned to an
+-- output that does not exist and become unreachable. `names` is the ordered
+-- list of connected outputs, primary first.
+local function owner_for(id, names)
+	local primary = names[1]
+	if not primary or id <= 6 then
+		return primary
+	end
+	if names[3] then
+		return id <= 8 and names[2] or names[3]
+	end
+	return names[2] or primary
+end
+
+-- Lowest workspace in 7-10 that this output owns, if any. A fourth display owns
+-- none: there are only ten workspaces to hand out.
+local function first_owned(name, names)
+	for id = 7, 10 do
+		if owner_for(id, names) == name then
+			return id
+		end
+	end
+	return nil
+end
+
+local function assign_workspaces(names)
+	if not names[1] then
 		return
 	end
-	for i = 1, 6 do
-		hl.workspace_rule({ workspace = tostring(i), monitor = primary })
-	end
-	for i = 7, 10 do
-		hl.workspace_rule({ workspace = tostring(i), monitor = secondary or primary })
+	for id = 1, 10 do
+		hl.workspace_rule({ workspace = tostring(id), monitor = owner_for(id, names) })
 	end
 end
 
@@ -93,7 +130,7 @@ for index, name in ipairs(hw.connected) do
 	hl.monitor(spec_for(name, hw.descriptions[name], index))
 end
 
-assign_workspaces(hw.connected[1], hw.connected[2])
+assign_workspaces(hw.connected)
 
 -- Re-apply the layout against Hyprland's live monitor list. Called on hotplug,
 -- where conf/hardware.lua's parse-time snapshot is by definition stale -- and
@@ -118,34 +155,39 @@ local function relayout()
 		return a.name < b.name
 	end)
 
+	local names = {}
 	for index, monitor in ipairs(monitors) do
 		hl.monitor(spec_for(monitor.name, monitor.description, index))
+		names[index] = monitor.name
 	end
 
-	local primary, secondary = monitors[1], monitors[2]
-	assign_workspaces(primary and primary.name, secondary and secondary.name)
+	assign_workspaces(names)
 
-	local target = secondary or primary
-	if not target then
+	if not names[2] then
 		return
 	end
 	-- Only workspaces that already exist: dispatching at one that does not just
 	-- logs "Workspace not found", and the rules above already cover the rest.
 	for _, workspace in ipairs(hl.get_workspaces()) do
 		if not workspace.special and workspace.id >= 7 and workspace.id <= 10 then
-			hl.dispatch(hl.dsp.workspace.move({ workspace = tostring(workspace.id), monitor = target.name }))
+			local target = owner_for(workspace.id, names)
+			if target then
+				hl.dispatch(hl.dsp.workspace.move({ workspace = tostring(workspace.id), monitor = target }))
+			end
 		end
 	end
 
-	-- The new output is still showing whatever Hyprland parked on it (11, 12,
-	-- ...). Moving the rule-owned workspaces across does not displace that, so
-	-- put the first of them on screen -- but only if the output is currently
-	-- showing a workspace outside 1-10, i.e. one of those throwaways.
-	if secondary then
-		local shown = secondary.active_workspace
+	-- A new output is still showing whatever Hyprland parked on it (11, 12, ...).
+	-- Moving the rule-owned workspaces across does not displace that, so put the
+	-- first workspace each external owns on screen -- but only where it is
+	-- currently showing a workspace outside 1-10, i.e. one of those throwaways.
+	for index = 2, #monitors do
+		local monitor = monitors[index]
+		local shown = monitor.active_workspace
 		local id = shown and tonumber(shown.id)
-		if not id or id > 10 or id < 1 then
-			secondary:set_workspace({ workspace = "7" })
+		local first = first_owned(monitor.name, names)
+		if first and (not id or id > 10 or id < 1) then
+			monitor:set_workspace({ workspace = tostring(first) })
 		end
 	end
 end

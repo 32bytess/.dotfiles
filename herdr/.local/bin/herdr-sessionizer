@@ -14,6 +14,7 @@ list_projects() {
 		"$HOME/dotfiles" \
 		"$HOME/.config/nvim" \
 		"$HOME/obsidian/main/projects/thesis" \
+		"$HOME/obsidian/thesis-final" \
 		"$HOME/obsidian/main/projects/thesis-submission" \
 		"$HOME/obsidian/main"; do
 		[[ -d "$path" ]] && printf '%s\n' "$path"

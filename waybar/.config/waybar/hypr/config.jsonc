@@ -6,7 +6,7 @@
 
 	"modules-left": ["custom/launcher","custom/separator", "clock"],
 
-	"modules-center": ["hyprland/workspaces" ],
+	"modules-center": ["ext/workspaces" ],
 
 	"modules-right": [
 		"tray",
@@ -25,9 +25,16 @@
 	},
 
 
-	"hyprland/workspaces": {
-		"disable-scroll": true,
+	// ext/workspaces, not hyprland/workspaces: under Hyprland's Lua config the
+	// hyprland module's hardcoded click (socket1 "dispatch workspace N") is
+	// parsed as Lua and dies with a syntax error, so clicks do nothing. This
+	// module switches workspaces over the ext-workspace-v1 Wayland protocol
+	// instead, which never touches the config parser. Scroll still shells out,
+	// so those commands must use the Lua form.
+	"ext/workspaces": {
+		"on-click": "activate",
 		"all-outputs": false,
+		"sort-by-name": true,
 		"format": "{icon}",
 		"format-icons": {
 			"1": ">_",
