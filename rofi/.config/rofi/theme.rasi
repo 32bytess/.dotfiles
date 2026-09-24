@@ -7,7 +7,7 @@
 }
 
 window {
-    background-color: @bg;
+    background-color: @bg-alpha;
     border:           2px solid;
     border-color:     @accent;
     border-radius:    15px;

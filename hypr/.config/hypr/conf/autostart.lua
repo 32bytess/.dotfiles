@@ -51,6 +51,20 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("sh -c '" .. try_exec(POLKIT_AGENT) .. "'")
 	hl.exec_cmd("kwalletd6")
 	hl.exec_cmd("swaync")
+	-- Daemon behind `wifi-manager --toggle` (keybind) and the waybar network
+	-- click; without it running, both signal nothing.
+	hl.exec_cmd("wifi-manager")
+
+	-- Lock after 10 min idle, blank the displays after 15, and always lock
+	-- before suspend. DPMS goes through the Lua dispatcher: legacy
+	-- `hyprctl dispatch dpms off` is a syntax error under the Lua config.
+	hl.exec_cmd(
+		"swayidle -w "
+			.. "timeout 600 'swaylock -f' "
+			.. [[timeout 900 "hyprctl dispatch 'hl.dsp.dpms({ action = \"off\" })'" ]]
+			.. [[resume "hyprctl dispatch 'hl.dsp.dpms({ action = \"on\" })'" ]]
+			.. "before-sleep 'swaylock -f'"
+	)
 
 	-- Tray apps register as StatusNotifierItems with the StatusNotifierWatcher,
 	-- which waybar itself owns. Launching them before waybar has claimed the

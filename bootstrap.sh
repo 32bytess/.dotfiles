@@ -21,7 +21,7 @@ usage() {
 }
 
 # Directories that are not stow packages (mirrors install.sh).
-NON_PACKAGES=(.git .claude)
+NON_PACKAGES=(.git .claude system)
 
 # Everything a graphical session needs regardless of which compositor runs it.
 SESSION="waybar SwayNotificationCenter rofi swaybg swaylock grim slurp
@@ -35,7 +35,7 @@ SESSION="waybar SwayNotificationCenter rofi swaybg swaylock grim slurp
 # the polkit agent -> polkit-kde. The union is deduplicated before installing.
 declare -A PKGS=(
 	[base]="stow git-core jq fzf xdg-utils python3"
-	[hypr]="hyprland xdg-desktop-portal-hyprland xdg-desktop-portal-gtk $SESSION"
+	[hypr]="hyprland xdg-desktop-portal-hyprland xdg-desktop-portal-gtk swayidle $SESSION"
 	[sway]="sway xdg-desktop-portal-wlr xdg-desktop-portal-gtk $SESSION"
 	[waybar]="waybar nerd-fonts"
 	[swaync]="SwayNotificationCenter nerd-fonts"

@@ -12,7 +12,7 @@ sudo install -Dm644 system/wayland-sessions/hyprland.desktop \
 Removing both files is a complete uninstall — SDDM falls straight back to the
 packaged session entry.
 
-## What this fixes
+## What this fixes: black panel at login
 
 A black internal panel after logging into Hyprland from a cold boot, which
 "goes away" if an external monitor is plugged in.
@@ -45,8 +45,39 @@ disappear from logind before exec'ing `/usr/bin/start-hyprland`.
 |------|--------------|-------|
 | `bin/hyprland-session` | `/usr/local/bin/` | Wrapper; must be outside `$HOME` because the `.desktop` `Exec` cannot expand `$HOME` (see below) |
 | `wayland-sessions/hyprland.desktop` | `/usr/local/share/wayland-sessions/` | Shadows the packaged entry; `SessionDir` searches `/usr/local` first |
+| `sysctl.d/99-zram-swap.conf` | `/etc/sysctl.d/` | zram swap tuning; overrides tuned's swappiness |
 
 The `Exec=` line has to be one whitespace-free token. SDDM passes it to
 `/etc/sddm/wayland-session`, which ends in an unquoted `exec $@`: any quoting is
 destroyed by word splitting and never re-interpreted, so an
 `Exec=/bin/sh -c '…$HOME…'` form silently breaks the login instead of fixing it.
+
+## What this fixes: freeze when RAM fills up
+
+```sh
+sudo install -Dm644 system/sysctl.d/99-zram-swap.conf /etc/sysctl.d/99-zram-swap.conf
+sudo sysctl --system
+sudo systemctl enable --now systemd-oomd.socket systemd-oomd.service
+```
+
+Uninstall: remove `/etc/sysctl.d/99-zram-swap.conf` and
+`sudo systemctl disable --now systemd-oomd.socket systemd-oomd.service`.
+
+At 100% RAM the desktop locked up hard and needed a power-button reboot, with
+no OOM kill in the journal. Two things combined:
+
+- **`systemd-oomd` was disabled** (preset is enabled, the unit was not), so the
+  only killer left was the kernel's, which fires only after minutes of
+  thrashing. Fedora's `systemd-oomd-defaults` already puts `ManagedOOMSwap=kill`
+  on the root slice and memory-pressure killing on `user@.service`; enabling
+  the daemon is all it takes to have the worst offending scope killed within
+  seconds.
+- **`vm.swappiness=10` on zram swap**, set by tuned's `throughput-performance`
+  profile. The only swap is `/dev/zram0`, i.e. compressed RAM. A low swappiness
+  makes the kernel evict file-backed pages (running programs' code) instead of
+  swapping anonymous memory into zram, so everything re-faults from disk in a
+  loop. `sysctl.d/99-zram-swap.conf` sets the zram-appropriate 180; tuned
+  reapplies `/etc/sysctl.d` after its profile, so the profile can stay.
+
+Check: `sysctl vm.swappiness` prints 180 (also after `systemctl restart tuned`),
+and `oomctl` lists the monitored cgroups.

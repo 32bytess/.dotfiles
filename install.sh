@@ -24,7 +24,7 @@ SESSION_DEPS="waybar rofi swaybg swaync swaync-client swaylock grim slurp wl-cop
 	bluetoothctl nmcli kwalletd6 wallust"
 
 declare -A DEPS=(
-	[hypr]="hyprland hyprctl $SESSION_DEPS"
+	[hypr]="hyprland hyprctl swayidle $SESSION_DEPS"
 	[sway]="sway swaymsg swaynag $SESSION_DEPS"
 	[waybar]="waybar"
 	[swaync]="swaync swaync-client"

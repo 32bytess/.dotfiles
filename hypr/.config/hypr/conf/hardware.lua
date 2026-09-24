@@ -36,6 +36,7 @@ local root = os.getenv("HYPR_HW_FAKE") or ""
 local SYS_DRM = root .. "/sys/class/drm"
 local DEV_DRI = root .. "/dev/dri"
 local INPUT_DEVICES = root .. "/proc/bus/input/devices"
+local PNP_IDS = root .. "/usr/share/hwdata/pnp.ids"
 
 -- PCI vendor ID -> name. Anything else stays "unknown", which is treated as a
 -- display-capable GPU we simply have no special handling for.
@@ -89,6 +90,18 @@ local function read_uevent(path)
 	return fields
 end
 
+-- PnP id ("SAM") -> manufacturer name ("Samsung Electric Company") from the
+-- hwdata database, which is where Hyprland gets the name it puts in a monitor's
+-- description. Resolving it here makes the parse-time description match the
+-- one `relayout` sees on hotplug, so a key like "SAMSUNG" works in both. Falls
+-- back to the bare id when the database is missing or has no entry.
+local function vendor_name(id)
+	local data = read_file(PNP_IDS)
+	-- Leading "\n" so the first line matches like every other one.
+	local name = data and ("\n" .. data):match("\n" .. id .. "\t([^\r\n]+)")
+	return name or id
+end
+
 -- EDID -> "<vendor> <model>", so preferences can be keyed to a physical panel
 -- instead of the connector it happened to land on (the same display shows up as
 -- DP-3 on one port and HDMI-A-1 on another). Best effort: an absent, short or
@@ -119,7 +132,7 @@ local function read_edid_description(path)
 		end
 		letters[#letters + 1] = string.char(64 + code)
 	end
-	local vendor = letters and table.concat(letters) or nil
+	local vendor = letters and vendor_name(table.concat(letters)) or nil
 
 	local model
 	for _, offset in ipairs({ 55, 73, 91, 109 }) do
@@ -139,6 +152,7 @@ end
 local function is_internal(connector)
 	return connector:match("^eDP") ~= nil or connector:match("^LVDS") ~= nil or connector:match("^DSI") ~= nil
 end
+M.is_internal = is_internal
 
 local function detect()
 	local entries = list_dir(SYS_DRM)
@@ -154,7 +168,10 @@ local function detect()
 			card_names[#card_names + 1] = name
 		end
 	end
-	table.sort(card_names)
+	-- Numerically, so card10 sorts after card2.
+	table.sort(card_names, function(a, b)
+		return tonumber(a:match("%d+")) < tonumber(b:match("%d+"))
+	end)
 
 	for _, card in ipairs(card_names) do
 		local uevent = read_uevent(SYS_DRM .. "/" .. card .. "/device/uevent")
@@ -309,8 +326,11 @@ local function detect()
 
 	local input_devices = read_file(INPUT_DEVICES)
 	if input_devices then
-		M.has_touchpad = input_devices:lower():match('name=".-touchpad') ~= nil
-			or input_devices:lower():match('name=".-trackpad') ~= nil
+		-- Stay inside one quoted name: a bare `.-` would run on across lines
+		-- and match "touchpad" anywhere later in the file.
+		local lowered = input_devices:lower()
+		M.has_touchpad = lowered:match('name="[^"\n]-touchpad') ~= nil
+			or lowered:match('name="[^"\n]-trackpad') ~= nil
 	end
 
 	return true

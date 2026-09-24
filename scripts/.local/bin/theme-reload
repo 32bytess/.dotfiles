@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Make every running app pick up the palette wallust just rendered.
+# Shared by wallpaper-picker and theme-rofi.
+
+# Give wallust's writes a moment to land before anything re-reads them.
+sleep 0.5
+
+if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+	hyprctl reload >/dev/null
+elif [ -n "${SWAYSOCK:-}" ]; then
+	swaymsg reload >/dev/null
+fi
+
+pkill -SIGUSR2 waybar 2>/dev/null
+swaync-client --reload-css 2>/dev/null
+pkill -SIGUSR1 kitty 2>/dev/null
+tmux source-file ~/.config/tmux/theme.conf 2>/dev/null
+pkill -SIGUSR1 nvim 2>/dev/null
+# Also wallust's hook in wallust.toml; repeated here because reloading is
+# idempotent and the hook is not guaranteed to fire for `wallust theme`.
+"$HOME/.local/bin/herdr" server reload-config >/dev/null 2>&1
+
+# Qt/KDE and GTK apps (LibreOffice, Dolphin, pavucontrol, ...) are left on a
+# fixed system theme and intentionally not re-themed from the wallust palette.
+exit 0
