@@ -9,6 +9,14 @@ list_projects() {
 			-exec test -e '{}/.git' \; -print 2>/dev/null
 	fi
 
+	# projects/work holds work projects that are not all git repos: list the
+	# directory itself and every project directly under it.
+	if [[ -d "$HOME/projects/work" ]]; then
+		printf '%s\n' "$HOME/projects/work"
+		find "$HOME/projects/work" -mindepth 1 -maxdepth 1 -type d \
+			! -name '.*' -print 2>/dev/null
+	fi
+
 	local path
 	for path in \
 		"$HOME/dotfiles" \

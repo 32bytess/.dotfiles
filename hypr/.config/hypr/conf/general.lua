@@ -30,7 +30,8 @@ hl.config({
 		layout = "dwindle",
 		col = {
 			active_border = { colors = { colors.color4, colors.color12 }, angle = 45 },
-			inactive_border = colors.color0,
+			-- Same gradient shape as the active border, dim and translucent.
+			inactive_border = { colors = { colors.color0 .. "aa", colors.color8 .. "aa" }, angle = 45 },
 		},
 	},
 	dwindle = {

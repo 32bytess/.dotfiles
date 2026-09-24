@@ -38,13 +38,9 @@ local default_scale = 1
 -- row: -1080x0, then -2440x0.
 local preferences = {
 	["ARZOPA"] = { transform = 1 }, -- portable second screen, stood on its side
-	["SAMSUNG"] = { position = "auto-up", scale = 0.5 }, -- desk monitor, above the laptop panel
+	["SAMSUNG"] = { position = "auto-up" }, -- desk monitor, above the laptop panel
 	-- ["DP-1"] = { scale = 2 }, -- a HiDPI display that does want scaling
 }
-
-local function is_internal(name)
-	return name:match("^eDP") ~= nil or name:match("^LVDS") ~= nil or name:match("^DSI") ~= nil
-end
 
 -- Merge every preference whose key matches this output. Exact connector names
 -- win as an exact match; everything else is a substring test against name and
@@ -148,7 +144,7 @@ local function relayout()
 
 	-- Same ordering as hardware.lua: built-in panel first, then by name.
 	table.sort(monitors, function(a, b)
-		local a_internal, b_internal = is_internal(a.name), is_internal(b.name)
+		local a_internal, b_internal = hw.is_internal(a.name), hw.is_internal(b.name)
 		if a_internal ~= b_internal then
 			return a_internal
 		end
